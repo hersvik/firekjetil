@@ -1,0 +1,28 @@
+[debug] [2018-12-26T17:09:38.717Z] ----------------------------------------------------------------------
+[debug] [2018-12-26T17:09:38.720Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2018-12-26T17:09:38.720Z] CLI Version:   4.2.1
+[debug] [2018-12-26T17:09:38.720Z] Platform:      darwin
+[debug] [2018-12-26T17:09:38.720Z] Node Version:  v8.9.3
+[debug] [2018-12-26T17:09:38.721Z] Time:          Wed Dec 26 2018 18:09:38 GMT+0100 (CET)
+[debug] [2018-12-26T17:09:38.721Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-12-26T17:09:38.733Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-12-26T17:09:38.734Z] > authorizing via signed-in user
+[debug] [2018-12-26T17:09:38.735Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-12-26T17:09:38.735Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+
+[debug] [2018-12-26T17:09:39.926Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-26T17:09:39.945Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/firekjetil  
+ 
+[debug] [2018-12-26T17:09:40.667Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-26T17:09:40.668Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/firekjetil  
+ 
+[debug] [2018-12-26T17:09:41.973Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/kjetilhersvik/firekjetil'...
+[info] 
+[debug] [2018-12-26T17:09:41.977Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/427119213483/clients/_:getWebAppConfig  
+ 
+[debug] [2018-12-26T17:09:42.364Z] <<< HTTP RESPONSE 200
+[info] i  hosting[firekjetil]: Serving hosting files from: public
+[info] ✔  hosting[firekjetil]: Local server: http://localhost:5000
