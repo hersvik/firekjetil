@@ -1,0 +1,25 @@
+[debug] [2019-07-31T10:13:37.060Z] ----------------------------------------------------------------------
+[debug] [2019-07-31T10:13:37.062Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2019-07-31T10:13:37.062Z] CLI Version:   7.2.2
+[debug] [2019-07-31T10:13:37.062Z] Platform:      darwin
+[debug] [2019-07-31T10:13:37.062Z] Node Version:  v8.9.3
+[debug] [2019-07-31T10:13:37.063Z] Time:          Wed Jul 31 2019 12:13:37 GMT+0200 (CEST)
+[debug] [2019-07-31T10:13:37.063Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-07-31T10:13:37.070Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-07-31T10:13:37.070Z] > authorizing via signed-in user
+[debug] [2019-07-31T10:13:37.070Z] [iam] checking project gigodhet for permissions ["firebase.projects.get"]
+[debug] [2019-07-31T10:13:37.072Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/gigodhet:testIamPermissions  
+
+[debug] [2019-07-31T10:13:38.681Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-31T10:13:38.683Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/gigodhet  
+ 
+[debug] [2019-07-31T10:13:39.150Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/kjetilhersvik/firekjetil/gigodhet'...
+[info] 
+[debug] [2019-07-31T10:13:39.153Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/gigodhet/webApps/-/config  
+ 
+[debug] [2019-07-31T10:13:39.896Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
