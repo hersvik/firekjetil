@@ -1,4 +1,5 @@
 import React from 'react';
+import Row from './Row';
 
 class Board extends React.Component {
 
@@ -6,27 +7,17 @@ class Board extends React.Component {
     super();
     this.state = {
       board: [
-        [0,0,0],
-        [0,0,0],
-        [0,0,0]
+        [11,12,13],
+        [21,22,23],
+        [31,32,33]
       ]
     }
   }
 
-  getCells(row) {
-    return row.map(cell => {
-        return <div className="tic_cell">
-          {cell}
-        </div>
-      }
-    )
-  }
-  
   render() {
-    let rows = this.state.board.map(row => {
-      return <div className="tic_row">
-        {this.getCells(row)}
-      </div>
+    let rows = this.state.board.map((row, i) => {
+      console.log("iii", i)
+      return <Row key={i} row={row} />
     });
     return (
           <div>{rows}</div>
