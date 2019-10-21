@@ -5,22 +5,40 @@ class Board extends React.Component {
 
   constructor(){
     super();
+    
     this.state = {
       board: [
-        [11,12,13],
-        [21,22,23],
-        [31,32,33]
-      ]
+        ["-","-","-"],
+        ["-","-","-"],
+        ["-","-","-"]
+      ],
+      turn: "x"
     }
   }
 
   render() {
+
+    const getClick = (x,y) => {
+      let boardCopy = this.state.board.slice();
+      boardCopy[y][x] = this.state.turn;
+      if(this.state.turn === "x"){
+        this.setState({turn: "o"});
+      } else {
+        this.setState({turn: "x"});
+      }
+      this.setState({board: boardCopy}, () => this.render());
+    }
+
     let rows = this.state.board.map((row, i) => {
       console.log("iii", i)
-      return <Row key={i} row={row} />
+      return <Row key={i} y={i} row={row} sendClick={getClick} />
     });
+
     return (
-          <div>{rows}</div>
+          <div>
+            {rows}
+            Next turn: {this.state.turn}
+          </div>
     );
   }
 

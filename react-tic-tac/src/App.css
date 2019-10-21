@@ -2,3 +2,15 @@
   text-align: left;
   margin: 2em;
 }
+
+.tic_cell {
+  display: inline-block;
+  padding: 1em;
+  background-color: silver;
+  width: 2em;
+  height: 2em;
+  text-align: center;
+}
+.tic_cell:hover {
+  background-color: #ddd;
+}
