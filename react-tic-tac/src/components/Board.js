@@ -16,9 +16,31 @@ class Board extends React.Component {
     }
   }
 
+  checkWinRow(){
+    for (let row of this.state.board) {
+      let previous;
+      let counter = 0;
+      for (let cell of row) {
+        if (cell === "-") {
+          break;
+        }
+        if (previous && cell !== previous) {
+          break;
+        }
+        counter++;
+        if(counter === 3){
+          alert(this.state.turn + " has a winner row!")
+          return true;
+        }
+        previous = cell;
+      }
+    }
+  }
+
   render() {
 
     const getClick = (x,y) => {
+      // store and re-render:
       let boardCopy = this.state.board.slice();
       boardCopy[y][x] = this.state.turn;
       if(this.state.turn === "x"){
@@ -27,6 +49,8 @@ class Board extends React.Component {
         this.setState({turn: "x"});
       }
       this.setState({board: boardCopy}, () => this.render());
+
+      this.checkWinRow()
     }
 
     let rows = this.state.board.map((row, i) => {
