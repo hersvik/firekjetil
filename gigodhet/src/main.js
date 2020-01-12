@@ -12,17 +12,27 @@ import {config} from './helpers/firebaseConfig'
 Vue.use(VueRouter)
 Vue.use(firestorePlugin)
 
+firebase.initializeApp(config);
+
+router.beforeEach( (to, from, next) => {
+
+  firebase.auth().onAuthStateChanged((user) => {
+    if(user) {
+      next();
+    } else {
+      if (to.path !== '/auth') {
+        next('/auth')
+      } else {
+        next();
+      }
+    }
+   });
+
+});
+
 new Vue({
   router,
   created() {
-    firebase.initializeApp(config);
-    firebase.auth().onAuthStateChanged((user) => {
-      if(user) {
-        this.$router.push('/success')
-      } else {
-        this.$router.push('/auth')
-      }
-     });
     },
   el: '#app',
   render: h => h(App)

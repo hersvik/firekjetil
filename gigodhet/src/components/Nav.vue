@@ -12,7 +12,7 @@
     methods: {
       logOut() {
           firebase.auth().signOut();
-        }
+      }
     }
   }
 </script>

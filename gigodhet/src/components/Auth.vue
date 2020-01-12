@@ -15,13 +15,19 @@ export default {
   mounted() {
     // debugger
     var uiConfig = {
-      signInSuccessUrl: '/success',
+      signInSuccessUrl: '/',
       signInOptions: [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         firebase.auth.EmailAuthProvider.PROVIDER_ID
         ]
       };
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    let ui;
+    if(firebaseui.auth.AuthUI.getInstance()) {
+      ui = firebaseui.auth.AuthUI.getInstance();
+    }
+    else {
+      ui = new firebaseui.auth.AuthUI(firebase.auth());
+    }
     // debugger
     ui.start('#firebaseui-auth-container', uiConfig);
     },

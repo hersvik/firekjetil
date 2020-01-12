@@ -5,9 +5,8 @@ import Registrering from './components/Registrering.vue';
 const router = new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/', component: Auth },
+    { path: '/', component: Registrering },
     { path: '/auth', component: Auth },
-    { path: '/success', component: Registrering }
   ]
 });
 export default router;
