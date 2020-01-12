@@ -25,7 +25,6 @@
     },
     methods: {
       updateEnrollment(enrolled) {
-        debugger
 
         db.collection("enrollment").doc(enrolled.id).update({misc: enrolled.misc})
       }
