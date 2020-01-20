@@ -1,14 +1,16 @@
 <template>
-  <div>
-    <button>Registrering  for giGodhet</button>
-    <div>
-      <div>
-        Deltakende kontaktperson
+  <div class="container">
+    <h1>Registrering  for giGodhet</h1>
+
+    <form>
+      <div class="form-group">
+          <label>
+            Fornavn
+          </label>
+          <input class="form-control" placeholder="Fornavn" type="text" v-model="registration.primaryPerson.firstName" />
+          <small class="form-text text-muted">Deltager og kontaktperson</small>
       </div>
-      <div>
-        Fornavn: <input type="text" v-model="registration.primaryPerson.firstName" />
-      </div>
-    </div>
+    </form>
     <!-- <div v-for="(enrolled, idx) in enrollment" :key="enrolled.id">
       Test enrollmemnt
       <input v-model="enrollment[idx].misc" @change="updateEnrollment(enrolled)"/>
