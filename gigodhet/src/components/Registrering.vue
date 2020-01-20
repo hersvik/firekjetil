@@ -1,10 +1,19 @@
 <template>
   <div>
-    <h1>Registrering  for giGodhet</h1>
-    <div v-for="(enrolled, idx) in enrollment" :key="enrolled.id">
-      {{ enrolled.misc }}
-      <input v-model="enrollment[idx].misc" @change="updateEnrollment(enrolled)"/>
+    <button>Registrering  for giGodhet</button>
+    <div>
+      <div>
+        Deltakende kontaktperson
+      </div>
+      <div>
+        Fornavn: <input type="text" v-model="registration.primaryPerson.firstName" />
+      </div>
     </div>
+    <!-- <div v-for="(enrolled, idx) in enrollment" :key="enrolled.id">
+      Test enrollmemnt
+      <input v-model="enrollment[idx].misc" @change="updateEnrollment(enrolled)"/>
+    </div> -->
+
   </div>
 </template>
 
@@ -15,18 +24,24 @@
     name: "Registrering",
     data () {
       return {
-        enrollment: []
+        // enrollment: []
+        registration: {}
       }
     },
     firestore () {
       return {
-        enrollment: db.collection('enrollment')
+        // enrollment: db.collection('enrollment')
+        registration: db.collection("registrations").doc("2VyE4TitKwZXQWvisZsE")
+      }
+    },
+    watch: {
+      registration: function (){//(newReg) {
+
       }
     },
     methods: {
-      updateEnrollment(enrolled) {
-
-        db.collection("enrollment").doc(enrolled.id).update({misc: enrolled.misc})
+      updateEnrollment() { // (enrolled)
+        // db.collection("enrollment").doc(enrolled.id).update({misc: enrolled.misc})
       }
     }
   }
