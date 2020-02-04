@@ -34,7 +34,7 @@
           <label>
             Tlf.
           </label>
-          <input v-model="registration.primaryPerson.phone" class="form-control" placeholder=" - 9 siffer -" type="number" />
+          <input v-model="registration.primaryPerson.phone" class="form-control" placeholder=" - 8 siffer -" type="number" />
         </div>
         <div class="form-group">
           <label>
@@ -44,7 +44,7 @@
         </div>
         <div class="form-group">
             <label>
-              Adresse og postnr.
+              Adresse, postnummer og -sted
             </label>
             <input v-model="registration.primaryPerson.address" class="form-control" placeholder=" - Solvegen 99, 4099 -" type="text" />
         </div>
@@ -70,16 +70,12 @@
         <input v-model="registration.competancies" class="form-control" placeholder=" - Eks. 1 person blomsterspesialist -" type="text" />
       </div>
     </form>
-    <!-- <div v-for="(enrolled, idx) in enrollment" :key="enrolled.id">
-      Test enrollmemnt
-      <input v-model="enrollment[idx].misc" @change="updateEnrollment(enrolled)"/>
-    </div> -->
 
     <div>
-      <h2>Gruppedeltagere</h2>
+      <h2>Meddeltagere</h2>
     </div>
     <div v-for="(participant, idx) in registration.participants" :key="idx" class="bg-light p-2 mb-2">
-      <small class="form-text text-muted">Deltager {{idx + 1}}</small>
+      <small class="form-text text-muted">Meddeltager {{idx + 1}}</small>
       <div class="form-group">
           <label>
             Fornavn
@@ -126,6 +122,14 @@
       </div>
     </div>
 
+    <div class="form-group mt-4">
+      <label>
+        (Evt.) annet / kommentar
+      </label>
+      <textarea v-model="registration.misc" class="form-control" type="text">
+      </textarea>
+    </div>
+
     <div class="form-group">
       <button class="btn btn-primary" @click="save">Lagre</button>
     </div>
@@ -146,6 +150,7 @@
           primaryPerson: {},
           participants: [],
           dailyAttendance: [{}], // add {} for tuesday, etc
+          event: "Godhet Stavanger 2020",
         }
       }
     },

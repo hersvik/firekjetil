@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
-import firebase from 'firebase/app' // from "firebase/app" ?
+import firebase from 'firebase/app'
 require('firebase/firestore')
 
 // import 'firebase/firestore' // needed?
