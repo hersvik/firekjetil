@@ -18,6 +18,7 @@ router.beforeEach( (to, from, next) => {
 
   firebase.auth().onAuthStateChanged((user) => {
     if(user) {
+      Vue.prototype.$userid = user.uid;
       next();
     } else {
       if (to.path !== '/auth') {

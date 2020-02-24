@@ -30,7 +30,7 @@
     },
     firestore () {
       return {
-        registrations: db.collection("registrations")
+        registrations: db.collection("registrations").where("ownerUid", "==", this.$userid)
       }
     },
     methods: {

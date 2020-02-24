@@ -10,13 +10,13 @@
             <label>
               Fornavn
             </label>
-            <input v-model="registration.primaryPerson.firstName" class="form-control" placeholder=" - Fornavn -" type="text" />
+            <input v-model="registration.primaryPerson.firstName" class="form-control" placeholder="" type="text" />
         </div>
         <div class="form-group">
             <label>
               Etternavn
             </label>
-            <input v-model="registration.primaryPerson.lastName" class="form-control" placeholder=" - Etternavn -" type="text" />
+            <input v-model="registration.primaryPerson.lastName" class="form-control" placeholder="" type="text" />
         </div>
 
         <div class="form-group">
@@ -185,6 +185,7 @@
       },
       save() {
 
+        this.registration.ownerUid = this.$userid;
         if (this.id) {
           // db.collection("registrations").doc(this.id).update({
           //   "primaryPerson.firstName": this.registration.primaryPerson.firstName,
