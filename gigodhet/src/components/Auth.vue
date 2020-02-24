@@ -1,6 +1,5 @@
 <template lang="html">
   <div>
-    <div>firebaseui template her</div>
     <div id="firebaseui-auth-container"></div>
   </div>
 </template>

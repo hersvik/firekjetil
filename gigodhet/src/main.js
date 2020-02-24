@@ -8,6 +8,7 @@ require('firebase/firestore')
 import {firestorePlugin} from 'vuefire'
 // import firebaseui from 'firebaseui';
 import router from './router'
+import {setters} from './store'
 import {config} from './helpers/firebaseConfig'
 Vue.use(VueRouter)
 Vue.use(firestorePlugin)
@@ -18,7 +19,7 @@ router.beforeEach( (to, from, next) => {
 
   firebase.auth().onAuthStateChanged((user) => {
     if(user) {
-      Vue.prototype.$userid = user.uid;
+      setters.setUser(user);
       next();
     } else {
       if (to.path !== '/auth') {

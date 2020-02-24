@@ -1,17 +1,25 @@
 <template>
   <div class="nav__wrapper">
+    {{loginName}}
     <button class="logout btn btn-default" @click='logOut'>Log out</button>
   </div>
 </template>
 
 <script>
   import firebase from 'firebase'
+  import {getters} from '../store.js'
 
   export default {
     name: "Nav",
     methods: {
       logOut() {
           firebase.auth().signOut();
+      }
+    },
+    computed: {
+      ...getters,
+      loginName(){
+        return this.user && this.user.displayName || "Mangler navn";
       }
     }
   }

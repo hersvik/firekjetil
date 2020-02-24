@@ -140,6 +140,7 @@
 
 <script>
   import { db } from '../main';
+  import { getters } from '../store';
 
   export default {
     name: "Registrering",
@@ -162,6 +163,7 @@
       }
     },
     computed: {
+      ...getters,
       adultNumberSelection: function() {
         let result= this.registration.participants.filter(el => el.ageGroup == 'adult');
         result.push({});
@@ -185,7 +187,7 @@
       },
       save() {
 
-        this.registration.ownerUid = this.$userid;
+        this.registration.ownerUid = this.user.uid;
         if (this.id) {
           // db.collection("registrations").doc(this.id).update({
           //   "primaryPerson.firstName": this.registration.primaryPerson.firstName,

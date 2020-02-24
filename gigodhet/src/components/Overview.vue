@@ -20,6 +20,7 @@
 
 <script>
   import { db } from '../main';
+  import {getters} from '../store';
 
   export default {
     name: "Overview",
@@ -28,9 +29,14 @@
         registrations: []
       }
     },
+    computed: {
+      ...getters,
+    },
     firestore () {
-      return {
-        registrations: db.collection("registrations").where("ownerUid", "==", this.$userid)
+      if(this.user.uid){
+        return {
+          registrations: db.collection("registrations").where("ownerUid", "==", this.user.uid)
+        }
       }
     },
     methods: {
