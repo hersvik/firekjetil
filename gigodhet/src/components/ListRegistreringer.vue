@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Oversikt</h1>
+    <h1>Påmeldinger</h1>
 
     <li class="list-group">
       <ul class="list-group-item">
@@ -9,7 +9,7 @@
         </router-link>
       </ul>
       <ul v-for="(registration) in registrations" :key="registration.id" class="list-group-item">
-        <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }"> <!--hardcoded id-->
+        <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
           {{registration.event}}: {{registration.primaryPerson.firstName}} +({{registration.participants && registration.participants.length || 0}})
         </router-link>
       </ul>
@@ -23,7 +23,7 @@
   import {getters, constants} from '../store';
 
   export default {
-    name: "Overview",
+    name: "ListRegistreringer",
     data () {
       return {
         registrations: []

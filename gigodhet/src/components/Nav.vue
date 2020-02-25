@@ -1,5 +1,7 @@
 <template>
   <div v-if="user.uid" class="nav__wrapper">
+    <a @click='goToListRegistreringer'>Påmeldinger</a>
+    <a @click='goToListWishes'>Forespørsler</a>
     <div class="">{{loginName}}</div>
     <a class="logout" @click='logOut'>Log out</a>
   </div>
@@ -12,6 +14,12 @@
   export default {
     name: "Nav",
     methods: {
+      goToListRegistreringer() {
+        this.$router.push("/");
+      },
+      goToListWishes() {
+        this.$router.push("/wishes");
+      },
       logOut() {
           firebase.auth().signOut();
       }
@@ -27,6 +35,16 @@
 
 <style scoped>
 
+  a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  a {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+  }
   .nav__wrapper {
     width: 100%;
     text-align: right;

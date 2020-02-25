@@ -16,7 +16,8 @@
 </script>
 
 <style>
-  a {
+
+  body a {
     cursor: pointer;
   }
 </style>

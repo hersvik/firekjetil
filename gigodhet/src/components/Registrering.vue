@@ -200,7 +200,6 @@
           db.collection('registrations')
             .doc(this.id)
             .set(registration, {merge: true})
-            .set(registration)
             .then(() => {
               this.$router.push("/")
             })
