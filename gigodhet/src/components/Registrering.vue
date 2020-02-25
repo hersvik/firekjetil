@@ -173,11 +173,11 @@
         return result;
       }
     },
-    watch: {
-      registration: function (){//(newReg) {
+    // watch: {
+    //   registration: function (){//(newReg) {
 
-      }
-    },
+    //   }
+    // },
     methods: {
       updateEnrollment() { // (enrolled)
         // db.collection("enrollment").doc(enrolled.id).update({misc: enrolled.misc})
@@ -187,7 +187,8 @@
       },
       save() {
 
-        this.registration.ownerUid = this.user.uid;
+        this.registration.ownerUid = this.registration.ownerUid || this.user.uid;
+
         if (this.id) {
           // db.collection("registrations").doc(this.id).update({
           //   "primaryPerson.firstName": this.registration.primaryPerson.firstName,

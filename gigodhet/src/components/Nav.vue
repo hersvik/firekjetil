@@ -1,7 +1,7 @@
 <template>
-  <div class="nav__wrapper">
-    {{loginName}}
-    <button class="logout btn btn-default" @click='logOut'>Log out</button>
+  <div v-if="user.uid" class="nav__wrapper">
+    <div class="">{{loginName}}</div>
+    <a class="logout" @click='logOut'>Log out</a>
   </div>
 </template>
 
@@ -30,6 +30,10 @@
   .nav__wrapper {
     width: 100%;
     text-align: right;
+  }
+  .nav__wrapper * {
+    display: inline;
+    margin: 1em;
   }
   .nav__wrapper .logout {
     /* position: absolute;

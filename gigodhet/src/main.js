@@ -22,6 +22,7 @@ router.beforeEach( (to, from, next) => {
       setters.setUser(user);
       next();
     } else {
+      setters.setUser({});
       if (to.path !== '/auth') {
         next('/auth')
       } else {

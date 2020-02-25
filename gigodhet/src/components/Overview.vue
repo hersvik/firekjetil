@@ -4,7 +4,7 @@
 
     <li class="list-group">
       <ul class="list-group-item">
-        <router-link :to="{path: 'registrering'}">
+        -> <router-link :to="{path: 'registrering'}">
           Ny påmelding
         </router-link>
       </ul>
@@ -20,7 +20,7 @@
 
 <script>
   import { db } from '../main';
-  import {getters} from '../store';
+  import {getters, constants} from '../store';
 
   export default {
     name: "Overview",
@@ -33,10 +33,15 @@
       ...getters,
     },
     firestore () {
-      if(this.user.uid){
+      if(this.user.uid === constants.adminUid){
+        return {
+          registrations: db.collection("registrations")
+        };
+      }
+      else if (this.user.uid) {
         return {
           registrations: db.collection("registrations").where("ownerUid", "==", this.user.uid)
-        }
+        };
       }
     },
     methods: {
