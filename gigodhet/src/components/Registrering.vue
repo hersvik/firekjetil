@@ -188,6 +188,8 @@
       save() {
 
         this.registration.ownerUid = this.registration.ownerUid || this.user.uid;
+        this.registration.created = this.registration.created || new Date();
+        this.registration.edited = new Date();
 
         if (this.id) {
           // db.collection("registrations").doc(this.id).update({
@@ -197,6 +199,7 @@
 
           db.collection('registrations')
             .doc(this.id)
+            .set(registration, {merge: true})
             .set(registration)
             .then(() => {
               this.$router.push("/")

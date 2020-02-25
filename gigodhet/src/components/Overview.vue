@@ -4,7 +4,7 @@
 
     <li class="list-group">
       <ul class="list-group-item">
-        -> <router-link :to="{path: 'registrering'}">
+        + <router-link :to="{path: 'registrering'}">
           Ny påmelding
         </router-link>
       </ul>
