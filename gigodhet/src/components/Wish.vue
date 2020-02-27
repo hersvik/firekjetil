@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <router-link to="/">Tilbake</router-link>
-    <h1>{{wish.event || "Godhet Stavanger 2020"}}</h1>
+    <h1>Forespørsel</h1>
+    <h3>{{wish.event || "Godhet Stavanger 2020"}}</h3>
 
     <form>
       <div class="bg-light p-2">
@@ -88,6 +89,16 @@
       </textarea>
     </div>
 
+
+    <div class="form-group">
+      <label>
+        Mandag
+      </label>
+      <AssigneeSelector v-for="(ref, idx) in wish.assigneesPerDay[0].registrationRefs" :key="idx" v-model="wish.assigneesPerDay[0].registrationRefs[idx]" :registrations="sortedRegistrations" />
+      <a @click="addExtraAssigneeForDay(0)">Legg til en til</a>
+    </div>
+
+
     <div class="form-group">
       <button class="btn btn-primary" @click="save">Lagre</button>
     </div>
@@ -98,38 +109,61 @@
 
 <script>
   import { db } from '../main';
-  import { getters } from '../store';
+  import { getters, constants } from '../store';
 
   export default {
     name: "Wish",
     props: ["id"],
+    components: {
+      AssigneeSelector: () => import("./AssigneeSelector.vue")
+    },
     data () {
       return {
         wish: {
           submitter: {},
           target: {},
           event: "Godhet Stavanger 2020",
-        }
+          assigneesPerDay: [
+            { registrationRefs: [] }
+          ],
+        },
+        registrations: [],
       }
     },
     firestore () {
+      let result = {};
       if (this.id) {
-        return {
-          wish: db.collection("wishes").doc(this.id)
-        }
+        result.wish = db.collection("wishes").doc(this.id)
       }
+      if (this.user.uid === constants.adminUid) {
+        result.registrations = db.collection("registrations")
+      }
+      return result;
     },
     computed: {
       ...getters,
+      sortedRegistrations() {
+        if (!this || !this.registrations) {
+          return;
+        }
+        let copy = this.registrations.slice();
+        return copy.sort((a, b) => {
+          let aFirstName = a.primaryPerson.firstName ||"";
+          let bFirstName = b.primaryPerson.firstName ||"";
+          return b.participants.length - a.participants.length || aFirstName.localeCompare(bFirstName);
+        });
+      },
     },
     methods: {
+      addExtraAssigneeForDay(day) {
+        this.wish.assigneesPerDay[day].registrationRefs.push(this.sortedRegistrations[0].id);
+      },
       save() {
 
         this.wish.ownerUid = this.wish.ownerUid || this.user.uid;
         this.wish.created = this.wish.created || new Date();
         this.wish.edited = new Date();
 
-        debugger
         if (this.id) {
           const wish= { ...this.wish} // to exclude non-enumerable "id"-property
 
