@@ -1,9 +1,9 @@
 <template>
   <div v-if="user.uid" class="nav__wrapper">
-    <a @click='goToListRegistreringer'>Påmeldinger</a>
-    <a @click='goToListWishes'>Forespørsler</a>
+    <a @click='goToListRegistreringer' :class='{active: activeNav == "pameldinger"}'>Påmeldinger</a>
+    <a @click='goToListWishes' :class='{active: activeNav == "foresporsler"}'>Forespørsler</a>
     <div class="">{{loginName}}</div>
-    <a class="logout" @click='logOut'>Log out</a>
+    <a class="" @click='logOut'>Log out</a>
   </div>
 </template>
 
@@ -34,7 +34,9 @@
 </script>
 
 <style scoped>
-
+  .nav__wrapper .active {
+    border: solid 1px #007bff
+  }
   a:hover {
     color: #0056b3;
     text-decoration: underline;
@@ -46,21 +48,14 @@
     background-color: transparent;
   }
   .nav__wrapper {
-    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 80%;
     text-align: right;
   }
   .nav__wrapper * {
-    display: inline;
-    margin: 1em;
-  }
-  .nav__wrapper .logout {
-    /* position: absolute;
-    right: 0; */
-
-    /* float: right; */
-
-    /* color: red;
-    background-color: red;
-    width: 100%; */
+    display: inline-block;
+    padding: 0.5em;
   }
 </style>

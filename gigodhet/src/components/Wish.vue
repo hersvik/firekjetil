@@ -1,10 +1,27 @@
 <template>
-  <div class="container">
-    <router-link to="/">Tilbake</router-link>
+  <div class="container container_under_nav">
+    <router-link to="/wishes">Tilbake</router-link>
     <h1>Forespørsel</h1>
     <h3>{{wish.event || "Godhet Stavanger 2020"}}</h3>
 
     <form>
+
+      <div class="form-group mt-4">
+        <label>
+          Kort overskrift
+        </label>
+        <input v-model="wish.title" class="form-control" type="text">
+      </div>
+
+      <div class="form-group mt-4">
+        <label>
+          Beskrivelse av arbeid
+        </label>
+        <textarea v-model="wish.description" class="form-control" type="text">
+        </textarea>
+      </div>
+
+
       <div class="bg-light p-2">
         <small class="form-text text-muted">Innmelder</small>
         <div class="form-group">
@@ -81,24 +98,18 @@
     </form>
 
 
-    <div class="form-group mt-4">
-      <label>
-        Forespørsel
-      </label>
-      <textarea v-model="wish.description" class="form-control" type="text">
-      </textarea>
-    </div>
-
-
-    <div class="form-group">
+    <div v-if="user.uid === constants.adminUid && wish.id" class="form-group">
       <label>
         Mandag
       </label>
       <div v-for="(ref, idx) in wish.assigneesPerDay[0].registrationRefs" :key="idx">
         <a @click="removeAssigneeForDay(0, ref)">(-)</a>
-        <AssigneeSelector  v-model="wish.assigneesPerDay[0].registrationRefs[idx]" :registrations="sortedRegistrations" />
+        <AssigneeSelector  v-model="wish.assigneesPerDay[0].registrationRefs[idx]" :registrations="sortedRegistrations" :day="0" :wishRef="wish.id" />
       </div>
-      <a @click="addExtraAssigneeForDay(0)">Legg til en til</a>
+      <a style="display: block" @click="addExtraAssigneeForDay(0)">Legg til deltagelse</a>
+    </div>
+    <div v-else-if="user.uid === constants.adminUid && !wish.id">
+      Etter forespørselen er lagret første gang, kan deltagere legges til.
     </div>
 
 
@@ -114,9 +125,12 @@
   import { db } from '../main';
   import firebase from 'firebase/app'
 
-  import { getters, constants } from '../store';
+  import { getters, setters, constants } from '../store';
 
   export default {
+    beforeCreate() {
+      setters.setActiveNav("foresporsler");
+    },
     name: "Wish",
     props: ["id"],
     components: {
@@ -147,6 +161,9 @@
     },
     computed: {
       ...getters,
+      constants() {
+        return constants;
+      },
       sortedRegistrations() {
         if (!this || !this.registrations) {
           return;
@@ -168,6 +185,7 @@
         this.wish.assigneesPerDay[day].registrationRefs = filtered;
 
       },
+
       save() {
         const assigneesPerDay = this.wish.assigneesPerDay;
         // Save wish document
@@ -196,25 +214,29 @@
             });
         }
 
-        let wishDocRef = db.collection("wishes").doc(this.id)
-        let wishId = this.id;
+        // Save ref. in registrations (need wish-id so not possible on first wish create)
+        if (this.id) {
+          let wishDocRef = db.collection("wishes").doc(this.id)
+          let wishId = this.id;
 
-        return db.runTransaction(function(transaction) {
-            // This code may get re-run multiple times if there are conflicts.
-            return transaction.get(wishDocRef).then(function(wishDoc) {
-                if (!wishDoc.exists) {
-                    throw "Document does not exist!";
-                }
+          return db.runTransaction(function(transaction) {
+              // This code may get re-run multiple times if there are conflicts.
+              return transaction.get(wishDocRef).then(function(wishDoc) {
+                  if (!wishDoc.exists) {
+                      throw "Document does not exist!";
+                  }
 
-                let wishServerData = wishDoc.data();
-                updateRegistrations(wishId, wishServerData, transaction, wishDocRef, assigneesPerDay)
-            });
-        }).then(function() {
-            console.log("Transaction successfully committed!");
-        }).catch(function(error) {
-            console.log("Transaction failed: ", error);
-        });
-      }
+                  let wishServerData = wishDoc.data();
+                  updateRegistrations(wishId, wishServerData, transaction, wishDocRef, assigneesPerDay)
+              });
+          }).then(function() {
+              console.log("Transaction successfully committed!");
+          }).catch(function(error) {
+              console.log("Transaction failed: ", error);
+          });
+        }
+      } //(end save)
+
     }
   }
 

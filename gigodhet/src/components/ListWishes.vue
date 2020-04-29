@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container container_under_nav">
     <h1>Forespørsler</h1>
 
     <li class="list-group">
@@ -20,9 +20,12 @@
 
 <script>
   import { db } from '../main';
-  import {getters, constants} from '../store';
+  import {getters, setters, constants} from '../store';
 
   export default {
+    beforeCreate() {
+      setters.setActiveNav("foresporsler");
+    },
     name: "ListWishes",
     data () {
       return {

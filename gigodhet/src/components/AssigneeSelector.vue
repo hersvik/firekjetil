@@ -6,7 +6,8 @@
       :key="registration.id"
       :value="registration.id"
       :selected="value === registration.id">
-        ({{registration.participants.length + 1}})
+        {{otherBusyness[registration.id]}}
+        ({{registration.dailyAttendance[0].adult}}/{{registration.participants.length + 1}})
         {{registration.primaryPerson.firstName}}
         {{registration.primaryPerson.lastName}}
     </option>
@@ -17,6 +18,23 @@
 <script>
   export default {
     name: "AssigneeSelector",
-    props: ["value", "registrations", ]
+    props: ["value", "registrations", "day", "wishRef", ],
+    computed: {
+      otherBusyness() {
+
+        let result = {};
+        for (let registration of this.registrations) {
+          let missions = registration["missionDay"+this.day] || [];
+          let otherOnSameDay = missions.filter(el => el !== this.wishRef).length || 0;
+
+          result[registration.id] = "";
+          for (let i=0; i<otherOnSameDay; i++) {
+            result[registration.id] += "*";
+          }
+        }
+        return result;
+
+      }
+    }
   }
 </script>

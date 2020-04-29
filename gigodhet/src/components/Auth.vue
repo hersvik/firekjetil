@@ -12,7 +12,6 @@ import "../../node_modules/firebaseui/dist/firebaseui.css"
 export default {
   name: 'auth',
   mounted() {
-    // debugger
     var uiConfig = {
       signInSuccessUrl: '/',
       signInOptions: [
@@ -27,7 +26,6 @@ export default {
     else {
       ui = new firebaseui.auth.AuthUI(firebase.auth());
     }
-    // debugger
     ui.start('#firebaseui-auth-container', uiConfig);
     },
 }

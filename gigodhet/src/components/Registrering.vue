@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container container_under_nav">
     <router-link to="/">Tilbake</router-link>
     <h1>{{registration.event || "Godhet Stavanger 2020"}}</h1>
 
@@ -140,9 +140,12 @@
 
 <script>
   import { db } from '../main';
-  import { getters } from '../store';
+  import { getters, setters } from '../store';
 
   export default {
+    beforeCreate() {
+      setters.setActiveNav("pameldinger");
+    },
     name: "Registrering",
     props: ["id"],
     data () {
