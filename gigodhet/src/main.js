@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import firebase from 'firebase/app'
+import 'bootstrap'; //import 'bootstrap/dist/css/bootstrap.min.css';
+import $ from 'jquery';
 require('firebase/firestore')
 
 // import 'firebase/firestore' // needed?
@@ -32,6 +34,13 @@ router.beforeEach( (to, from, next) => {
    });
 
 });
+Vue.directive('tooltip', function(el, binding){
+  $(el).tooltip({
+           title: binding.value,
+           placement: binding.arg,
+           trigger: 'hover'
+       })
+})
 
 new Vue({
   router,

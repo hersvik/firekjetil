@@ -5,7 +5,7 @@
 
     <form>
       <div class="bg-light p-2">
-        <small class="form-text text-muted">Deltager og kontaktperson (i løpet av Godhet)</small>
+        <small class="form-text text-muted">Deltager (enkeltperson eller gruppeleder)</small>
         <div class="form-group">
             <label>
               Fornavn

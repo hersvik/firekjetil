@@ -10,8 +10,9 @@
       </ul>
       <ul v-for="(wish) in wishes" :key="wish.id" class="list-group-item">
         <router-link :to="{name: 'endreWish', params:{id: wish.id} }">
-          {{wish.event}}: {{wish.submitter.firstName}} +({{wish.target.firstName}})
+          <em>{{wish.submitter.firstName}} {{wish.submitter.lastName}}</em>: <strong>{{wish.title}}</strong>  for {{wish.target.firstName}} {{wish.target.lastName}}
         </router-link>
+        <span v-if="true || user.uid === constants.adminUid" v-tooltip:top="'Admin-status'">{{wish.status}}</span>
       </ul>
     </li>
 
@@ -33,6 +34,9 @@
       }
     },
     computed: {
+      constants(){
+        return constants;
+      },
       ...getters,
     },
     firestore () {

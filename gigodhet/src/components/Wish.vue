@@ -6,6 +6,13 @@
 
     <form>
 
+      <div v-if="user.uid === constants.adminUid" class="form-group mt-4" style="opacity: 0.5;">
+        <label>
+          Admin-status
+        </label>
+        <input v-model="wish.status" class="form-control" type="text">
+      </div>
+
       <div class="form-group mt-4">
         <label>
           Kort overskrift

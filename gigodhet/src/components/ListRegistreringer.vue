@@ -10,7 +10,7 @@
       </ul>
       <ul v-for="(registration) in registrations" :key="registration.id" class="list-group-item">
         <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
-          {{registration.event}}: {{registration.primaryPerson.firstName}} +({{registration.participants && registration.participants.length || 0}})
+          {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}} +({{registration.participants && registration.participants.length || 0}})
         </router-link>
       </ul>
     </li>
