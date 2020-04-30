@@ -1,7 +1,9 @@
 <template>
   <div v-if="user.uid" class="nav__wrapper">
+    <span class="header_banner">Godhetstavanger.no</span>
+    <a @click='goToHjem' :class='{active: activeNav == "hjem"}'>Hjem</a>
     <a @click='goToListRegistreringer' :class='{active: activeNav == "pameldinger"}'>Påmeldinger</a>
-    <a @click='goToListWishes' :class='{active: activeNav == "foresporsler"}'>Forespørsler</a>
+    <a @click='goToListWishes' :class='{active: activeNav == "foresporsler"}'>Forslag</a>
     <div class="">{{loginName}}</div>
     <a class="" @click='logOut'>Log out</a>
   </div>
@@ -14,8 +16,11 @@
   export default {
     name: "Nav",
     methods: {
-      goToListRegistreringer() {
+      goToHjem() {
         this.$router.push("/");
+      },
+      goToListRegistreringer() {
+        this.$router.push("/regs");
       },
       goToListWishes() {
         this.$router.push("/wishes");
@@ -34,6 +39,9 @@
 </script>
 
 <style scoped>
+  .header_banner {
+    margin-right: 1em;
+  }
   .nav__wrapper .active {
     border: solid 1px #007bff
   }

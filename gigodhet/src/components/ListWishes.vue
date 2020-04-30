@@ -1,11 +1,11 @@
 <template>
   <div class="container container_under_nav">
-    <h1>Forespørsler</h1>
+    <h1>Forslag til Godhetsoppdrag</h1>
 
     <li class="list-group">
       <ul class="list-group-item">
         + <router-link :to="{path: 'wish'}">
-          Ny forespørsel
+          Nytt forslag
         </router-link>
       </ul>
       <ul v-for="(wish) in wishes" :key="wish.id" class="list-group-item">

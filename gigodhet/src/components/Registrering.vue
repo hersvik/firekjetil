@@ -104,14 +104,14 @@
       <button class="btn btn-light" @click="addParticipant">+ Legg til gruppedeltager</button>
     </div>
 
-    <div class="form-row">
+    <div v-if="constants.hasDailyAttendanceFeature" class="form-row">
       <div class="col">
       </div>
       <div class="col">
         Antall voksne
       </div>
     </div>
-    <div class="form-row">
+    <div v-if="constants.hasDailyAttendanceFeature" class="form-row">
       <div class="col">
         Mandag
       </div>
@@ -140,7 +140,7 @@
 
 <script>
   import { db } from '../main';
-  import { getters, setters } from '../store';
+  import { getters, setters, constants } from '../store';
 
   export default {
     beforeCreate() {
@@ -166,6 +166,9 @@
       }
     },
     computed: {
+      constants() {
+        return constants;
+      },
       ...getters,
       adultNumberSelection: function() {
         let result= this.registration.participants.filter(el => el.ageGroup == 'adult');

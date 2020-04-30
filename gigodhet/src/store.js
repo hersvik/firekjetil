@@ -17,4 +17,5 @@ export const setters = {
 
 export const constants = {
   adminUid: "M7BpZGRkH4hgut24BPknSOVB2H02",
+  hasDailyAttendanceFeature: false,
 }
