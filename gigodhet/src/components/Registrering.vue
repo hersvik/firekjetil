@@ -1,7 +1,9 @@
 <template>
   <div class="container container_under_nav">
-    <router-link to="/">Tilbake</router-link>
+    <router-link to="/regs">Tilbake</router-link>
     <h1>{{registration.event || "Godhet Stavanger 2020"}}</h1>
+    <h3>Påmelding</h3>
+    <em> {{constants.dataDisclosure}} </em>
 
     <form>
       <div class="bg-light p-2">

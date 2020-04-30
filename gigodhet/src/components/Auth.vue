@@ -1,5 +1,9 @@
 <template lang="html">
   <div>
+    <div class="sentrer_hjemlink">
+      Tilbake til
+      <router-link to="/">Godhetstavanger.no</router-link>
+    </div>
     <div id="firebaseui-auth-container"></div>
   </div>
 </template>
@@ -30,3 +34,10 @@ export default {
     },
 }
 </script>
+<style scoped>
+  .sentrer_hjemlink {
+    text-align: center;
+    width: 100%;
+    margin-top: 2em;
+  }
+</style>

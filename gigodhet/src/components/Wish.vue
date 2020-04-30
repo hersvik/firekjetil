@@ -1,9 +1,9 @@
 <template>
   <div class="container container_under_nav">
     <router-link to="/wishes">Tilbake</router-link>
-    <h1>Forslag</h1>
+    <h1>Forslag til oppdrag</h1>
     <h3>{{wish.event || "Godhet Stavanger 2020"}}</h3>
-
+    <em> {{constants.dataDisclosure}} </em>
     <form>
 
       <div v-if="user.uid === constants.adminUid" class="form-group mt-4" style="opacity: 0.5;">

@@ -1,15 +1,65 @@
 <template>
   <div class="container container_under_nav">
-    <h1>Godhet Stavanger</h1>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/--K_rM6p4IM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+    <div class="jumbotron" :class="{jumbotron__logged_in: getters.user().uid}">
+      <h1 class="display-4">Godhet Stavanger</h1>
+      <hr class="my-4">
+      <div v-if="!getters.user() || !getters.user().uid">
+        <p class="lead">For å <strong>melde deg på</strong>, <br />eller for å komme med <strong>forslag</strong> til oppdrag: </p>
+        <router-link to="/auth">
+          <button type="button" class="btn btn-primary btn-lg">
+            Logg inn
+          </button>
+        </router-link>
+      </div>
+      <div v-else>
+        <p class="lead">Yes, du er nå logget inn, <strong>kjør på</strong> videre:</p>
+        <router-link to="/regs">
+          <button type="button" class="btn btn-primary btn-lg mr-3 mt-3">
+            Meld på som deltager
+          </button>
+        </router-link>
+        <router-link to="/wishes">
+          <button type="button" class="btn btn-primary btn-lg mt-3">
+            Foreslå oppdrag
+          </button>
+        </router-link>
+      </div>
+
+    </div>
+
+
+
+    <div class="video_wrapper">
+      <iframe width="200" height="112" src="https://www.youtube.com/embed/--K_rM6p4IM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    I samarbeid med <a href="http://godhet.no">godhet.no</a>
   </div>
 </template>
 
 <script>
-  import {setters} from '../store'
+  import {getters, setters} from '../store'
   export default {
     beforeCreate() {
       setters.setActiveNav("hjem");
     },
+    computed: {
+      getters(){
+        return getters;
+      }
+    }
   }
 </script>
+
+<style>
+  .video_wrapper {
+    display: block;
+    margin: 1em 0;
+  }
+
+  .jumbotron__logged_in {
+    background-color: #cfffdd;
+  }
+</style>
