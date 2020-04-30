@@ -20,11 +20,12 @@ firebase.initializeApp(config);
 router.beforeEach( (to, from, next) => {
 
   firebase.auth().onAuthStateChanged((user) => {
-    if(user) {
-      setters.setUser(user);
+
+    setters.setUser(user || {});
+
+    if(to.path === '/' || user) {
       next();
     } else {
-      setters.setUser({});
       if (to.path !== '/auth') {
         next('/auth')
       } else {

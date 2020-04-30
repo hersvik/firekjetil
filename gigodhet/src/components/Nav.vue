@@ -1,11 +1,11 @@
 <template>
-  <div v-if="user.uid" class="nav__wrapper">
+  <div v-if="$route.path !== '/auth'" class="nav__wrapper">
     <span class="header_banner">Godhetstavanger.no</span>
     <a @click='goToHjem' :class='{active: activeNav == "hjem"}'>Hjem</a>
     <a @click='goToListRegistreringer' :class='{active: activeNav == "pameldinger"}'>Påmeldinger</a>
     <a @click='goToListWishes' :class='{active: activeNav == "foresporsler"}'>Forslag</a>
-    <div class="">{{loginName}}</div>
-    <a class="" @click='logOut'>Log out</a>
+    <div v-if="user.uid" class="">{{loginName}}</div>
+    <a v-if="user.uid" @click='logOut'>Log out</a>
   </div>
 </template>
 
