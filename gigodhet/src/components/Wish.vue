@@ -41,19 +41,19 @@
           <label>
             Tlf.
           </label>
-          <input v-model="wish.submitter.phone" class="form-control" placeholder=" - 8 siffer -" type="number" />
+          <input v-model="wish.submitter.phone" class="form-control" placeholder="" type="number" />
         </div>
         <div class="form-group">
           <label>
             E-post
           </label>
-          <input v-model="wish.submitter.email" class="form-control" placeholder="- xxx@xxx.xx -" type="text" />
+          <input v-model="wish.submitter.email" class="form-control" placeholder="" type="text" />
         </div>
         <div class="form-group">
             <label>
               Adresse, postnummer og -sted
             </label>
-            <input v-model="wish.submitter.address" class="form-control" placeholder=" - Solvegen 99, 4099 -" type="text" />
+            <input v-model="wish.submitter.address" class="form-control" placeholder="" type="text" />
         </div>
 
       </div>
@@ -61,7 +61,7 @@
 
     <form>
       <div class="bg-light p-2 mt-4">
-        <small class="form-text text-muted">Godhetsmottaker</small>
+        <small class="form-text text-muted">Person som mottar hjelp (sted for oppdrag)</small>
         <div class="form-group">
             <label>
               Fornavn
@@ -79,19 +79,19 @@
           <label>
             Tlf.
           </label>
-          <input v-model="wish.target.phone" class="form-control" placeholder=" - 8 siffer -" type="number" />
+          <input v-model="wish.target.phone" class="form-control" placeholder="" type="number" />
         </div>
         <div class="form-group">
           <label>
             E-post
           </label>
-          <input v-model="wish.target.email" class="form-control" placeholder="- xxx@xxx.xx -" type="text" />
+          <input v-model="wish.target.email" class="form-control" placeholder="" type="text" />
         </div>
         <div class="form-group">
             <label>
               Adresse, postnummer og -sted
             </label>
-            <input v-model="wish.target.address" class="form-control" placeholder=" - Solvegen 99, 4099 -" type="text" />
+            <input v-model="wish.target.address" class="form-control" placeholder="" type="text" />
         </div>
 
       </div>

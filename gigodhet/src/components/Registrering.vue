@@ -34,19 +34,19 @@
           <label>
             Tlf.
           </label>
-          <input v-model="registration.primaryPerson.phone" class="form-control" placeholder=" - 8 siffer -" type="number" />
+          <input v-model="registration.primaryPerson.phone" class="form-control" placeholder="" type="number" />
         </div>
         <div class="form-group">
           <label>
             E-post
           </label>
-          <input v-model="registration.primaryPerson.email" class="form-control" placeholder="- xxx@xxx.xx -" type="text" />
+          <input v-model="registration.primaryPerson.email" class="form-control" placeholder="" type="text" />
         </div>
         <div class="form-group">
             <label>
               Adresse, postnummer og -sted
             </label>
-            <input v-model="registration.primaryPerson.address" class="form-control" placeholder=" - Solvegen 99, 4099 -" type="text" />
+            <input v-model="registration.primaryPerson.address" class="form-control" placeholder="" type="text" />
         </div>
 
       </div>
@@ -59,15 +59,15 @@
       </div>
       <div class="form-group">
         <label>
-          (Evt.) Tilhørighet
+          Tilhørighet (valgfritt)
         </label>
-        <input v-model="registration.belonging" class="form-control" placeholder=" - Menighet / huskirke / ledere(e) / el.l. -" type="text" />
+        <input v-model="registration.belonging" class="form-control" placeholder=" ~ Menighet / huskirke / ledere(e) / el.l. ~" type="text" />
       </div>
       <div class="form-group">
         <label>
-          (Evt.) kompetanser
+          Kompetanser (valgfritt)
         </label>
-        <input v-model="registration.competancies" class="form-control" placeholder=" - Eks. 1 person blomsterspesialist -" type="text" />
+        <input v-model="registration.competancies" class="form-control" placeholder=" ~ Eksempelvis: 1 person blomsterspesialist ~" type="text" />
       </div>
     </form>
 
@@ -124,7 +124,7 @@
 
     <div class="form-group mt-4">
       <label>
-        (Evt.) annet / kommentar
+        Eventuelt annet / kommentar
       </label>
       <textarea v-model="registration.misc" class="form-control" type="text">
       </textarea>
