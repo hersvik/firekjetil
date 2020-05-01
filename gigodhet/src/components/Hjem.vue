@@ -3,7 +3,6 @@
 
 
     <div class="jumbotron" :class="{jumbotron__logged_in: getters.user().uid}">
-
       <h1 class="display-4">Godhet Stavanger</h1>
       <hr class="my-4">
 
@@ -14,6 +13,7 @@
             Logg inn
           </button>
         </router-link>
+        <p class="lead">Du kan bruke en google konto eller opprette eget passord direkte på første innlogging. </p>
       </div>
       <div v-else>
         <p class="lead">Yes, du er nå logget inn, <strong>kjør på</strong> videre:</p>
@@ -27,10 +27,10 @@
             Foreslå oppdrag
           </button>
         </router-link>
-        <hr class="my-4">
-        <p class="lead">I etterkant kan du <strong>lese og redigere</strong> alt du eventuelt har sendt inn - bare naviger inn samme vei.</p>
       </div>
 
+      <hr class="my-4">
+      <p class="lead">I etterkant kan du <strong>lese og redigere</strong> alt du eventuelt har sendt inn - bare naviger inn samme vei.</p>
     </div>
 
     <div class="video_wrapper">
