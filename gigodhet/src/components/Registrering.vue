@@ -209,7 +209,7 @@
             .doc(this.id)
             .set(registration, {merge: true})
             .then(() => {
-              this.$router.push("/")
+              this.$router.push("/regs")
             })
             .catch(function(error){ // trenger å verifiseres
               alert("Kunne ikke lagre. ("+error+")")
@@ -218,7 +218,7 @@
         else {
           db.collection("registrations").add(this.registration)
             .then(() => {
-              this.$router.push("/");
+              this.$router.push("/regs");
             });
         }
 
