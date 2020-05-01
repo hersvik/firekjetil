@@ -9,10 +9,12 @@
         </router-link>
       </ul>
       <ul v-for="(wish) in chronologicalWishes" :key="wish.id" class="list-group-item">
+        {{wish.isMostRecentEdited}}
         {{wish.created.toDate().toLocaleDateString()}}
         <router-link :to="{name: 'endreWish', params:{id: wish.id} }">
           <em>{{wish.submitter.firstName}} {{wish.submitter.lastName}}</em>: <strong>{{wish.title}}</strong>  for {{wish.target.firstName}} {{wish.target.lastName}}
         </router-link>
+        <span class="edited_tag">{{wish.displayEdited}} </span>
         <span v-if="true || user.uid === constants.adminUid" v-tooltip:top="'Admin-status'">{{wish.status}}</span>
       </ul>
     </li>
@@ -43,7 +45,29 @@
         if (!this || !this.wishes) {
           return;
         }
+        // Find most recently edited
+        let uidRecentEdit;
+        let secondsRecentEdit = 0;
+        for(let wish of this.wishes){
+          if(wish.edited && wish.edited.seconds > secondsRecentEdit) {
+            secondsRecentEdit = wish.edited.seconds;
+            uidRecentEdit = wish.id;
+          }
+        }
+        let uidMostRecentEdited = uidRecentEdit;
+
+        // Sort a list copy, insert .dispayEdited and .isMostRecentEdited
         let copy = this.wishes.slice();
+        for(let wish of copy){
+          if(wish.edited.seconds !== wish.created.seconds){
+            let hoursAgo = (Date.now() - wish.edited.toMillis())/1000/60/60/24;
+            wish.displayEdited = "(endret " + hoursAgo.toFixed(1) + " dager siden)";
+
+            wish.isMostRecentEdited = wish.id === uidMostRecentEdited
+                                              ? "->"
+                                              : "";
+          }
+        }
         return copy.sort((a, b) => {
           return a.created.seconds - b.created.seconds;
         });
@@ -66,3 +90,9 @@
     }
   }
 </script>
+
+<style scoped>
+  .edited_tag {
+    opacity: 0.3;
+  }
+</style>
