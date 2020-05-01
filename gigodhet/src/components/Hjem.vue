@@ -3,8 +3,10 @@
 
 
     <div class="jumbotron" :class="{jumbotron__logged_in: getters.user().uid}">
+
       <h1 class="display-4">Godhet Stavanger</h1>
       <hr class="my-4">
+
       <div v-if="!getters.user() || !getters.user().uid">
         <p class="lead">For å <strong>melde deg på</strong>, <br />eller for å komme med <strong>forslag</strong> til oppdrag: </p>
         <router-link to="/auth">
@@ -25,11 +27,11 @@
             Foreslå oppdrag
           </button>
         </router-link>
+        <hr class="my-4">
+        <p class="lead">I etterkant kan du <strong>lese og redigere</strong> alt du eventuelt har sendt inn - bare naviger inn samme vei.</p>
       </div>
 
     </div>
-
-
 
     <div class="video_wrapper">
       <iframe width="200" height="112" src="https://www.youtube.com/embed/--K_rM6p4IM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
