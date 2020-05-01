@@ -8,7 +8,8 @@
           Ny påmelding
         </router-link>
       </ul>
-      <ul v-for="(registration) in registrations" :key="registration.id" class="list-group-item">
+      <ul v-for="(registration) in chronologicalRegistrations" :key="registration.id" class="list-group-item">
+        {{registration.created.toDate().toLocaleDateString()}}
         <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
           {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}} +({{registration.participants && registration.participants.length || 0}})
         </router-link>
@@ -34,6 +35,15 @@
     },
     computed: {
       ...getters,
+      chronologicalRegistrations() {
+        if (!this || !this.registrations) {
+          return;
+        }
+        let copy = this.registrations.slice();
+        return copy.sort((a, b) => {
+          return a.created.seconds - b.created.seconds;
+        });
+      },
     },
     firestore () {
       if(this.user.uid === constants.adminUid){

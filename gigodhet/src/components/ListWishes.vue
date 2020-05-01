@@ -8,7 +8,8 @@
           Nytt forslag
         </router-link>
       </ul>
-      <ul v-for="(wish) in wishes" :key="wish.id" class="list-group-item">
+      <ul v-for="(wish) in chronologicalWishes" :key="wish.id" class="list-group-item">
+        {{wish.created.toDate().toLocaleDateString()}}
         <router-link :to="{name: 'endreWish', params:{id: wish.id} }">
           <em>{{wish.submitter.firstName}} {{wish.submitter.lastName}}</em>: <strong>{{wish.title}}</strong>  for {{wish.target.firstName}} {{wish.target.lastName}}
         </router-link>
@@ -38,6 +39,15 @@
         return constants;
       },
       ...getters,
+      chronologicalWishes() {
+        if (!this || !this.wishes) {
+          return;
+        }
+        let copy = this.wishes.slice();
+        return copy.sort((a, b) => {
+          return a.created.seconds - b.created.seconds;
+        });
+      },
     },
     firestore () {
       if(this.user.uid === constants.adminUid){
