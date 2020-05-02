@@ -1,6 +1,6 @@
 <template>
   <div class="container container_under_nav">
-    <h1>Forslag til Godhetsoppdrag</h1>
+    <h1>Gi forslag til Godhetsoppdrag</h1>
 
     <li class="list-group">
       <ul class="list-group-item">

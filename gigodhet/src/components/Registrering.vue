@@ -63,7 +63,7 @@
         <label>
           Tilhørighet (valgfritt)
         </label>
-        <input v-model="registration.belonging" class="form-control" placeholder=" ~ Menighet / huskirke / ledere(e) / el.l. ~" type="text" />
+        <input v-model="registration.belonging" class="form-control" placeholder=" ~ Menighet / huskirke / leder(e) / el.l. ~" type="text" />
       </div>
       <div class="form-group">
         <label>

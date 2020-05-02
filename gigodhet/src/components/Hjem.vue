@@ -13,7 +13,7 @@
             Logg inn
           </button>
         </router-link>
-        <p class="lead">Du kan bruke en google konto eller opprette eget passord direkte på første innlogging. </p>
+        <p class="lead">Du kan bruke en google konto, eller opprette et selvstendig passord direkte på første innlogging. Glemt passord-funksjonalitet kan deretter brukes. </p>
       </div>
       <div v-else>
         <p class="lead">Yes, du er nå logget inn, <strong>kjør på</strong> videre:</p>
