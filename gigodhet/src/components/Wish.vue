@@ -6,7 +6,7 @@
     <em> {{constants.dataDisclosure}} </em>
     <form>
 
-      <div v-if="user.uid === constants.adminUid" class="form-group mt-4" style="opacity: 0.5;">
+      <div v-if="getters.user().uid === constants.adminUid" class="form-group mt-4" style="opacity: 0.5;">
         <label>
           Admin-status
         </label>
@@ -105,7 +105,7 @@
     </form>
 
 
-    <div v-if="user.uid === constants.adminUid && wish.id" class="form-group">
+    <div v-if="getters.user().uid === constants.adminUid && wish.id" class="form-group">
       <label>
         Mandag
       </label>
@@ -115,7 +115,7 @@
       </div>
       <a style="display: block" @click="addExtraAssigneeForDay(0)">Legg til deltagelse</a>
     </div>
-    <div v-else-if="user.uid === constants.adminUid && !wish.id">
+    <div v-else-if="getters.user().uid === constants.adminUid && !wish.id">
       Etter forespørselen er lagret første gang, kan deltagere legges til.
     </div>
 
@@ -147,7 +147,10 @@
     data () {
       return {
         wish: {
-          submitter: {},
+          submitter: {
+            firstName: getters.authDisplayNameSplitted().firstName,
+            lastName: getters.authDisplayNameSplitted().lastName,
+          },
           target: {},
           event: "Godhet Stavanger 2020",
           assigneesPerDay: [
@@ -162,13 +165,15 @@
       if (this.id) {
         result.wish = db.collection("wishes").doc(this.id)
       }
-      if (this.user.uid === constants.adminUid) {
+      if (getters.user().uid === constants.adminUid) {
         result.registrations = db.collection("registrations")
       }
       return result;
     },
     computed: {
-      ...getters,
+      getters() {
+        return getters;
+      },
       constants() {
         return constants;
       },
@@ -197,7 +202,7 @@
       save() {
         const assigneesPerDay = this.wish.assigneesPerDay;
         // Save wish document
-        this.wish.ownerUid = this.wish.ownerUid || this.user.uid;
+        this.wish.ownerUid = this.wish.ownerUid || getters.user().uid;
         this.wish.created = this.wish.created || new Date();
         this.wish.edited = new Date();
 

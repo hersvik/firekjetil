@@ -8,6 +8,15 @@ const state = Vue.observable({
 export const getters = {
   user: () => state.user,
   activeNav: () => state.activeNav,
+  authDisplayNameSplitted() {
+    let nameParts = getters.user().displayName.split(" ");
+    let result = {};
+    result.firstName = nameParts[0];
+    if(nameParts.length > 1){
+      result.lastName = nameParts.slice(-1)[0];
+    }
+    return result;
+  },
 }
 
 export const setters = {

@@ -40,7 +40,7 @@
       constants(){
         return constants;
       },
-      ...getters,
+      getters: () => getters,
       chronologicalWishes() {
         if (!this || !this.wishes) {
           return;
@@ -74,14 +74,14 @@
       },
     },
     firestore () {
-      if(this.user.uid === constants.adminUid){
+      if(getters.user().uid === constants.adminUid){
         return {
           wishes: db.collection("wishes")
         };
       }
-      else if (this.user.uid) {
+      else if (getters.user().uid) {
         return {
-          wishes: db.collection("wishes").where("ownerUid", "==", this.user.uid)
+          wishes: db.collection("wishes").where("ownerUid", "==", getters.user().uid)
         };
       }
     },

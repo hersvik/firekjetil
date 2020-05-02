@@ -36,7 +36,7 @@
       }
     },
     computed: {
-      ...getters,
+      getters: () => getters,
       chronologicalRegistrations() {
         if (!this || !this.registrations) {
           return;
@@ -70,14 +70,14 @@
       },
     },
     firestore () {
-      if(this.user.uid === constants.adminUid){
+      if(getters.user().uid === constants.adminUid){
         return {
           registrations: db.collection("registrations")
         };
       }
-      else if (this.user.uid) {
+      else if (getters.user().uid) {
         return {
-          registrations: db.collection("registrations").where("ownerUid", "==", this.user.uid)
+          registrations: db.collection("registrations").where("ownerUid", "==", getters.user().uid)
         };
       }
     },

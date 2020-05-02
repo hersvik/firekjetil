@@ -155,7 +155,10 @@
     data () {
       return {
         registration: {
-          primaryPerson: {},
+          primaryPerson: {
+            firstName: getters.authDisplayNameSplitted().firstName,
+            lastName: getters.authDisplayNameSplitted().lastName,
+          },
           participants: [],
           dailyAttendance: [{}], // add {} for tuesday, etc
           event: "Godhet Stavanger 2020",
@@ -173,7 +176,9 @@
       constants() {
         return constants;
       },
-      ...getters,
+      getters(){
+        return getters;
+      },
       adultNumberSelection: function() {
         let result= this.registration.participants.filter(el => el.ageGroup == 'adult');
         result.push({});
@@ -197,7 +202,7 @@
       },
       save() {
 
-        this.registration.ownerUid = this.registration.ownerUid || this.user.uid;
+        this.registration.ownerUid = this.registration.ownerUid || getters.user().uid;
         this.registration.created = this.registration.created || new Date();
         this.registration.edited = new Date();
 

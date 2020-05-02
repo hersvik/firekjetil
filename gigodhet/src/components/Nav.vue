@@ -3,16 +3,16 @@
     <span class="header_banner">
       Godhetstavanger.no
     </span>
-    <a @click='goToHjem' :class='{active: activeNav == "hjem"}'>
+    <a @click='goToHjem' :class='{active: getters.activeNav() == "hjem"}'>
       Hjem
     </a>
-    <a @click='goToListRegistreringer' :class='{active: activeNav == "pameldinger"}'>
+    <a @click='goToListRegistreringer' :class='{active: getters.activeNav() == "pameldinger"}'>
       Påmeldinger</a>
-    <a @click='goToListWishes' :class='{active: activeNav == "foresporsler"}'>
+    <a @click='goToListWishes' :class='{active: getters.activeNav() == "foresporsler"}'>
       Foreslå oppdrag
     </a>
-    <div v-if="user.uid" class="">{{loginName}}</div>
-    <a v-if="user.uid" @click='logOut'>Log out</a>
+    <div v-if="getters.user().uid" class="">{{loginName}}</div>
+    <a v-if="getters.user().uid" @click='logOut'>Log out</a>
   </div>
 </template>
 
@@ -37,9 +37,11 @@
       }
     },
     computed: {
-      ...getters,
+      getters(){
+        return getters;
+      },
       loginName(){
-        return this.user && this.user.displayName || "Mangler navn";
+        return getters.user() && getters.user().displayName || "Mangler navn";
       }
     }
   }

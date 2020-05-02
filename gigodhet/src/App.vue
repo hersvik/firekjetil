@@ -1,6 +1,6 @@
 <template>
   <div id=”app”>
-    <div id="wrapper_all" :class="{wish_section: activeNav=='foresporsler'}">
+    <div id="wrapper_all" :class="{wish_section: getters.activeNav()=='foresporsler'}">
       <Nav />
       <router-view></router-view>
     </div>
@@ -16,7 +16,7 @@
       Nav: Nav
     },
     computed: {
-      ...getters,
+      getters: () => getters,
     },
   }
 </script>
