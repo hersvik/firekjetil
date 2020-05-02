@@ -124,6 +124,7 @@
       </div>
     </div>
 
+    Hvilke dager i godhetsuka man ønsker å delta avtales i år primært med godhetslederen i huskirka eller leder for oppdraget du får tildelt, men du kan skrive en kommentar om dette her.
     <div class="form-group mt-4">
       <label>
         Eventuelt annet / kommentar
