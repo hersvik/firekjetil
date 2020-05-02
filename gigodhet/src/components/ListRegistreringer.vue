@@ -12,6 +12,7 @@
       </ul>
       <ul v-for="(registration) in chronologicalRegistrations" :key="registration.id" class="list-group-item" :class="{faded_removed: registration.removedBy}">
         {{registration.isMostRecentEdited}}
+        <span class="edited_tag">#{{registration.counter}}</span>
         {{registration.created.toDate().toLocaleDateString()}}
         <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
           {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}} +({{registration.participants && registration.participants.length || 0}})
@@ -56,15 +57,22 @@
         }
         let uidMostRecentEdited = uidRecentEdit;
 
-        // Copy of registrations list
+        let sorted = this.registrations.slice();
+        sorted.sort((a, b) => {
+          return a.created.seconds - b.created.seconds;
+        });
+
         let copy = [];
 
-        for (let i=0; i < this.registrations.length; i++) {
+        for (let i=0; i < sorted.length; i++) {
           let registration = this.registrations[i];
           if (this.showRemoved || !registration.removedBy) {
               copy.push(registration)
           }
-
+          else{
+            continue;
+          }
+          registration.counter = i+1;
           if (registration.edited.seconds !== registration.created.seconds) {
 
             let hoursAgo = (Date.now() - registration.edited.toMillis())/1000/60/60/24;
@@ -75,9 +83,7 @@
                                               : "";
           }
         }
-        return copy.sort((a, b) => {
-          return a.created.seconds - b.created.seconds;
-        });
+        return copy;
       },
     },
     firestore () {
