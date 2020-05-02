@@ -136,6 +136,9 @@
     {{constants.welcomeUnfinishedFormMessage}}
     <div class="form-group">
       <button class="btn btn-primary" @click="save">Lagre</button>
+
+      <span v-if="id && !registration.removedBy" @click="removeRegistration" class="remove_registration clickable_label">[Fjern påmelding]</span>
+      <span v-if="id && registration.removedBy" @click="reviveRegistration" class="remove_registration clickable_label">[Gjenopprett påmelding]</span>
     </div>
 
   </div>
@@ -234,12 +237,32 @@
             });
         }
 
+      },
+      removeRegistration() {
+        if( confirm("Vil du fjerne påmeldingen? For å gjennopprette etterpå, klikk 'Inkluder fjernede' i oversikten. (Felter som tømmes kan ikke hentes frem av noen).") ){
+          db.collection('registrations').doc(this.id).update({
+            removedBy: getters.user().displayName,
+            edited: new Date(),
+          });
+          this.$router.push("/regs");
+        }
+      },
+      reviveRegistration() {
+          db.collection('registrations').doc(this.id).update({
+            removedBy: "",
+            edited: new Date(),
+          });
+          alert("Du har nå re-aktivert denne påmeldingen. For å lagre evt. oppdatert innhold bruk lagre-knappen i tillegg som vanlig.");
       }
     }
   }
 </script>
 
 <style scoped>
+  .remove_registration {
+    margin-left: 2em;
+    opacity: 0.5;
+  }
   .clickable_label {
     cursor: pointer;
   }
