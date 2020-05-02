@@ -132,6 +132,7 @@
       </textarea>
     </div>
 
+    {{constants.welcomeUnfinishedFormMessage}}
     <div class="form-group">
       <button class="btn btn-primary" @click="save">Lagre</button>
     </div>

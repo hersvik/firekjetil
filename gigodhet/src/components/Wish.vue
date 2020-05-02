@@ -119,7 +119,8 @@
       Etter forespørselen er lagret første gang, kan deltagere legges til.
     </div>
 
-
+    <br />
+    {{constants.welcomeUnfinishedFormMessage}}
     <div class="form-group">
       <button class="btn btn-primary" @click="save">Lagre</button>
     </div>
