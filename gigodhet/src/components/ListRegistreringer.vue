@@ -65,7 +65,7 @@
         let copy = [];
 
         for (let i=0; i < sorted.length; i++) {
-          let registration = this.registrations[i];
+          let registration = sorted[i];
           if (this.showRemoved || !registration.removedBy) {
               copy.push(registration)
           }
