@@ -77,7 +77,7 @@
       <h2>Meddeltagere</h2>
     </div>
     <div v-for="(participant, idx) in registration.participants" :key="idx" class="bg-light p-2 mb-2">
-      <small class="form-text text-muted">Meddeltager {{idx + 1}}</small>
+      <small class="form-text text-muted" style="display: inline;">Meddeltager {{idx + 1}} </small><small class="clickable_label" @click="removeGroupMember(idx)">[Fjerne]</small>
       <div class="form-group">
           <label>
             Fornavn
@@ -200,6 +200,11 @@
       addParticipant() {
         this.registration.participants.push({});
       },
+      removeGroupMember(idx) {
+        if(confirm("Vil du fjerne meddeltager nummer "+(idx+1)+"? Husk å også bruke lagre-knappen nederst i skjema. ")){
+          this.registration.participants.splice(idx, 1);
+        }
+      },
       save() {
 
         this.registration.ownerUid = this.registration.ownerUid || getters.user().uid;
@@ -233,3 +238,9 @@
     }
   }
 </script>
+
+<style scoped>
+  .clickable_label {
+    cursor: pointer;
+  }
+</style>
