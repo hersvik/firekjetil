@@ -165,7 +165,8 @@
           participants: [],
           dailyAttendance: [{}], // add {} for tuesday, etc
           event: "Godhet Stavanger 2020",
-        }
+        },
+        alreadyLoaded: false,
       }
     },
     firestore () {
@@ -191,11 +192,13 @@
         return result;
       }
     },
-    // watch: {
-    //   registration: function (){//(newReg) {
-
-    //   }
-    // },
+    watch: {
+      registration: function (){
+        if(this.alreadyLoaded)
+          alert("Opplysningene i skjemaet ble endret utenfra og erstatter innholdet i ditt skjema. ");
+        this.alreadyLoaded = true;
+      }
+    },
     methods: {
       updateEnrollment() { // (enrolled)
         // db.collection("enrollment").doc(enrolled.id).update({misc: enrolled.misc})
@@ -209,7 +212,7 @@
         }
       },
       save() {
-
+        this.alreadyLoaded = false; // Avoids watch alert
         this.registration.ownerUid = this.registration.ownerUid || getters.user().uid;
         this.registration.created = this.registration.created || new Date();
         this.registration.edited = new Date();
