@@ -106,17 +106,34 @@
 
 
     <div v-if="getters.user().uid === constants.adminUid && wish.id" class="form-group">
-      <label>
-        Mandag
-      </label>
+
+      <br />
+      <h3>
+        Administrer deltagere på dette oppdraget
+      </h3>
+      <div style="opacity: 0.5;">
+      Tegnforklaring når du legger til deltagelse:  <br />
+      (tall) = antall deltagere på gruppen inkludert leder<br />
+      F = deltar på familiegodhet <br />
+      * = allerede engasjert på <strong>ett</strong> oppdrag <em>utenom</em> dette oppdraget <br />
+      ** = allerede engasjert på <strong>to</strong> oppdrag <em>utenom</em> dette oppdraget <br />
+      (Listen er sortert med største grupper først, deretter alfabetisk etter navn på hoveddeltageren. )
+      </div>
       <div v-for="(ref, idx) in wish.assigneesPerDay[0].registrationRefs" :key="idx">
-        <a @click="removeAssigneeForDay(0, ref)">(-)</a>
+        <span @click="removeAssigneeForDay(0, ref)" class="clickable_tag">(-)</span>
         <AssigneeSelector  v-model="wish.assigneesPerDay[0].registrationRefs[idx]" :registrations="sortedRegistrations" :day="0" :wishRef="wish.id" />
       </div>
-      <a style="display: block" @click="addExtraAssigneeForDay(0)">Legg til deltagelse</a>
+      <button type="button" class="btn btn-secondary" @click="addExtraAssigneeForDay(0)">
+        Legg til deltagelse
+      </button>
+
+
     </div>
     <div v-else-if="getters.user().uid === constants.adminUid && !wish.id">
-      Etter forespørselen er lagret første gang, kan deltagere legges til.
+      <h5>
+        Administrer deltagere på dette oppdraget
+      </h5>
+      Du må lagre dette oppdraget først før du kan legge  til deltagere.
     </div>
 
     <br />
@@ -203,9 +220,10 @@
         this.wish.assigneesPerDay[day].registrationRefs.push("");
       },
       removeAssigneeForDay(day, ref) {
-        let filtered = this.wish.assigneesPerDay[day].registrationRefs.filter(el => el !== ref)
-        this.wish.assigneesPerDay[day].registrationRefs = filtered;
-        alert("Klikke lagre i skjemaet for å bekrefte fjerning av meddeltager. (For å angre fjerning og andre ulagrede endringer: last siden på nytt)")
+        if(confirm("Fjerne deltager fra oppdraget \nHusk å klikke lagre i skjemaet for at endringen skal få effekt. \n\n(For å angre, last siden på nytt)") ){
+          let filtered = this.wish.assigneesPerDay[day].registrationRefs.filter(el => el !== ref)
+          this.wish.assigneesPerDay[day].registrationRefs = filtered;
+        }
       },
 
       save() {
@@ -300,3 +318,9 @@
     }
   };
 </script>
+
+<style scoped>
+  .clickable_tag {
+    cursor: pointer !important;
+  }
+</style>

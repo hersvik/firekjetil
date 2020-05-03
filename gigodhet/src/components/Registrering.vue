@@ -213,7 +213,7 @@
         this.registration.participants.push({});
       },
       removeGroupMember(idx) {
-        if(confirm("Vil du fjerne meddeltager nummer "+(idx+1)+"? Husk å også bruke lagre-knappen nederst i skjema. ")){
+        if(confirm("Vil du fjerne meddeltager nummer "+(idx+1)+"? \n\nHusk å også bruke lagre-knappen nederst i skjema for å bekrefte endringer. ")){
           this.registration.participants.splice(idx, 1);
         }
       },
