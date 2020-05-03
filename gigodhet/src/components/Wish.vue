@@ -166,7 +166,7 @@
         result.wish = db.collection("wishes").doc(this.id)
       }
       if (getters.user().uid === constants.adminUid) {
-        result.registrations = db.collection("registrations")
+        result.registrations = db.collection("registrations");
       }
       return result;
     },
@@ -182,16 +182,24 @@
           return;
         }
         let copy = this.registrations.slice();
+        copy = copy.filter(r => !r.removedBy);
+
         return copy.sort((a, b) => {
-          let aFirstName = a.primaryPerson.firstName ||"";
-          let bFirstName = b.primaryPerson.firstName ||"";
-          return b.participants.length - a.participants.length || aFirstName.localeCompare(bFirstName);
+          let aName = a.primaryPerson.firstName ||"";
+          let bName = b.primaryPerson.firstName ||"";
+          if (a.primaryPerson.lastName) {
+            aName += " "+a.primaryPerson.lastName;
+          }
+          if (b.primaryPerson.lastName) {
+            bName += " "+b.primaryPerson.lastName;
+          }
+          return b.participants.length - a.participants.length || aName.localeCompare(bName);
         });
       },
     },
     methods: {
       addExtraAssigneeForDay(day) {
-        this.wish.assigneesPerDay[day].registrationRefs.push(this.sortedRegistrations[0].id);
+        this.wish.assigneesPerDay[day].registrationRefs.push("");
       },
       removeAssigneeForDay(day, ref) {
         let filtered = this.wish.assigneesPerDay[day].registrationRefs.filter(el => el !== ref)
@@ -256,6 +264,7 @@
   let updateRegistrations = function(wishId, wishServerData, transaction, wishDocRef, newAssigneesPerDay){
     let registrationReferences = newAssigneesPerDay[0].registrationRefs;
     let uniqueReferences = [...new Set(registrationReferences)];
+    uniqueReferences = uniqueReferences.filter(r => !!r);
     newAssigneesPerDay[0].registrationRefs = uniqueReferences;
     transaction.update(wishDocRef, {
       assigneesPerDay: newAssigneesPerDay

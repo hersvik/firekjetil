@@ -1,13 +1,14 @@
 <template>
 
   <select @input="$emit('input', $event.target.value)" class="custom-select">
+    <option value="" />
     <option
       v-for="(registration) in registrations"
       :key="registration.id"
       :value="registration.id"
       :selected="value === registration.id">
         {{otherBusyness[registration.id]}}
-        ({{registration.dailyAttendance[0].adult}}/{{registration.participants.length + 1}})
+        (<!--{{registration.dailyAttendance[0].adult}}/ [[comment: if hasDailyAttendanceFeature]]-->{{registration.participants.length + 1}})
         {{registration.primaryPerson.firstName}}
         {{registration.primaryPerson.lastName}}
     </option>
