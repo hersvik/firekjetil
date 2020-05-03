@@ -11,9 +11,12 @@ export const getters = {
   authDisplayNameSplitted() {
     let nameParts = getters.user().displayName.split(" ");
     let result = {};
-    result.firstName = nameParts[0];
+    result.firstName = nameParts[0] || "";
     if(nameParts.length > 1){
       result.lastName = nameParts.slice(-1)[0];
+    }
+    else {
+      result.lastName = "";
     }
     return result;
   },

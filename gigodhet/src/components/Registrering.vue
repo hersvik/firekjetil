@@ -135,10 +135,10 @@
 
     {{constants.welcomeUnfinishedFormMessage}}
     <div class="form-group">
-      <button class="btn btn-primary" @click="save">Lagre</button>
+      <button v-if="!registration.removedBy" class="btn btn-primary" @click="save">Lagre</button>
+      <button v-if="registration.removedBy" @click="save(true)" class="btn btn-primary">Lagre og gjenopprett</button>
 
       <span v-if="id && !registration.removedBy" @click="removeRegistration" class="remove_registration clickable_label">[Fjern påmelding]</span>
-      <span v-if="id && registration.removedBy" @click="reviveRegistration" class="remove_registration clickable_label">[Gjenopprett påmelding]</span>
     </div>
 
   </div>
@@ -195,7 +195,7 @@
     watch: {
       registration: function (){
         if(this.alreadyLoaded)
-          alert("Opplysningene i skjemaet ble endret utenfra og erstatter innholdet i ditt skjema. ");
+          alert("Opplysningene i skjemaet ble endret utenfra og erstatter innholdet i ditt skjema automatisk nå.");
         this.alreadyLoaded = true;
       }
     },
@@ -211,7 +211,12 @@
           this.registration.participants.splice(idx, 1);
         }
       },
-      save() {
+
+      save (wantReactivation) {
+
+        if(wantReactivation){
+          this.registration.removedBy = "";
+        }
         this.alreadyLoaded = false; // Avoids watch alert
         this.registration.ownerUid = this.registration.ownerUid || getters.user().uid;
         this.registration.created = this.registration.created || new Date();
@@ -250,13 +255,6 @@
           this.$router.push("/regs");
         }
       },
-      reviveRegistration() {
-          db.collection('registrations').doc(this.id).update({
-            removedBy: "",
-            edited: new Date(),
-          });
-          alert("Du har nå re-aktivert denne påmeldingen. For å lagre evt. oppdatert innhold bruk lagre-knappen i tillegg som vanlig.");
-      }
     }
   }
 </script>

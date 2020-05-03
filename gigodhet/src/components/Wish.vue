@@ -158,6 +158,7 @@
           ],
         },
         registrations: [],
+        alreadyLoaded: false,
       }
     },
     firestore () {
@@ -208,6 +209,8 @@
       },
 
       save() {
+        this.alreadyLoaded = false; // Avoids watch alert
+
         const assigneesPerDay = this.wish.assigneesPerDay;
         // Save wish document
         this.wish.ownerUid = this.wish.ownerUid || getters.user().uid;
@@ -258,7 +261,14 @@
         }
       } //(end save)
 
-    }
+    },
+     watch: {
+       wish: function (){ // wish only contains uids for registrations. No need to watch registrations :)
+         if(this.alreadyLoaded)
+           alert("Opplysningene i skjemaet ble endret utenfra og erstatter innholdet i ditt skjema automatisk nå. ");
+         this.alreadyLoaded = true;
+       }
+     },
   }
 
   let updateRegistrations = function(wishId, wishServerData, transaction, wishDocRef, newAssigneesPerDay){
