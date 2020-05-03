@@ -34,6 +34,12 @@
         </textarea>
       </div>
 
+      <div class="form-group mt-4">
+        <label>
+          Utstyr på stedet (f.eks. stige, gressklipper)
+        </label>
+        <input v-model="wish.equipment" class="form-control" type="text">
+      </div>
 
       <div class="bg-light p-2">
         <small class="form-text text-muted">Innmelder</small>
@@ -119,7 +125,7 @@
       </h3>
       <div style="opacity: 0.5;">
       Tegnforklaring når du legger til deltagelse:  <br />
-      (tall) = antall deltagere på gruppen inkludert leder<br />
+      (tall) = antall "voksne" deltagere på gruppen inkludert leder<br />
       F = deltar på familiegodhet <br />
       * = allerede engasjert på <strong>ett</strong> oppdrag <em>utenom</em> dette oppdraget <br />
       ** = allerede engasjert på <strong>to</strong> oppdrag <em>utenom</em> dette oppdraget <br />
@@ -128,6 +134,7 @@
       <div v-for="(ref, idx) in wish.assigneesPerDay[0].registrationRefs" :key="idx">
         <span @click="removeAssigneeForDay(0, ref)" class="clickable_tag">(-)</span>
         <AssigneeSelector  v-model="wish.assigneesPerDay[0].registrationRefs[idx]" :registrations="sortedRegistrations" :day="0" :wishRef="wish.id" />
+        <a v-if="ref" :href="'/registrering/'+ref" target="_blank">Åpne påmeldingen</a>
       </div>
       <button type="button" class="btn btn-secondary" @click="addExtraAssigneeForDay(0)">
         Legg til deltagelse

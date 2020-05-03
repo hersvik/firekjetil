@@ -6,7 +6,7 @@
     <br />
     <em> {{constants.dataDisclosure}} </em>
 
-    <div class="alert alert-secondary" role="alert">
+    <div v-if="!registration.id" class="alert alert-secondary" role="alert">
       👉 Av hensyn til smittevernregler kobles man på en leder for en gruppe som har ansvar for gjengen.
     </div>
 
@@ -18,6 +18,9 @@
         <input v-model="registration.status" class="form-control" type="text">
       </div>
 
+      <div v-if="registration.removedBy" class="alert alert-danger">
+        Denne påmeldingen er deaktivert (fjernet). Lagre på nytt for å gjennopprette.
+      </div>
       <div class="bg-light p-2">
         <small class="form-text text-muted">Deltager (enkeltperson eller gruppeleder)</small>
         <div class="form-group">
@@ -266,6 +269,7 @@
       },
       removeRegistration() {
         if( confirm("Vil du fjerne påmeldingen? For å gjennopprette etterpå, klikk 'Inkluder fjernede' i oversikten. (Felter som tømmes kan ikke hentes frem av noen).") ){
+          this.alreadyLoaded = false;
           db.collection('registrations').doc(this.id).update({
             removedBy: getters.user().displayName,
             edited: new Date(),
