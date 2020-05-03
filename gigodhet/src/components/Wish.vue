@@ -204,7 +204,7 @@
       removeAssigneeForDay(day, ref) {
         let filtered = this.wish.assigneesPerDay[day].registrationRefs.filter(el => el !== ref)
         this.wish.assigneesPerDay[day].registrationRefs = filtered;
-
+        alert("Klikke lagre i skjemaet for å bekrefte fjerning av meddeltager. (For å angre fjerning og andre ulagrede endringer: last siden på nytt)")
       },
 
       save() {
