@@ -15,7 +15,7 @@
           <em>{{wish.submitter.firstName}} {{wish.submitter.lastName}}</em>: <strong>{{wish.title}}</strong>  for {{wish.target.firstName}} {{wish.target.lastName}}
         </router-link>
         <span class="edited_tag">{{wish.displayEdited}} </span>
-        <span v-if="true || user.uid === constants.adminUid" v-tooltip:top="'Admin-status'">{{wish.status}}</span>
+        <span v-if="getters.user().uid === constants.adminUid" v-tooltip:top="'Admin-status (intern)'">{{wish.status}}</span>
       </ul>
     </li>
 

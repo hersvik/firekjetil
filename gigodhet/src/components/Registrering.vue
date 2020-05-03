@@ -6,6 +6,13 @@
     <em> {{constants.dataDisclosure}} </em>
 
     <form>
+      <div v-if="getters.user().uid === constants.adminUid" class="form-group mt-4" style="opacity: 0.5;">
+        <label>
+          Intern sekretariat-kommentar
+        </label>
+        <input v-model="registration.status" class="form-control" type="text">
+      </div>
+
       <div class="bg-light p-2">
         <small class="form-text text-muted">Deltager (enkeltperson eller gruppeleder)</small>
         <div class="form-group">

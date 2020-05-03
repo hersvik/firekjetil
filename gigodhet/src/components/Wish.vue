@@ -8,7 +8,7 @@
 
       <div v-if="getters.user().uid === constants.adminUid" class="form-group mt-4" style="opacity: 0.5;">
         <label>
-          Admin-status
+          Admin-status (intern)
         </label>
         <input v-model="wish.status" class="form-control" type="text">
       </div>

@@ -18,7 +18,8 @@
           {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}} +({{registration.participants && registration.participants.length || 0}})
         </router-link>
         <span class="" v-if="registration.removedBy">Fjernet av {{registration.removedBy}} </span>
-        <span class="edited_tag">{{registration.displayEdited}}</span>
+        <span class="edited_tag">{{registration.displayEdited}} </span>
+        <span v-if="getters.user().uid === constants.adminUid" v-tooltip:top="'Intern sekretariat-kommentar'">{{registration.status}}</span>
       </ul>
     </li>
 
@@ -42,6 +43,7 @@
     },
     computed: {
       getters: () => getters,
+      constants: () => constants,
       chronologicalRegistrations() {
         if (!this || !this.registrations) {
           return;
