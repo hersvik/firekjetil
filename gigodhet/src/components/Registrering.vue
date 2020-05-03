@@ -3,7 +3,12 @@
     <router-link to="/regs">Tilbake</router-link>
     <h1>{{registration.event || "Godhet Stavanger 2020"}}</h1>
     <h3>Påmelding</h3>
+    <br />
     <em> {{constants.dataDisclosure}} </em>
+
+    <div class="alert alert-secondary" role="alert">
+      👉 Av hensyn til smittevernregler kobles man på en leder for en gruppe som har ansvar for gjengen.
+    </div>
 
     <form>
       <div v-if="getters.user().uid === constants.adminUid" class="form-group mt-4" style="opacity: 0.5;">
@@ -131,7 +136,7 @@
       </div>
     </div>
 
-    Hvilke dager i godhetsuka man ønsker å delta avtales i år primært med godhetslederen i huskirka eller leder for oppdraget du får tildelt, men du kan skrive en kommentar om dette her.
+    Hvilke dager i godhetsuka man ønsker å delta avtales i år primært med godhetslederen i huskirka eller leder for oppdraget du får tildelt, men du kan skrive en kommentar om det her.
     <div class="form-group mt-4">
       <label>
         Eventuelt annet / kommentar
