@@ -167,6 +167,7 @@
           event: "Godhet Stavanger 2020",
         },
         alreadyLoaded: false,
+        watchedRegistration: {},
       }
     },
     firestore () {
@@ -193,10 +194,15 @@
       }
     },
     watch: {
-      registration: function (){
-        if(this.alreadyLoaded)
+      registration: function (entry){
+        entry.edited = null;
+        this.watchedRegistration.edited = null;
+        if (this.alreadyLoaded
+          && JSON.stringify(entry) !== JSON.stringify(this.watchedRegistration) ){
           alert("Opplysningene i skjemaet ble endret utenfra og erstatter innholdet i ditt skjema automatisk nå.");
+        }
         this.alreadyLoaded = true;
+        this.watchedRegistration = entry;
       }
     },
     methods: {
