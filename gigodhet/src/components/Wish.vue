@@ -176,6 +176,7 @@
         },
         registrations: [],
         alreadyLoaded: false,
+        watchedWish: {}
       }
     },
     firestore () {
@@ -281,11 +282,16 @@
 
     },
      watch: {
-       wish: function (){ // wish only contains uids for registrations. No need to watch registrations :)
-         if(this.alreadyLoaded)
-           alert("Opplysningene i skjemaet ble endret utenfra og erstatter innholdet i ditt skjema automatisk nå. ");
-         this.alreadyLoaded = true;
-       }
+      wish: function (entry){
+        entry.edited = null;
+        this.watchedWish.edited = null;
+        if (this.alreadyLoaded
+          && JSON.stringify(entry) !== JSON.stringify(this.watchedWish) ){
+            alert("Opplysningene i skjemaet ble endret utenfra og innholdet du ser oppdateres automatisk. \n\nEksisterende innhold i skjemaet blir dermed erstattet nå. \n\n(Når du lagrer, oppdateres visningen umiddelbart hos andre som ser på også)");
+        }
+        this.alreadyLoaded = true;
+        this.watchedWish = entry;
+      }
      },
   }
 

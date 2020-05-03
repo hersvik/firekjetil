@@ -206,7 +206,7 @@
         this.watchedRegistration.edited = null;
         if (this.alreadyLoaded
           && JSON.stringify(entry) !== JSON.stringify(this.watchedRegistration) ){
-          alert("Opplysningene i skjemaet ble endret utenfra og erstatter innholdet i ditt skjema automatisk nå.");
+            alert("Opplysningene i skjemaet ble endret utenfra og innholdet du ser oppdateres automatisk. \n\nEksisterende innhold i skjemaet blir dermed erstattet nå. \n\n(Når du lagrer, oppdateres visningen umiddelbart hos andre som ser på også)");
         }
         this.alreadyLoaded = true;
         this.watchedRegistration = entry;
