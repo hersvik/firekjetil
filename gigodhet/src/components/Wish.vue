@@ -125,7 +125,7 @@
       </h3>
       <div style="opacity: 0.5;">
       Tegnforklaring når du legger til deltagelse:  <br />
-      (tall) = antall "voksne" deltagere på gruppen inkludert leder<br />
+      (tall) = antall deltagere på gruppen inkludert leder og alle aldre<br />
       F = deltar på familiegodhet <br />
       * = allerede engasjert på <strong>ett</strong> oppdrag <em>utenom</em> dette oppdraget <br />
       ** = allerede engasjert på <strong>to</strong> oppdrag <em>utenom</em> dette oppdraget <br />

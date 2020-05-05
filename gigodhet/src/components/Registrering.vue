@@ -38,12 +38,12 @@
 
         <div class="form-group">
             <label>
-              Aldersgruppe
+              Aldersgruppe*
             </label>
             <select v-model="registration.primaryPerson.ageGroup" class="custom-select">
               <option selected>-  Velg -</option>
               <option value="adult">Voksen</option>
-              <option value="childUnder10">Barn under 10</option>
+              <option value="child">Barn (til og med 7. klasse)</option>
             </select>
         </div>
 
@@ -107,12 +107,12 @@
       </div>
       <div class="form-group">
         <label>
-          Aldersgruppe
+          Aldersgruppe*
         </label>
         <select v-model="participant.ageGroup" class="custom-select">
           <option selected>-  Velg -</option>
           <option value="adult">Voksen</option>
-          <option value="childUnder10">Barn under 10</option>
+          <option value="child">Barn (til og med 7. klasse)</option>
         </select>
       </div>
     </div>
@@ -155,6 +155,8 @@
 
       <span v-if="id && !registration.removedBy" @click="removeRegistration" class="remove_registration clickable_label">[Fjern påmelding]</span>
     </div>
+
+    *) Deltagere fra 8. klasse og ut videregående skole meldes på via ungdom@imikirken.no (Join)
 
   </div>
 
