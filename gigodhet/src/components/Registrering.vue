@@ -7,7 +7,8 @@
     <em> {{constants.dataDisclosure}} </em>
 
     <div v-if="!registration.id" class="alert alert-secondary" role="alert">
-      👉 Av hensyn til smittevernregler kobles man på en leder for en gruppe som har ansvar for gjengen.
+      👉 Av hensyn til smittevernregler kobles man på en leder for en gruppe som har ansvar for gjengen. <br>
+      Hvis du er med i en <strong>huskirke</strong> i IMI-kirken som deltar på Godhet skal du i utgangspunktet ikke melde deg på her.
     </div>
 
     <form>
