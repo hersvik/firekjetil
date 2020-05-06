@@ -8,7 +8,7 @@
 
     <div class="alert alert-secondary" role="alert">
       <span style="font-size: 2em; float:  left; margin-right: 0.5em;">😃</span>Vi holder smittevernregler høyt. <br />Videre vil vi informere om at vi ikke tar de største oppdragene i denne tiden, men meld gjerne inn her under så svarer vi 👍🏼
-      <br>Dersom du har forslag og tilhører en gruppe som vil utføre oppdraget på egenhånd trenger dere ikke registrere det her.
+      <br>Dersom du tilhører en huskirke i IMI-Kirken som skal utføre oppdraget du ønsker å melde inn, trenger du ikke å melde det inn her.
     </div>
 
     <form>
