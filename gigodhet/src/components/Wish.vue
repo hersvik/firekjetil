@@ -270,6 +270,7 @@
           alert("Du må lagre først for ordens skyld");
         }
         else {
+          alert("Husk å fjerne sensitiv informasjon før du sender eposten!");
           window.location.href = 'mailto:'+this.wish.emailSendTo+'?cc=stavanger@godhet.no&subject='+this.wish.title+'&body='+this.emailText;
         }
       },
