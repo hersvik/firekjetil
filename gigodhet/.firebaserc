@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "gigodhet"
+    "default": "gigodhet",
+    "testing": "gigodhet-testing",
+    "prod": "gigodhet"
   }
 }
