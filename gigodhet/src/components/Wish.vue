@@ -20,6 +20,14 @@
         <input v-model="wish.status" class="form-control" type="text">
       </div>
 
+      <div v-if="getters.user().uid === constants.adminUid" class="form-group mt-4" style="opacity: 0.5;">
+        <label>
+          Send til epostadresse
+        </label>
+        <a :href="'mailto:'+wish.emailSendTo+'?cc=stavanger@godhet.no&subject='+wish.title+'&body='+emailText"> Lag epost</a>
+        <input v-model="wish.emailSendTo" class="form-control" type="text">
+      </div>
+
       <div class="form-group mt-4">
         <label>
           Kort overskrift
@@ -228,6 +236,18 @@
           }
           return b.participants.length - a.participants.length || aName.localeCompare(bName);
         });
+      },
+      emailText() {
+        return `%0D%0A
+        ${this.wish.status} %0D%0A
+        %0D%0A
+        Oppdrag hos: ${this.wish.target.firstName} ${this.wish.target.lastName} %0D%0A
+        ${this.wish.target.address}%0D%0A
+        tlf: ${this.wish.target.phone}%0D%0A
+        ${this.wish.target.email}%0D%0A
+        %0D%0A
+        ${this.wish.description}%0D%0A
+        Utstyr på stedet: ${this.wish.equipment}%0D%0A`
       },
     },
     methods: {
