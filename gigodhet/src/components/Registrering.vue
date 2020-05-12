@@ -145,7 +145,7 @@
       <label>
         Eventuelt annet / kommentar
       </label>
-      <textarea v-model="registration.misc" class="form-control" type="text">
+      <textarea v-model="registration.misc" class="form-control" type="text" rows="3">
       </textarea>
     </div>
 

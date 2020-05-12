@@ -39,7 +39,7 @@
         <label>
           Beskrivelse av arbeid
         </label>
-        <textarea v-model="wish.description" class="form-control" type="text">
+        <textarea v-model="wish.description" class="form-control" type="text" rows="4">
         </textarea>
       </div>
 
