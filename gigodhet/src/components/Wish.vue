@@ -11,7 +11,8 @@
       <br>Dersom du tilhører en huskirke i IMI-Kirken som skal utføre oppdraget du ønsker å melde inn, trenger du ikke å melde det inn her.
     </div>
 
-    <form>
+    <button v-if="id" class="btn mr-3" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Lagre</button>
+    <form @input="onFormInput">
 
       <div v-if="getters.user().uid === constants.adminUid" class="form-group mt-4" style="opacity: 0.5;">
         <label>
@@ -24,7 +25,7 @@
         <label>
           Send til epostadresse
         </label>
-        <a :href="'mailto:'+wish.emailSendTo+'?cc=stavanger@godhet.no&subject='+wish.title+'&body='+emailText"> Lag epost</a>
+        <a @click="makeEmail" class="link_look"> Lag epost</a>
         <input v-model="wish.emailSendTo" class="form-control" type="text">
       </div>
 
@@ -85,9 +86,7 @@
         </div>
 
       </div>
-    </form>
 
-    <form>
       <div class="bg-light p-2 mt-4">
         <small class="form-text text-muted">Person som mottar hjelp (sted for oppdrag)</small>
         <div class="form-group">
@@ -123,45 +122,47 @@
         </div>
 
       </div>
+
+
+      <div v-if="getters.user().uid === constants.adminUid && wish.id" class="form-group">
+
+        <br />
+        <h3>
+          Administrer deltagere på dette oppdraget
+        </h3>
+        <div style="opacity: 0.5;">
+        Tegnforklaring når du legger til deltagelse:  <br />
+        (tall) = antall deltagere på gruppen inkludert leder og alle aldre<br />
+        F = deltar på familiegodhet <br />
+        * = allerede engasjert på <strong>ett</strong> oppdrag <em>utenom</em> dette oppdraget <br />
+        ** = allerede engasjert på <strong>to</strong> oppdrag <em>utenom</em> dette oppdraget <br />
+        (Listen er sortert med største grupper først, deretter alfabetisk etter navn på hoveddeltageren. )
+        </div>
+        <div v-for="(ref, idx) in wish.assigneesPerDay[0].registrationRefs" :key="idx">
+          <span @click="removeAssigneeForDay(0, ref)" class="clickable_tag">(-)</span>
+          <AssigneeSelector  v-model="wish.assigneesPerDay[0].registrationRefs[idx]" :registrations="sortedRegistrations" :day="0" :wishRef="wish.id" />
+          <a v-if="ref" :href="'/registrering/'+ref" target="_blank">Åpne påmeldingen</a>
+        </div>
+        <button type="button" class="btn btn-secondary" @click="addExtraAssigneeForDay(0)">
+          Legg til deltagelse
+        </button>
+
+
+      </div>
+      <div v-else-if="getters.user().uid === constants.adminUid && !wish.id">
+        <h5>
+          Administrer deltagere på dette oppdraget
+        </h5>
+        Du må lagre dette oppdraget først før du kan legge  til deltagere.
+      </div>
+
     </form>
-
-
-    <div v-if="getters.user().uid === constants.adminUid && wish.id" class="form-group">
-
-      <br />
-      <h3>
-        Administrer deltagere på dette oppdraget
-      </h3>
-      <div style="opacity: 0.5;">
-      Tegnforklaring når du legger til deltagelse:  <br />
-      (tall) = antall deltagere på gruppen inkludert leder og alle aldre<br />
-      F = deltar på familiegodhet <br />
-      * = allerede engasjert på <strong>ett</strong> oppdrag <em>utenom</em> dette oppdraget <br />
-      ** = allerede engasjert på <strong>to</strong> oppdrag <em>utenom</em> dette oppdraget <br />
-      (Listen er sortert med største grupper først, deretter alfabetisk etter navn på hoveddeltageren. )
-      </div>
-      <div v-for="(ref, idx) in wish.assigneesPerDay[0].registrationRefs" :key="idx">
-        <span @click="removeAssigneeForDay(0, ref)" class="clickable_tag">(-)</span>
-        <AssigneeSelector  v-model="wish.assigneesPerDay[0].registrationRefs[idx]" :registrations="sortedRegistrations" :day="0" :wishRef="wish.id" />
-        <a v-if="ref" :href="'/registrering/'+ref" target="_blank">Åpne påmeldingen</a>
-      </div>
-      <button type="button" class="btn btn-secondary" @click="addExtraAssigneeForDay(0)">
-        Legg til deltagelse
-      </button>
-
-
-    </div>
-    <div v-else-if="getters.user().uid === constants.adminUid && !wish.id">
-      <h5>
-        Administrer deltagere på dette oppdraget
-      </h5>
-      Du må lagre dette oppdraget først før du kan legge  til deltagere.
-    </div>
 
     <br />
     {{constants.welcomeUnfinishedFormMessage}}
     <div class="form-group">
-      <button class="btn btn-primary" @click="save">Lagre</button>
+      <button v-if="id" class="btn mr-3" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Lagre</button>
+      <button class="btn btn-primary" @click="save">Lagre og lukk</button>
     </div>
 
   </div>
@@ -198,6 +199,7 @@
         },
         registrations: [],
         alreadyLoaded: false,
+        isEdited: false,
         watchedWish: {}
       }
     },
@@ -260,8 +262,19 @@
           this.wish.assigneesPerDay[day].registrationRefs = filtered;
         }
       },
+      onFormInput() {
+        this.isEdited = true;
+      },
+      makeEmail() {
+        if (this.isEdited) {
+          alert("Du må lagre først for ordens skyld");
+        }
+        else {
+          window.location.href = 'mailto:'+this.wish.emailSendTo+'?cc=stavanger@godhet.no&subject='+this.wish.title+'&body='+this.emailText;
+        }
+      },
 
-      save() {
+      save(stayOnPage) {
         this.alreadyLoaded = false; // Avoids watch alert
 
         const assigneesPerDay = this.wish.assigneesPerDay;
@@ -278,7 +291,9 @@
             .doc(this.id)
             .set(wish, {merge: true})
             .then(() => {
-              this.$router.push("/wishes")
+              if (!stayOnPage) {
+                this.$router.push("/wishes") // Could there be a race condition so that transaction save below is omitted?
+              }
             })
             .catch(function(error){ // trenger å verifiseres
               alert("Kunne ikke lagre. ("+error+")")
@@ -306,8 +321,9 @@
                   let wishServerData = wishDoc.data();
                   updateRegistrations(wishId, wishServerData, transaction, wishDocRef, assigneesPerDay)
               });
-          }).then(function() {
+          }).then(() => {
               console.log("Transaction successfully committed!");
+              this.isEdited = false;
           }).catch(function(error) {
               console.log("Transaction failed: ", error);
           });
@@ -362,5 +378,9 @@
 <style scoped>
   .clickable_tag {
     cursor: pointer !important;
+  }
+  .link_look {
+    color: #007bff;
+    cursor: pointer;
   }
 </style>
