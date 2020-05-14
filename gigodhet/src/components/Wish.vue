@@ -269,6 +269,7 @@
         if(confirm("Fjerne deltager fra oppdraget \n\nHusk å klikke lagre i skjemaet for at endringen skal få effekt. ") ){
           let filtered = this.wish.assigneesPerDay[day].registrationRefs.filter(el => el !== ref)
           this.wish.assigneesPerDay[day].registrationRefs = filtered;
+          this.isEdited = true;
         }
       },
       onFormInput() {
