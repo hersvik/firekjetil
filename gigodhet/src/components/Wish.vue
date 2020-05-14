@@ -1,35 +1,42 @@
 <template>
   <div class="container container_under_nav">
     <router-link to="/wishes">Tilbake</router-link>
-    <h1>Gi forslag til oppdrag</h1>
+    <h1>{{id ? wish.title : 'Gi forslag til oppdrag'}}</h1>
     <h3>{{wish.event || "Godhet Stavanger 2020"}}</h3>
     <br />
     <em> {{constants.dataDisclosure}} </em>
 
-    <div class="alert alert-secondary" role="alert">
+    <div class="alert alert-secondary bg-light mt-3" role="alert">
       <span style="font-size: 2em; float:  left; margin-right: 0.5em;">😃</span>Vi holder smittevernregler høyt. <br />Videre vil vi informere om at vi ikke tar de største oppdragene i denne tiden, men meld gjerne inn her under så svarer vi 👍🏼
       <br>Dersom du tilhører en huskirke i IMI-Kirken som skal utføre oppdraget du ønsker å melde inn, trenger du ikke å melde det inn her.
     </div>
 
-    <button v-if="id" class="btn mr-3" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Lagre</button>
+    <button v-if="id" class="btn mt-4" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Lagre</button>
     <form @input="onFormInput">
 
-      <div v-if="getters.user().uid === constants.adminUid" class="form-group mt-4" style="opacity: 0.5;">
-        <label>
-          Admin-status (intern)
-        </label>
-        <input v-model="wish.status" class="form-control" type="text">
+      <div v-if="getters.user().uid === constants.adminUid" class="alert alert-dark bg-secondary text-white mt-4">
+        <div class="form-group mt-3">
+          <label>
+            Intern status
+          </label>
+          <input v-model="wish.status" class="form-control" type="text">
+        </div>
+
+        <div class="form-group mt-5">
+          <label>
+            Lag e-post til
+          </label>
+          <div class="input-group">
+            <input v-model="wish.emailSendTo" class="form-control" type="text">
+            <div class="input-group-append">
+              <button @click="makeEmail" class="btn btn-primary" type="button">Lag e-post</button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div v-if="getters.user().uid === constants.adminUid" class="form-group mt-4" style="opacity: 0.5;">
-        <label>
-          Send til epostadresse
-        </label>
-        <a @click="makeEmail" class="link_look"> Lag epost</a>
-        <input v-model="wish.emailSendTo" class="form-control" type="text">
-      </div>
 
-      <div class="form-group mt-4">
+      <div class="form-group mt-5">
         <label>
           Kort overskrift
         </label>
@@ -51,7 +58,7 @@
         <input v-model="wish.equipment" class="form-control" type="text">
       </div>
 
-      <div class="bg-light p-2">
+      <div class="bg-light p-2 mt-5">
         <small class="form-text text-muted">Innmelder</small>
         <div class="form-group">
             <label>
@@ -87,7 +94,7 @@
 
       </div>
 
-      <div class="bg-light p-2 mt-4">
+      <div class="bg-light p-2 mt-5 mb-4">
         <small class="form-text text-muted">Person som mottar hjelp (sted for oppdrag)</small>
         <div class="form-group">
             <label>
@@ -124,9 +131,8 @@
       </div>
 
 
-      <div v-if="getters.user().uid === constants.adminUid && wish.id" class="form-group">
+      <div v-if="getters.user().uid === constants.adminUid && wish.id" class="form-group mt-5 mb-5">
 
-        <br />
         <h3>
           Administrer deltagere på dette oppdraget
         </h3>
@@ -160,9 +166,9 @@
 
     <br />
     {{constants.welcomeUnfinishedFormMessage}}
-    <div class="form-group">
+    <div class="form-group pb-5">
       <button v-if="id" class="btn mr-3" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Lagre</button>
-      <button class="btn btn-primary" @click="save">Lagre og lukk</button>
+      <button class="btn btn-primary" @click="save(false)">Lagre og lukk</button>
     </div>
 
   </div>
@@ -248,7 +254,8 @@
         tlf: ${this.wish.target.phone}%0D%0A
         ${this.wish.target.email}%0D%0A
         %0D%0A
-        ${this.wish.description}%0D%0A
+        "${this.wish.description}"%0D%0A
+        %0D%0A
         Utstyr på stedet: ${this.wish.equipment}%0D%0A`
       },
     },
@@ -379,9 +386,5 @@
 <style scoped>
   .clickable_tag {
     cursor: pointer !important;
-  }
-  .link_look {
-    color: #007bff;
-    cursor: pointer;
   }
 </style>

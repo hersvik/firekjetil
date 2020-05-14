@@ -6,18 +6,21 @@
     <br />
     <em> {{constants.dataDisclosure}} </em>
 
-    <div v-if="!registration.id" class="alert alert-secondary" role="alert">
+    <div v-if="!registration.id" class="alert alert-secondary bg-light mt-3" role="alert">
       👉 Av hensyn til smittevernregler kobles man på en leder for en gruppe som har ansvar for gjengen. <br>
       Hvis du er med i en <strong>huskirke</strong> i IMI-kirken som deltar på Godhet skal du i utgangspunktet ikke melde deg på her.
     </div>
 
     <form>
-      <div v-if="getters.user().uid === constants.adminUid" class="form-group mt-4" style="opacity: 0.5;">
+      <div v-if="getters.user().uid === constants.adminUid" class="alert alert-dark bg-secondary text-white mt-4">
         <label>
-          Intern sekretariat-kommentar
+          Intern kommentar (...husk å lagre)
         </label>
         <input v-model="registration.status" class="form-control" type="text">
+
+        <a v-for="(ref, idx) in registration.missionDay0" :key="ref" :href="'/wish/'+ref" class="mt-4" style="display: block; color:white;" target="_blank">Åpne tildelt oppdrag nummer {{idx+1}}</a>
       </div>
+
 
       <div v-if="registration.removedBy" class="alert alert-danger">
         Denne påmeldingen er deaktivert (fjernet). Lagre på nytt for å gjennopprette.
@@ -89,7 +92,7 @@
       </div>
     </form>
 
-    <div>
+    <div class="mt-5">
       <h2>Meddeltagere</h2>
     </div>
     <div v-for="(participant, idx) in registration.participants" :key="idx" class="bg-light p-2 mb-2">
@@ -118,7 +121,7 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mb-5">
       <button class="btn btn-light" @click="addParticipant">+ Legg til gruppedeltager</button>
     </div>
 
@@ -141,7 +144,7 @@
     </div>
 
     Hvilke dager i godhetsuka man ønsker å delta avtales i år primært med godhetslederen i huskirka eller leder for oppdraget du får tildelt, men du kan skrive en kommentar om det her.
-    <div class="form-group mt-4">
+    <div class="form-group mt-4 mb-5">
       <label>
         Eventuelt annet / kommentar
       </label>
@@ -151,7 +154,7 @@
 
     {{constants.welcomeUnfinishedFormMessage}}
     <div class="form-group">
-      <button v-if="!registration.removedBy" class="btn btn-primary" @click="save">Lagre</button>
+      <button v-if="!registration.removedBy" class="btn btn-primary" @click="save">Lagre og lukk</button>
       <button v-if="registration.removedBy" @click="save(true)" class="btn btn-primary">Lagre og gjenopprett</button>
 
       <span v-if="id && !registration.removedBy" @click="removeRegistration" class="remove_registration clickable_label">[Fjern påmelding]</span>
