@@ -206,6 +206,8 @@
         registrations: [],
         alreadyLoaded: false,
         isEdited: false,
+        doneSavePart1: false,
+        doneSavePart2: false,
         watchedWish: {}
       }
     },
@@ -281,8 +283,15 @@
           window.location.href = 'mailto:'+this.wish.emailSendTo+'?cc=stavanger@godhet.no&subject='+this.wish.title+'&body='+this.emailText;
         }
       },
+      whenAllSaved(isStaying){
+        this.isEdited = false;
 
-      save(stayOnPage) {
+        if (!isStaying) {
+          this.$router.push("/wishes");
+        }
+      },
+
+      save(isStaying) {
         this.alreadyLoaded = false; // Avoids watch alert
 
         const assigneesPerDay = this.wish.assigneesPerDay;
@@ -299,8 +308,9 @@
             .doc(this.id)
             .set(wish, {merge: true})
             .then(() => {
-              if (!stayOnPage) {
-                this.$router.push("/wishes") // Could there be a race condition so that transaction save below is omitted?
+              this.doneSavePart1 = true;
+              if (this.doneSavePart2) {
+                this.whenAllSaved(isStaying);
               }
             })
             .catch(function(error){ // trenger å verifiseres
@@ -331,7 +341,10 @@
               });
           }).then(() => {
               console.log("Transaction successfully committed!");
-              this.isEdited = false;
+              this.doneSavePart2 = true;
+              if (this.doneSavePart1) {
+                this.whenAllSaved(isStaying)
+              }
           }).catch(function(error) {
               console.log("Transaction failed: ", error);
           });
