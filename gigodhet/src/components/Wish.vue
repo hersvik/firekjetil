@@ -204,7 +204,7 @@
           ],
         },
         registrations: [],
-        alreadyLoaded: false,
+        suppressWatchOnce: true,
         isEdited: false,
         doneSavePart1: false,
         doneSavePart2: false,
@@ -293,7 +293,7 @@
       },
 
       save(isStaying) {
-        this.alreadyLoaded = false; // Avoids watch alert
+        this.suppressWatchOnce = true;
 
         const assigneesPerDay = this.wish.assigneesPerDay;
         // Save wish document
@@ -310,6 +310,7 @@
             .set(wish, {merge: true})
             .then(() => {
               this.doneSavePart1 = true;
+              this.suppressWatchOnce = true;
               if (this.doneSavePart2) {
                 this.whenAllSaved(isStaying);
               }
@@ -343,6 +344,7 @@
           }).then(() => {
               console.log("Transaction successfully committed!");
               this.doneSavePart2 = true;
+              this.suppressWatchOnce = true;
               if (this.doneSavePart1) {
                 this.whenAllSaved(isStaying)
               }
@@ -357,11 +359,11 @@
       wish: function (entry){
         entry.edited = null;
         this.watchedWish.edited = null;
-        if (this.alreadyLoaded
+        if (!this.suppressWatchOnce
           && JSON.stringify(entry) !== JSON.stringify(this.watchedWish) ){
             alert("Opplysningene i skjemaet ble endret utenfra og innholdet du ser oppdateres automatisk. \n\nEksisterende innhold i skjemaet blir dermed erstattet nå. \n\n(Når du lagrer, oppdateres visningen umiddelbart hos andre som ser på også)");
         }
-        this.alreadyLoaded = true;
+        this.suppressWatchOnce = false; // enable next watch
         this.watchedWish = entry;
       }
      },
