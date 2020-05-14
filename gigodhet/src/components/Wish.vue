@@ -33,6 +33,7 @@
             </div>
           </div>
         </div>
+        <pre v-if="isShowingEmailPreview" style="white-space: pre-wrap;">E-post, emne: {{wish.title}}{{emailTextHtml}}</pre>
       </div>
 
 
@@ -208,6 +209,7 @@
         isEdited: false,
         doneSavePart1: false,
         doneSavePart2: false,
+        isShowingEmailPreview: false,
         watchedWish: {}
       }
     },
@@ -249,16 +251,18 @@
       },
       emailText() {
         return `%0D%0A
-        ${this.wish.status} %0D%0A
-        %0D%0A
-        Oppdrag hos: ${this.wish.target.firstName} ${this.wish.target.lastName} %0D%0A
-        ${this.wish.target.address}%0D%0A
-        tlf: ${this.wish.target.phone}%0D%0A
-        ${this.wish.target.email}%0D%0A
-        %0D%0A
-        "${this.wish.description}"%0D%0A
-        %0D%0A
-        Utstyr på stedet: ${this.wish.equipment}%0D%0A`
+%0D%0A
+Oppdrag hos: ${this.wish.target.firstName} ${this.wish.target.lastName} %0D%0A
+${this.wish.target.address}%0D%0A
+tlf: ${this.wish.target.phone}%0D%0A
+${this.wish.target.email}%0D%0A
+%0D%0A
+"${this.wish.description}"%0D%0A
+%0D%0A
+Utstyr på stedet: ${this.wish.equipment}%0D%0A`
+      },
+      emailTextHtml() {
+        return this.emailText.replace(/%0D%0A/g,'');
       },
     },
     methods: {
@@ -280,7 +284,8 @@
           alert("Du må lagre først for ordens skyld");
         }
         else {
-          alert("Husk å fjerne sensitiv informasjon før du sender eposten!");
+          this.isShowingEmailPreview = true;
+          alert("E-post forslaget vil nå forhåpentligvis åpnes i din e-post app.\n\nHusk å fjerne sensitiv informasjon før du sender eposten!");
           window.location.href = 'mailto:'+this.wish.emailSendTo+'?cc=stavanger@godhet.no&subject='+this.wish.title+'&body='+this.emailText;
         }
       },
