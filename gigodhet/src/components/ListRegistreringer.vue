@@ -15,7 +15,7 @@
         <span class="edited_tag">#{{registration.counter}}</span>
         {{registration.created.toDate().toLocaleDateString()}}
         <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
-          {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}} +({{registration.participants && registration.participants.length || 0}})
+          {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}} (+{{registration.participants && registration.participants.length || 0}})
         </router-link>
         <span class="" v-if="registration.removedBy">Fjernet av {{registration.removedBy}} </span>
         <span class="edited_tag">{{registration.displayEdited}} </span>

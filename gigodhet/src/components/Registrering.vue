@@ -2,7 +2,7 @@
   <div class="container container_under_nav">
     <router-link to="/regs">Tilbake</router-link>
     <h1>{{registration.event || "Godhet Stavanger 2020"}}</h1>
-    <h3>Påmelding</h3>
+    <h3>{{registration.id ? registration.primaryPerson.firstName+ ' + ' +registration.participants.length : "Påmelding"}}</h3>
     <br />
     <em> {{constants.dataDisclosure}} </em>
 

@@ -4,6 +4,7 @@
 
     <div class="jumbotron" :class="{jumbotron__logged_in: getters.user().uid}">
       <h1 class="display-4">Godhet Stavanger</h1>
+      <p class="lead"><strong>25. - 29. mai</strong> 2020</p>
       <hr class="my-4">
 
       <div v-if="!getters.user() || !getters.user().uid">
