@@ -11,6 +11,7 @@
         (<!--{{registration.dailyAttendance[0].adult}}/ [[comment: if hasDailyAttendanceFeature]]-->{{registration.participants.length + 1}}){{registration.familiegodhet ? "F" : ""}} -
         {{registration.primaryPerson.firstName}}
         {{registration.primaryPerson.lastName}}
+        - [{{registration.status.substr(0, 40)}}{{registration.status.length > 40 ? "..." : ""}}]
     </option>
   </select>
 
