@@ -264,7 +264,7 @@
         this.wish.assigneesPerDay[day].registrationRefs.push("");
       },
       removeAssigneeForDay(day, ref) {
-        if(confirm("Fjerne deltager fra oppdraget \nHusk å klikke lagre i skjemaet for at endringen skal få effekt. \n\n(For å angre, last siden på nytt)") ){
+        if(confirm("Fjerne deltager fra oppdraget \n\nHusk å klikke lagre i skjemaet for at endringen skal få effekt. ") ){
           let filtered = this.wish.assigneesPerDay[day].registrationRefs.filter(el => el !== ref)
           this.wish.assigneesPerDay[day].registrationRefs = filtered;
         }
