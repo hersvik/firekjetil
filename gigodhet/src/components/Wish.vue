@@ -33,7 +33,9 @@
             </div>
           </div>
         </div>
-        <pre v-if="isShowingEmailPreview" style="white-space: pre-wrap;">E-post, emne: {{wish.title}}{{emailTextHtml}}</pre>
+        <pre v-if="isShowingEmailPreview" style="white-space: pre-wrap;">E-post, emne: {{wish.title}} <br>cc: stavanger@godhet.no
+          {{emailTextHtml}}
+        </pre>
       </div>
 
 
