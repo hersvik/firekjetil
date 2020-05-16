@@ -2,6 +2,14 @@
   <div class="container container_under_nav">
     <h1>Gi forslag til Godhetsoppdrag</h1>
 
+    <div v-if="wishes.length" class="alert alert-secondary bg-light mt-3" role="alert">
+      <div class="mb-2"><strong>Takk for innmeldingen, den er tilgjengelig i listen under!</strong></div>
+      <span style="font-size: 2em; float:  left; margin-right: 0.5em;">
+        🙏
+      </span>
+      Vi ber om forståelse for at vi ikke rekker over alle innmeldte oppdrag, men må gjøre et utvalg basert på hvor mange frivillige som er med. Vi tar kontakt ifm de oppdragene vi har mulighet til å utføre, og har dessverre ikke mulighet til å holde dere oppdaterte i prosessen med valg av oppdrag.
+    </div>
+
     <li class="list-group">
       <ul class="list-group-item">
         + <router-link :to="{path: 'wish'}">

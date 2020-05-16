@@ -11,7 +11,7 @@
         <p class="lead">For å <strong>melde deg på</strong>, <br />eller for å komme med <strong>forslag</strong> til oppdrag: </p>
         <router-link to="/auth">
           <button type="button" class="btn btn-primary btn-lg">
-            Logg inn
+            Start her
           </button>
         </router-link>
         <p class="lead">Du kan bruke en google konto, eller opprette et selvstendig passord direkte på første innlogging. Glemt passord-funksjonalitet kan deretter brukes. </p>
