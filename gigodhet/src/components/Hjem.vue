@@ -8,7 +8,7 @@
       <hr class="my-4">
 
       <div v-if="!getters.user() || !getters.user().uid">
-        <p class="lead">For å <strong>melde deg på</strong>, <br />eller for å komme med <strong>forslag</strong> til oppdrag: </p>
+        <p class="lead">For å <strong>melde deg på</strong>, <br />eller for å <strong>komme med forslag</strong> til oppdrag: </p>
         <router-link to="/auth">
           <button type="button" class="btn btn-primary btn-lg">
             Start her

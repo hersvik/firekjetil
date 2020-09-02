@@ -14,6 +14,10 @@ const router = new VueRouter({
         path: "/regs",
         component: () => import('./components/ListRegistreringer.vue')
     },
+    {
+        path: "/spendings", // easter-egg app
+        component: () => import('./components/SpendingsApp.vue')
+    },
     { path: '/auth', component: Auth },
     { path: '/registrering', component: Registrering },
     {
