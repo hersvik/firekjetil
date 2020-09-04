@@ -4,8 +4,8 @@
 
     <li class="list-group">
       <ul>
-        <input v-model="newSpending.amount" class="form-control" placeholder="" type="number" />
-        <input v-model="newSpending.text" class="form-control" placeholder="" type="text" />
+        <input v-model="newSpending.amount" class="form-control" placeholder="Cost (amount)" type="number" />
+        <input v-model="newSpending.text" class="form-control" placeholder="Name or Description" type="text" />
         <button @click="save">Save</button>
       </ul>
       <ul v-for="(spending) in spendingsWithBalance" :key="spending.id" class="list-group-item">
@@ -87,6 +87,10 @@
     methods: {
       save () {
         debugger
+        if (!this.newSpending.amount) {
+          return;
+        }
+
         this.alreadyLoaded = false; // Avoids watch alert
         this.newSpending.ownerUid = getters.user().uid;
         this.newSpending.created = new Date();
@@ -94,6 +98,8 @@
 
         db.collection("spendings").add(this.newSpending)
           .then(() => {
+            this.newSpending.amount = "";
+            this.newSpending.text = this.$route.query.text;
             // this.$router.push("/regs");
           });
 

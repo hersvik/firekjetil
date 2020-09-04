@@ -1,16 +1,18 @@
 <template>
   <div v-if="$route.path !== '/auth'" class="nav__wrapper">
-    <span class="header_banner">
-      Godhetstavanger.no
+    <span v-if="$route.path !== '/spendings'">
+      <span class="header_banner">
+        Godhetstavanger.no
+      </span>
+      <a @click='goToHjem' :class='{active: getters.activeNav() == "hjem"}'>
+        Hjem
+      </a>
+      <a @click='goToListRegistreringer' :class='{active: getters.activeNav() == "pameldinger"}'>
+        Påmeldinger</a>
+      <a @click='goToListWishes' :class='{active: getters.activeNav() == "foresporsler"}'>
+        Foreslå oppdrag
+      </a>
     </span>
-    <a @click='goToHjem' :class='{active: getters.activeNav() == "hjem"}'>
-      Hjem
-    </a>
-    <a @click='goToListRegistreringer' :class='{active: getters.activeNav() == "pameldinger"}'>
-      Påmeldinger</a>
-    <a @click='goToListWishes' :class='{active: getters.activeNav() == "foresporsler"}'>
-      Foreslå oppdrag
-    </a>
     <div v-if="getters.user().uid" class="">{{loginName}}</div>
     <a v-if="getters.user().uid" @click='logOut'>Log out</a>
   </div>
