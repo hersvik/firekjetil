@@ -9,8 +9,8 @@
         <button @click="save">Save</button>
       </ul>
       <ul v-for="(spending) in spendingsWithBalance" :key="spending.id" class="list-group-item">
-        {{spending.created.toDate().toLocaleDateString()}}
-        <span style="opacity: 0.5">;{{spending.text}}</span>
+        {{spending.created && spending.created.toDate().toLocaleDateString()}}
+        <span style="opacity: 0.5">{{spending.text}}</span>
         {{spending.amount}}
         <span class="float_right">{{spending.balance}}</span>
       </ul>
@@ -40,24 +40,39 @@
       getters: () => getters,
       constants: () => constants,
       spendingsWithBalance() {
-        let result = [];
-        let monthlyAllowance = 9000;
-        let dailyAllowance = monthlyAllowance / 30;
-
         if (!this.spendings[0])
           return;
 
-        let firstDate = this.spendings[0].created;
+        let spendings = this.spendings.slice();
+        spendings.sort((a, b) => a.created.toDate() - b.created.toDate() );
+
+        let result = [];
+        let monthlyAllowance = 9000;                // User input <-- (monthly allowance)
+        let dailyAllowance = monthlyAllowance / 30; // Conversion to daily allowance
+
+        let firstTimestamp = spendings[0].created;
         let totalSpending = 0;
 
-        for (let spending of this.spendings) {
-          totalSpending += spending.amount;
-          let millisecondsSinceFirst = spending.created.toDate() - firstDate.toDate();
-          let fullDaysEllapsed = Math.floor(millisecondsSinceFirst / 1000 / 60 / 60 / 24);
+        let daysStarted = (millisecondsElapsed) => 1 + Math.floor(millisecondsElapsed / 1000 / 60 / 60 / 24);
 
-          spending.balance = fullDaysEllapsed*dailyAllowance - totalSpending;
-          result.push(spending);
+        for (let spending of spendings) {
+          totalSpending += spending.amount;
+          let elapsed = spending.created.toDate() - firstTimestamp.toDate();
+
+          spending.balance = daysStarted(elapsed) * dailyAllowance - totalSpending;
+          result.unshift(spending);
         }
+
+        let elapsed = new Date() - firstTimestamp.toDate();
+        let hoursElapsed = elapsed/1000/60/60;
+        let completedDays = daysStarted(elapsed) - 1;
+        let hoursSinceAllowance = hoursElapsed - 24 * completedDays;
+        let nextAllowanceHours = (24 - hoursSinceAllowance).toFixed(0);
+        let statusNow = {
+          text: `Balance now, next allowance in ${nextAllowanceHours} hours`,
+          balance: daysStarted(elapsed) * dailyAllowance - totalSpending,
+        }
+        result.unshift(statusNow);
 
         return result;
       }
