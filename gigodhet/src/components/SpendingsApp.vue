@@ -4,9 +4,14 @@
 
     <li class="list-group">
       <ul>
-        <input v-model="newSpending.amount" class="form-control" placeholder="Cost (amount)" type="number" />
-        <input v-model="newSpending.text" class="form-control" placeholder="Name or Description" type="text" />
+        <input v-model="newSpending.amount" class="form-control" placeholder="Amount spent" type="number" />
+        <input v-model="newSpending.text" class="form-control" placeholder="Optional note" type="text" />
         <button @click="save">Save</button>
+      </ul>
+      <ul>
+        <span class="light_text">Daily budget:</span>
+          {{dailyAllowance}}
+          <span v-if="!isNaN(dailyAllowance)" class="light_text">(~ {{dailyAllowance * 30}} monthly)</span>
       </ul>
       <ul v-for="(spending) in spendingsWithBalance" :key="spending.id" class="list-group-item">
         {{spending.created && spending.created.toDate().toLocaleDateString()}}
@@ -30,9 +35,10 @@
     name: "SpendingsApp",
     data () {
       return {
+        dailyAllowance: this.$route.query.daily || "add this to the website URL: ?daily=<your budget number>&text=<optional>",
         spendings: [],
         newSpending: {
-          text: this.$route.query.text,
+          text: this.$route.query.text || "",
         },
       }
     },
@@ -47,8 +53,7 @@
         spendings.sort((a, b) => a.created.toDate() - b.created.toDate() );
 
         let result = [];
-        let monthlyAllowance = 9000;                // User input <-- (monthly allowance)
-        let dailyAllowance = monthlyAllowance / 30; // Conversion to daily allowance
+        let dailyAllowance =  this.dailyAllowance;
 
         let firstTimestamp = spendings[0].created;
         let totalSpending = 0;
@@ -64,12 +69,8 @@
         }
 
         let elapsed = new Date() - firstTimestamp.toDate();
-        let hoursElapsed = elapsed/1000/60/60;
-        let completedDays = daysStarted(elapsed) - 1;
-        let hoursSinceAllowance = hoursElapsed - 24 * completedDays;
-        let nextAllowanceHours = (24 - hoursSinceAllowance).toFixed(0);
         let statusNow = {
-          text: `Balance now, next allowance in ${nextAllowanceHours} hours`,
+          text: `Balance today`,
           balance: daysStarted(elapsed) * dailyAllowance - totalSpending,
         }
         result.unshift(statusNow);
@@ -86,11 +87,11 @@
     },
     methods: {
       save () {
-        debugger
         if (!this.newSpending.amount) {
           return;
         }
 
+        debugger
         this.alreadyLoaded = false; // Avoids watch alert
         this.newSpending.ownerUid = getters.user().uid;
         this.newSpending.created = new Date();
@@ -109,7 +110,7 @@
 </script>
 
 <style scoped>
-  .edited_tag {
+  .light_text {
     opacity: 0.5;
   }
   .float_right {
