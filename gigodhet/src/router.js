@@ -18,6 +18,10 @@ const router = new VueRouter({
         path: "/spendings", // easter-egg app
         component: () => import('./components/SpendingsApp.vue')
     },
+    {
+        path: "/chat", // easter-egg app
+        component: () => import('./components/ChatApp.vue')
+    },
     { path: '/auth', component: Auth },
     { path: '/registrering', component: Registrering },
     {
