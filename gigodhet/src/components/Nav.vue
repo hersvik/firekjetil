@@ -1,6 +1,6 @@
 <template>
   <div v-if="$route.path !== '/auth'" class="nav__wrapper">
-    <span v-if="$route.path !== '/spendings'">
+    <span v-if="$route.path !== '/spendings' && $route.path !== '/cycle'">
       <span class="header_banner">
         Godhetstavanger.no
       </span>

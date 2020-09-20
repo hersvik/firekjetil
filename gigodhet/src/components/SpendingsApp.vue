@@ -9,8 +9,8 @@
         <button @click="save">Save</button>
       </ul>
       <ul>
-        <span class="light_text">Daily budget:</span>
-          {{dailyAllowance}}
+        <span class="light_text">Budget:</span>
+          {{dailyAllowance}} daily
           <span v-if="!isNaN(dailyAllowance)" class="light_text">(~ {{dailyAllowance * 30}} monthly)</span>
       </ul>
       <ul v-for="(spending) in spendingsWithBalance" :key="spending.id" class="list-group-item">
