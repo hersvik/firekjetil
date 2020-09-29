@@ -108,7 +108,7 @@
         hoursDecimal = Math.abs(hoursDecimal);
         let wholeHours = hoursDecimal - hoursDecimal % 1;
         let minutes = (hoursDecimal - wholeHours) * 60;
-        let minutesStr = (minutes < 10 ? "0":"") + minutes.toFixed(0)
+        let minutesStr = (minutes < 10 ? "0":"") + Math.floor(minutes);
         return (sign < 0 ? "-":"") + wholeHours + "h " + minutesStr + "m";
       },
     },
