@@ -10,11 +10,11 @@
       <ul>
         <button @click="save">Save</button>
       </ul>
-      <ul v-for="(numGobs, idx) in dailyGobs.slice(0, 3)" :key="idx" class="list-group-item">
+      <ul v-for="(numGobs, idx) in dailyGobs.slice(0, 3)" :key="idx" class="list-group-item" :class="{'strong_border': idx === 0}">
         {{numGobs}}
         <span class="float_right">-</span>
       </ul>
-      <ul v-for="(gob) in sortedGobs.slice(0, 3)" :key="gob.id" class="list-group-item">
+      <ul v-for="(gob) in sortedGobs.slice(0, 3)" :key="gob.id" class="list-group-item no_background">
         {{gob.time && gob.time.toDate().toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}}
         <span class="float_right">:D</span>
       </ul>
@@ -180,5 +180,11 @@
   }
   .float_right {
     float: right;
+  }
+  .strong_border {
+    border: solid 2px #666;
+  }
+  .no_background {
+    background: transparent;
   }
 </style>
