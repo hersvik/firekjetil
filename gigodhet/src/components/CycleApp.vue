@@ -4,7 +4,8 @@
 
     <li class="list-group">
       <ul>
-        {{estimate && estimate.toLocaleTimeString()}} &ndash; ({{ estimateHoursAndMinutes }})
+        {{estimate && estimate.toLocaleTimeString()}}
+        <span class="light_text">({{ estimateHoursAndMinutes }})</span>
       </ul>
       <ul>
         <button @click="save">Save</button>
@@ -103,10 +104,12 @@
         if(!this.estimate)
           return "";
         let hoursDecimal = (this.estimate - new Date() )/1000/60/60;
-        let wholeHours = Math.floor(hoursDecimal);
+        let sign = hoursDecimal/Math.abs(hoursDecimal);
+        hoursDecimal = Math.abs(hoursDecimal);
+        let wholeHours = hoursDecimal - hoursDecimal % 1;
         let minutes = (hoursDecimal - wholeHours) * 60;
         let minutesStr = (minutes < 10 ? "0":"") + minutes.toFixed(0)
-        return wholeHours + "h " + minutesStr + "m";
+        return (sign < 0 ? "-":"") + wholeHours + "h " + minutesStr + "m";
       },
     },
     firestore () {
