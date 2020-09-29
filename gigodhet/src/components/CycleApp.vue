@@ -4,23 +4,23 @@
 
     <li class="list-group">
       <ul>
-        {{estimate && estimate.toLocaleTimeString()}}
+        {{estimate && estimate.toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}}
         <span class="light_text">({{ estimateHoursAndMinutes }})</span>
       </ul>
       <ul>
         <button @click="save">Save</button>
       </ul>
-      <ul>
-        <span class="light_text">{{average.numDays}}-day average:</span>
-          {{average.value.toFixed(2)}} per day
-      </ul>
       <ul v-for="(numGobs, idx) in dailyGobs.slice(0, 3)" :key="idx" class="list-group-item">
         {{numGobs}}
         <span class="float_right">-</span>
       </ul>
-      <ul v-for="(gob) in sortedGobs" :key="gob.id" class="list-group-item">
-        {{gob.time && gob.time.toDate().toLocaleDateString()}} {{gob.time && gob.time.toDate().toLocaleTimeString()}}
+      <ul v-for="(gob) in sortedGobs.slice(0, 3)" :key="gob.id" class="list-group-item">
+        {{gob.time && gob.time.toDate().toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}}
         <span class="float_right">:D</span>
+      </ul>
+      <ul>
+        <span class="light_text">{{average.numDays}}-day average:</span>
+          {{average.value.toFixed(2)}} per day
       </ul>
     </li>
 
@@ -39,11 +39,35 @@
     beforeCreate() {
       // setters.setActiveNav("pameldinger");
     },
+    created() {
+      setInterval( () => {
+        this.newDate = new Date();
+      }, 1000)
+    },
     name: "CycleApp",
     data () {
       return {
         gobs: [],
+        newDate: new Date(),
       }
+    },
+    watch: {
+      newDate() {
+
+        let hoursRemaining = (this.estimate - this.newDate)/1000/60/60;
+        console.log(hoursRemaining)
+
+        let color = ""
+        if (hoursRemaining < -2)
+          color = "#f9a";//red
+        else if (hoursRemaining < 0)
+          color = "#fdb";//"orange"
+        else if (hoursRemaining < 2)
+          color = "white";
+        else
+          color = "#9f9";//"green";
+
+        document.querySelector('body').style.backgroundColor = color;      }
     },
     computed: {
       getters: () => getters,
@@ -70,7 +94,8 @@
 
       },
       average() {
-        let dayTo = this.dailyGobs.length > 11 ? 11 : this.dailyGobs.length;
+        let numDays = 4;
+        let dayTo = this.dailyGobs.length > numDays+1 ? numDays+1 : this.dailyGobs.length;
         let sum = 0;
 
         for (let i=1; i<dayTo; i++) {
@@ -103,13 +128,15 @@
       estimateHoursAndMinutes() {
         if(!this.estimate)
           return "";
-        let hoursDecimal = (this.estimate - new Date() )/1000/60/60;
+        let hoursDecimal = (this.estimate - this.newDate )/1000/60/60;
         let sign = hoursDecimal/Math.abs(hoursDecimal);
         hoursDecimal = Math.abs(hoursDecimal);
         let wholeHours = hoursDecimal - hoursDecimal % 1;
         let minutes = (hoursDecimal - wholeHours) * 60;
         let minutesStr = (minutes < 10 ? "0":"") + Math.floor(minutes);
-        return (sign < 0 ? "-":"") + wholeHours + "h " + minutesStr + "m";
+        let seconds = (minutes % 1) * 60;
+        let secondsStr = Math.floor(seconds);
+        return (sign < 0 ? "-":"") + wholeHours + "h " + minutesStr + "m " + secondsStr;
       },
     },
     firestore () {
