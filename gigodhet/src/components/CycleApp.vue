@@ -62,7 +62,7 @@
           color = "#f9a";//red
         else if (hoursRemaining < 0)
           color = "#fdb";//"orange"
-        else if (hoursRemaining < 2)
+        else if (hoursRemaining < 4)
           color = "white";
         else
           color = "#9f9";//"green";
