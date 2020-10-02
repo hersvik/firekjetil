@@ -5,6 +5,7 @@
     <li class="list-group">
       <ul>
         {{estimate && estimate.toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}}
+        <span class="dot" v-if="(new Date() - sortedGobs[0].time.toDate()) < 3*60*60*1000" />
         <span class="light_text">({{ estimateHoursAndMinutes }})</span>
       </ul>
       <ul>
@@ -12,10 +13,12 @@
       </ul>
       <ul v-for="(numGobs, idx) in dailyGobs.slice(0, 3)" :key="idx" class="list-group-item" :class="{'strong_border': idx === 0}">
         {{numGobs}}
+        <span class="dot" v-if="idx === 0 && (new Date() - sortedGobs[0].time.toDate()) < 3*60*60*1000" />
         <span class="float_right">-</span>
       </ul>
       <ul v-for="(gob) in sortedGobs.slice(0, 3)" :key="gob.id" class="list-group-item no_background">
         {{gob.time && gob.time.toDate().toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}}
+        <span class="dot" v-if="new Date() - gob.time.toDate() < 3*60*60*1000" />
         <span class="float_right">:D</span>
       </ul>
       <ul>
@@ -55,17 +58,16 @@
       newDate() {
 
         let hoursRemaining = (this.estimate - this.newDate)/1000/60/60;
-        console.log(hoursRemaining)
 
         let color = ""
         if (hoursRemaining < -2)
           color = "#f9a";//red
         else if (hoursRemaining < 0)
           color = "#fdb";//"orange"
-        else if (hoursRemaining < 4)
+        else //if (hoursRemaining < 4)
           color = "white";
-        else
-          color = "#9f9";//"green";
+        // else
+        //   color = "#9f9";//"green";
 
         document.querySelector('body').style.backgroundColor = color;      }
     },
@@ -153,11 +155,30 @@
         if (!confirm("Bekreft"))
           return
 
+        let that = this;
         db.collection("gobs").add({
           time: new Date(),
           ownerUid: getters.user().uid,
         })
-          .then(() => {});
+          .then(() => {
+            let timerDateTime = new Date();
+            let hourOfDayEstimate = that.estimate.getHours();
+
+            if(hourOfDayEstimate >= 22 || hourOfDayEstimate < 7) {
+              if(that.dailyGobs[0] + that.dailyGobs[1] < 5) {
+                timerDateTime.setHours(22, 0, 0);
+              }
+              else {
+                timerDateTime.setHours(24 + 7, 0, 0);
+              }
+            }
+            else {
+              timerDateTime = that.estimate;
+            }
+            let timerMinutes = (timerDateTime - new Date())/1000/60;
+
+            window.location.assign("shortcuts://run-shortcut?name=minutes_remaining&input="+(timerMinutes - 30));
+          });
 
         let idsToDelete = this.gobs.slice().filter(gob => gob.time.seconds + 60*60*24*15 < Date.now()/1000)
                                             .map(gob => gob.id);
@@ -187,4 +208,12 @@
   .no_background {
     background: transparent;
   }
+  .dot {
+  height: 12px;
+  width: 12px;
+  background-color: #8af;
+  border-radius: 50%;
+  display: inline-block;
+  margin:2px;
+}
 </style>
