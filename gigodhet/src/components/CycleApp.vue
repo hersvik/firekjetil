@@ -162,9 +162,11 @@
         })
           .then(() => {
             let timerDateTime = new Date();
-            let hourOfDayEstimate = that.estimate.getHours();
+            let alarmDateTime = that.estimate;
+            alarmDateTime.setTime(timerDateTime.getTime() - 1000*60 * 30) // alarm 30 minutes before estimate.
+            let alarmHour = alarmDateTime.getHours();
 
-            if(hourOfDayEstimate >= 22 || hourOfDayEstimate < 7) {
+            if(alarmHour >= 22 || alarmHour < 7) {
               if(that.dailyGobs[0] + that.dailyGobs[1] < 5) {
                 timerDateTime.setHours(22, 0, 0);
               }
@@ -174,10 +176,11 @@
             }
             else {
               timerDateTime = that.estimate;
+              timerDateTime.setTime(timerDateTime.getTime() - 1000*60 * 30); // alarm 30 minutes before estimate.
             }
             let timerMinutes = (timerDateTime - new Date())/1000/60;
 
-            window.location.assign("shortcuts://run-shortcut?name=minutes_remaining&input="+(timerMinutes - 30));
+            window.location.assign("shortcuts://run-shortcut?name=minutes_remaining&input="+(timerMinutes));
           });
 
         let idsToDelete = this.gobs.slice().filter(gob => gob.time.seconds + 60*60*24*15 < Date.now()/1000)
