@@ -66,10 +66,10 @@
           color = "#f9a";//red
         else if (hoursRemaining < 0)
           color = "#fdb";//"orange"
-        else //if (hoursRemaining < 4)
-          color = "white";
-        // else
-        //   color = "#9f9";//"green";
+        else if (hoursRemaining < 2)
+          color = "#ffa";//yellow
+         else
+           color = "white";//older: "#9f9";//"green";
 
         document.querySelector('body').style.backgroundColor = color;      }
     },
