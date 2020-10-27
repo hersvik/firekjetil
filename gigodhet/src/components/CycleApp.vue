@@ -1,24 +1,25 @@
 <template>
   <div class="container container_under_nav">
-    <h1>CycleApp</h1>
 
     <li class="list-group">
-      <ul>
+      <ul style="margin-bottom: 2em;">
         {{estimate && estimate.toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}}
-        <span class="dot" v-if="(new Date() - sortedGobs[0].time.toDate()) < 3*60*60*1000" />
-        <span class="light_text">({{ estimateHoursAndMinutes }})</span>
+        <!-- <span class="dot" v-if="(new Date() - sortedGobs[0].time.toDate()) < 3*60*60*1000" /> -->
+        ...<span class="light_text">({{ estimateHoursAndMinutes }})</span>
       </ul>
       <ul>
-        <button @click="save">Save</button>
+        <button @click="preSave = true" v-if="preSave == false">Add now</button>
+        <button @click="save" v-if="preSave == true" style="float: right">Confirm</button>
       </ul>
       <ul v-for="(numGobs, idx) in dailyGobs.slice(0, 3)" :key="idx" class="list-group-item" :class="{'strong_border': idx === 0}">
         {{numGobs}}
-        <span class="dot" v-if="idx === 0 && (new Date() - sortedGobs[0].time.toDate()) < 3*60*60*1000" />
+        <!-- <span class="dot" v-if="idx === 0 && (new Date() - sortedGobs[0].time.toDate()) < 3*60*60*1000" /> -->
         <span class="float_right">-</span>
       </ul>
       <ul v-for="(gob) in sortedGobs.slice(0, 3)" :key="gob.id" class="list-group-item no_background">
+        <span class="dot" v-if="gob.time.toDate().toDateString() == (new Date()).toDateString()" />
         {{gob.time && gob.time.toDate().toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}}
-        <span class="dot" v-if="new Date() - gob.time.toDate() < 3*60*60*1000" />
+        <!-- <span class="dot" v-if="new Date() - gob.time.toDate() < 3*60*60*1000" /> -->
         <span class="float_right">:D</span>
       </ul>
       <ul>
@@ -52,6 +53,7 @@
       return {
         gobs: [],
         newDate: new Date(),
+        preSave: false,
       }
     },
     watch: {
@@ -152,8 +154,6 @@
     },
     methods: {
       save () {
-        if (!confirm("Bekreft"))
-          return
 
         let that = this;
         db.collection("gobs").add({
@@ -162,8 +162,8 @@
         })
           .then(() => {
             let timerDateTime = new Date();
-            let alarmDateTime = that.estimate;
-            alarmDateTime.setTime(timerDateTime.getTime() - 1000*60 * 30) // alarm 30 minutes before estimate.
+            let alarmDateTime = new Date(that.estimate.getTime());
+            alarmDateTime.setTime(alarmDateTime.getTime() - 1000*60 * 30) // alarm 30 minutes before estimate.
             let alarmHour = alarmDateTime.getHours();
 
             if(alarmHour >= 22 || alarmHour < 7) {
@@ -175,7 +175,7 @@
               }
             }
             else {
-              timerDateTime = that.estimate;
+              timerDateTime = new Date(that.estimate.getTime());
               timerDateTime.setTime(timerDateTime.getTime() - 1000*60 * 30); // alarm 30 minutes before estimate.
             }
             let timerMinutes = (timerDateTime - new Date())/1000/60;
