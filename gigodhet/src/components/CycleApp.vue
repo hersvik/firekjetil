@@ -154,6 +154,7 @@
     },
     methods: {
       save () {
+        this.preSave = false;
 
         let that = this;
         db.collection("gobs").add({
