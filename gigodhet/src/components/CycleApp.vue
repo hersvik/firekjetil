@@ -10,7 +10,7 @@
         <button @click="preSave = true" v-if="preSave == false">Add now</button>
         <button @click="save" v-if="preSave == true" style="float: right">Confirm</button>
       </ul>
-      <ul>
+      <ul style="margin-bottom: 1em;">
         <span class="light_text">{{ new Date().toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}} - </span>
         <span style="color: black">{{dailyGobs[1] > 2 ? 2 - dailyGobs[0] : 3 - dailyGobs[0]}} left</span>
       </ul>
