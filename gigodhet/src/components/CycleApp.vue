@@ -2,25 +2,28 @@
   <div class="container container_under_nav">
 
     <li class="list-group">
-      <ul style="margin-bottom: 2em;">
+      <ul style="margin-bottom: 1.5em;">
         {{estimate && estimate.toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}}
-        <!-- <span class="dot" v-if="(new Date() - sortedGobs[0].time.toDate()) < 3*60*60*1000" /> -->
         ...<span class="light_text">({{ estimateHoursAndMinutes }})</span>
       </ul>
       <ul>
         <button @click="preSave = true" v-if="preSave == false">Add now</button>
         <button @click="save" v-if="preSave == true" style="float: right">Confirm</button>
       </ul>
-      <ul v-for="(numGobs, idx) in dailyGobs.slice(0, 3)" :key="idx" class="list-group-item" :class="{'strong_border': idx === 0}">
-        {{numGobs}}
-        <!-- <span class="dot" v-if="idx === 0 && (new Date() - sortedGobs[0].time.toDate()) < 3*60*60*1000" /> -->
-        <span class="float_right">-</span>
+      <ul>
+        <span class="light_text">{{ new Date().toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}} - </span>
+        <span style="color: black">{{dailyGobs[1] > 2 ? 2 - dailyGobs[0] : 3 - dailyGobs[0]}} left</span>
       </ul>
-      <ul v-for="(gob) in sortedGobs.slice(0, 3)" :key="gob.id" class="list-group-item no_background">
+      <ul v-for="(gob, idx) in sortedGobs.slice(0, 3)" :key="gob.id" class="list-group-item no_background">
         <span class="dot" v-if="gob.time.toDate().toDateString() == (new Date()).toDateString()" />
         {{gob.time && gob.time.toDate().toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}}
-        <!-- <span class="dot" v-if="new Date() - gob.time.toDate() < 3*60*60*1000" /> -->
-        <span class="float_right">:D</span>
+        <span class="light_text">{{idx === 0
+          ? ((newDate - gob.time.toDate())/1000/60/60).toFixed(1) + "h ago"
+          : ((sortedGobs[idx-1].time.toDate() - gob.time.toDate())/1000/60/60).toFixed(1) + "h before"}}</span>
+      </ul>
+      <ul v-for="(numGobs, idx) in dailyGobs.slice(0, 3)" :key="idx" class="list-group-item" :class="{'strong_border': idx === 0}">
+        {{numGobs}}
+        <span class="float_right">-</span>
       </ul>
       <ul>
         <span class="light_text">{{average.numDays}}-day average:</span>
@@ -200,6 +203,9 @@
 </script>
 
 <style scoped>
+  ul {
+    margin-bottom: 0.5em;
+  }
   .light_text {
     opacity: 0.5;
   }
