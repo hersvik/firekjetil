@@ -3,15 +3,15 @@
 
     <li class="list-group">
       <ul style="margin-bottom: 1.5em;">
-        {{estimate && estimate.toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}}
-        ...<span class="light_text">({{ estimateHoursAndMinutes }})</span>
+        ...{{estimate && estimate.toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}}
+        <span class="light_text">({{ estimateHoursAndMinutes }})</span>
       </ul>
       <ul>
         <button @click="preSave = true" v-if="preSave == false">Add now</button>
         <button @click="save" v-if="preSave == true" style="float: right">Confirm</button>
       </ul>
       <ul style="margin-bottom: 1em;">
-        <span class="light_text">{{ new Date().toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}} - </span>
+        <span class="light_text">{{ new Date().toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}}, </span>
         <span style="color: black;">
           {{dailyGobs[1] > 2 ? 2 - (dailyGobs[0] || 0) : 3 - (dailyGobs[0] || 0)}}</span><span class="light_text" style="font-size: 0.8em;">/{{dailyGobs[1] > 2 ? 2 : 3}}
           </span><span>left
