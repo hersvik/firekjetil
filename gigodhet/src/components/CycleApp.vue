@@ -12,7 +12,10 @@
       </ul>
       <ul style="margin-bottom: 1em;">
         <span class="light_text">{{ new Date().toLocaleTimeString("no-NO", {weekday: "long", hour: '2-digit', minute:'2-digit'})}} - </span>
-        <span style="color: black">{{dailyGobs[1] > 2 ? 2 - dailyGobs[0] : 3 - dailyGobs[0]}} left</span>
+        <span style="color: black;">
+          {{dailyGobs[1] > 2 ? 2 - (dailyGobs[0] || 0) : 3 - (dailyGobs[0] || 0)}}</span><span class="light_text" style="font-size: 0.8em;">/{{dailyGobs[1] > 2 ? 2 : 3}}
+          </span><span>left
+        </span>
       </ul>
       <ul v-for="(gob, idx) in sortedGobs.slice(0, 3)" :key="gob.id" class="list-group-item no_background">
         <span class="dot" v-if="gob.time.toDate().toDateString() == (new Date()).toDateString()" />
