@@ -2,7 +2,7 @@
   <div class="container container_under_nav">
     <router-link to="/wishes">Tilbake</router-link>
     <h1>{{id ? wish.title : 'Gi forslag til oppdrag'}}</h1>
-    <h3>{{wish.event || "Godhet Stavanger 2020"}}</h3>
+    <h3>{{wish.event}}</h3>
     <br />
     <em> {{constants.dataDisclosure}} </em>
 
@@ -201,7 +201,7 @@
             lastName: getters.authDisplayNameSplitted().lastName,
           },
           target: {},
-          event: "Godhet Stavanger 2020",
+          event: "Godhet Stavanger 2021",
           assigneesPerDay: [
             { registrationRefs: [] }
           ],

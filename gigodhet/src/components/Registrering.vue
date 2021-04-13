@@ -1,7 +1,7 @@
 <template>
   <div class="container container_under_nav">
     <router-link to="/regs">Tilbake</router-link>
-    <h1>{{registration.event || "Godhet Stavanger 2020"}}</h1>
+    <h1>{{registration.event}}</h1>
     <h3>{{registration.id ? registration.primaryPerson.firstName+ ' + ' +registration.participants.length : "Påmelding"}}</h3>
     <br />
     <em> {{constants.dataDisclosure}} </em>
@@ -185,7 +185,7 @@
           },
           participants: [],
           dailyAttendance: [{}], // add {} for tuesday, etc
-          event: "Godhet Stavanger 2020",
+          event: "Godhet Stavanger 2021",
         },
         alreadyLoaded: false,
         watchedRegistration: {},

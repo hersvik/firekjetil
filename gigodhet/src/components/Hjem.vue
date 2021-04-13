@@ -3,8 +3,8 @@
 
 
     <div class="jumbotron" :class="{jumbotron__logged_in: getters.user().uid}">
-      <h1 class="display-4">Godhet Stavanger</h1>
-      <p class="lead"><strong>25. - 29. mai</strong> 2020</p>
+      <h1 class="display-4">Godhet Stavanger &ndash; 2021</h1>
+      <p class="lead"><strong>Uke 22</strong> &ndash; fra mandag 31. mai</p>
       <hr class="my-4">
 
       <div v-if="!getters.user() || !getters.user().uid">
@@ -14,7 +14,8 @@
             Start her
           </button>
         </router-link>
-        <p class="lead">Du kan bruke en google konto, eller opprette et selvstendig passord direkte på første innlogging. Glemt passord-funksjonalitet kan deretter brukes. </p>
+        <!-- <span style="color: silver;"> PC eller smartelefon</span> -->
+        <p class="lead">Ved første innlogging kan du opprette et passord (velg "email") eller velge "google" for å bruke din google konto. Hvis du ønsker å vende tilbake en annen gang, er det nok å huske hvilken epostadresse du brukte, så kan du få nytt passord ved behov. </p>
       </div>
       <div v-else>
         <p class="lead">Yes, du er nå logget inn, <strong>kjør på</strong> videre:</p>
@@ -31,7 +32,12 @@
       </div>
 
       <hr class="my-4">
-      <p class="lead">I etterkant kan du <strong>lese og redigere</strong> alt du eventuelt har sendt inn - bare naviger inn samme vei.</p>
+      <p class="lead">Etter at du har sendt inn en påmelding eller et forslag kan du når som helst <span style="background-color: white;">redigere</span> informasjonen &ndash; bare naviger inn samme vei.
+      <span v-if="more">Vi beholder kun informasjon fra din siste endring. Godhet Stavanger vil kontakte deg angående påmeldingen din. Hvis du ønsker å endre påmeldingen din (eller ditt forslag til oppdrag) etter at du har fått svar på den, kan det være lurt å si ifra til personen som kontaktet deg i tillegg til å redigere her på egenhånd. Vedkommende leser ellers ikke nødvendigvis informasjonen din på nytt.
+        <span style="font-size: 0.8em"><br />Du kan også fjerne informasjonen din på egenhånd ved å evt. erstatte med tom info. Ta kontakt eventuelt ved ønske om å slette brukernavn eller slette tidspunkt for din siste redigering.</span>
+      </span>
+      <span @click="toggleMore()" style="color: silver; cursor: pointer;"> {{more ? "vis mindre" : "vis mer"}}</span>
+    </p>
     </div>
 
     <div class="video_wrapper">
@@ -39,6 +45,10 @@
     </div>
 
     I samarbeid med <a href="http://godhet.no">godhet.no</a>
+
+    <div style="margin-top: 1em; color: silver;">
+      <em>Oppdatert 13. april 2021 (Gjennomgang av all info, endret årstall 2020->2021)</em>
+    </div>
   </div>
 </template>
 
@@ -47,6 +57,16 @@
   export default {
     beforeCreate() {
       setters.setActiveNav("hjem");
+    },
+    data(){
+      return {
+      more: false,
+      }
+    },
+    methods: {
+      toggleMore() {
+        return this.more = !this.more;
+      },
     },
     computed: {
       getters(){
