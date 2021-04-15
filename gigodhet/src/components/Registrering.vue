@@ -23,7 +23,7 @@
 
 
       <div v-if="registration.removedBy" class="alert alert-danger">
-        Denne påmeldingen er deaktivert (fjernet). Lagre på nytt for å gjennopprette.
+        Denne påmeldingen er deaktivert (skjult). Lagre på nytt for å gjennopprette.
       </div>
       <div class="bg-light p-2">
         <small class="form-text text-muted">Deltager (enkeltperson eller gruppeleder)</small>
@@ -157,7 +157,7 @@
       <button v-if="!registration.removedBy" class="btn btn-primary" @click="save">Lagre og lukk</button>
       <button v-if="registration.removedBy" @click="save(true)" class="btn btn-primary">Lagre og gjenopprett</button>
 
-      <span v-if="id && !registration.removedBy" @click="removeRegistration" class="remove_registration clickable_label">[Fjern påmelding]</span>
+      <span v-if="id && !registration.removedBy" @click="removeRegistration" class="remove_registration clickable_label">[Skjul påmelding]</span>
     </div>
 
     *) Deltagere fra 8. klasse og ut videregående skole meldes på via ungdom@imikirken.no (Join)
@@ -274,7 +274,7 @@
 
       },
       removeRegistration() {
-        if( confirm("Vil du fjerne påmeldingen? For å gjennopprette etterpå, klikk 'Inkluder fjernede' i oversikten. (Felter som tømmes kan ikke hentes frem av noen).") ){
+        if( confirm("Vil du skjule påmeldingen? For å gjennopprette etterpå, klikk 'vis skjulte' i oversikten. (Administrator kan finne skjulte påmeldinger, men du kan tømme innholdet før du lagrer for å slette innholdet helt).") ){
           this.alreadyLoaded = false;
           db.collection('registrations').doc(this.id).update({
             removedBy: getters.user().displayName,

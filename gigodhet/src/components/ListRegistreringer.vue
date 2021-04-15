@@ -7,8 +7,8 @@
         + <router-link :to="{path: 'registrering'}">
           Ny påmelding
         </router-link>
-        <small @click="showAll" class="show_removed" v-if="!showRemoved">[Inkluder fjernede]</small>
-        <small @click="showAll" class="show_removed" v-if="showRemoved">[Skjul fjernede]</small>
+        <small @click="showAll" class="show_removed" v-if="!showRemoved">[vis skjulte]</small>
+        <small @click="showAll" class="show_removed" v-if="showRemoved">[skjul igjen]</small>
       </ul>
       <ul v-for="(registration) in chronologicalRegistrations" :key="registration.id" class="list-group-item" :class="{faded_removed: registration.removedBy}">
         {{registration.isMostRecentEdited}}
