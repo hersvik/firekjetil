@@ -39,6 +39,7 @@
       <span @click="toggleMore()" style="color: silver; cursor: pointer;"> {{more ? "vis mindre" : "vis mer"}}</span>
     </p>
     </div>
+    Kontakt oss: stavanger@godhet.no
 
     <div class="video_wrapper">
       <iframe width="200" height="112" src="https://www.youtube.com/embed/--K_rM6p4IM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
