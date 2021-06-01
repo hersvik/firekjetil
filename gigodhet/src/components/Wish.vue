@@ -7,8 +7,9 @@
     <em> {{constants.dataDisclosure}} </em>
 
     <div class="alert alert-secondary bg-light mt-3" role="alert">
-      <span style="font-size: 2em; float:  left; margin-right: 0.5em;">😃</span>Vi holder smittevernregler høyt. <br />Videre vil vi informere om at vi ikke tar de største oppdragene i denne tiden, men meld gjerne inn her under så svarer vi 👍🏼
-      <br>Dersom du tilhører en huskirke i IMI-Kirken som skal utføre oppdraget du ønsker å melde inn, trenger du ikke å melde det inn her.
+      <span style="font-size: 2em; float:  left; margin-right: 0.5em;">❎</span>Innmeldingen av forslag er <em><strong>stengt</strong></em> for i år!<br><br>
+      <span style="opacity: 20%">Vi holder smittevernregler høyt. <br />Videre vil vi informere om at vi ikke tar de største oppdragene i denne tiden, men meld gjerne inn her under så svarer vi 👍🏼
+      <br>Dersom du tilhører en huskirke i IMI-Kirken som skal utføre oppdraget du ønsker å melde inn, trenger du ikke å melde det inn her.</span>
     </div>
 
     <button v-if="id" class="btn mt-4" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Lagre</button>
@@ -407,6 +408,10 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
 </script>
 
 <style scoped>
+  input, button, textarea {
+    pointer-events: none;
+    background-color: silver;
+  }
   .clickable_tag {
     cursor: pointer !important;
   }
