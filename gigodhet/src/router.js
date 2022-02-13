@@ -35,6 +35,12 @@ const router = new VueRouter({
         component: () => import("./components/Registrering.vue")
     },
     {
+        path: "/registrering/agent/:agent",
+        // name: "registrerHosAgent",
+        props: true,
+        component: () => import("./components/Registrering.vue")
+    },
+    {
         path: "/wish",
         component: () => import("./components/Wish.vue")
     },

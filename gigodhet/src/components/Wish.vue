@@ -408,10 +408,10 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
 </script>
 
 <style scoped>
-  input, button, textarea {
+  /* input, button, textarea {
     pointer-events: none;
     background-color: silver;
-  }
+  } */
   .clickable_tag {
     cursor: pointer !important;
   }

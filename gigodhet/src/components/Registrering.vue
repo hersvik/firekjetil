@@ -175,7 +175,7 @@
       setters.setActiveNav("pameldinger");
     },
     name: "Registrering",
-    props: ["id"],
+    props: ["id","agent"],
     data () {
       return {
         registration: {
@@ -246,6 +246,7 @@
         }
         this.alreadyLoaded = false; // Avoids watch alert
         this.registration.ownerUid = this.registration.ownerUid || getters.user().uid;
+        this.registration.agentUid = this.agent;
         this.registration.created = this.registration.created || new Date();
         this.registration.edited = new Date();
 
