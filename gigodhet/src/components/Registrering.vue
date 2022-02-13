@@ -246,7 +246,7 @@
         }
         this.alreadyLoaded = false; // Avoids watch alert
         this.registration.ownerUid = this.registration.ownerUid || getters.user().uid;
-        this.registration.agentUid = this.agent;
+        this.registration.agentUid = this.agent || null;
         this.registration.created = this.registration.created || new Date();
         this.registration.edited = new Date();
 
