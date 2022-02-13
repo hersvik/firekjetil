@@ -38,6 +38,7 @@
     data () {
       return {
         registrations: [],
+        registrationsReadOnly: [],
         showRemoved: false,
       }
     },
@@ -59,7 +60,8 @@
         }
         let uidMostRecentEdited = uidRecentEdit;
 
-        let sorted = this.registrations.slice();
+        let combined = this.registrations.slice().concat(this.registrationsReadOnly.slice());
+        let sorted = combined;
         sorted.sort((a, b) => {
           return a.created.seconds - b.created.seconds;
         });
@@ -96,7 +98,8 @@
       }
       else if (getters.user().uid) {
         return {
-          registrations: db.collection("registrations").where("ownerUid", "==", getters.user().uid)
+          registrations: db.collection("registrations").where("ownerUid", "==", getters.user().uid),
+          registrationsReadOnly: db.collection("registrations").where("agentUid", "==", getters.user().uid)
         };
       }
     },
