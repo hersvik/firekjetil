@@ -13,6 +13,7 @@
       <ul v-for="(registration) in chronologicalRegistrations" :key="registration.id" class="list-group-item" :class="{faded_removed: registration.removedBy}">
         {{registration.isMostRecentEdited}}
         <span class="edited_tag">#{{registration.counter}}</span>
+        <span class="dot" v-if="registration.ownerUid === getters.user().uid"></span>
         {{registration.created.toDate().toLocaleDateString()}}
         <span class="hasAgent" v-if="registration.agentUid"> G</span>
         <span class="hasAgent" v-if="registration.agentUid === getters.user().uid"> A</span>
@@ -130,5 +131,14 @@
   }
   .hasAgent{
     font-weight: bold;
+  }
+  .dot {
+    height: 0.8em;
+    width: 0.8em;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 0.2em
+;
   }
 </style>
