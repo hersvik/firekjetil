@@ -1,5 +1,5 @@
 <template>
-  <div class="container container_under_nav">
+  <div class="container container_under_nav" :class="{readonly: isReadonly}">
     <router-link to="/regs">Tilbake</router-link>
     <h1>{{registration.event}}</h1>
     <h3>{{registration.id ? registration.primaryPerson.firstName+ ' + ' +registration.participants.length : "Påmelding"}}</h3>
@@ -212,6 +212,9 @@
           result.push({});
         }
         return result;
+      },
+      isReadonly(){
+        return this.registration.ownerUid !== this.getters.user().uid;
       }
     },
     watch: {
@@ -295,5 +298,13 @@
   }
   .clickable_label {
     cursor: pointer;
+  }
+
+  .readonly input, .readonly button, .readonly textarea, .readonly select {
+    pointer-events: none;
+    background-color: rgb(236, 236, 236);
+  }
+  .readonly .clickable_label {
+    pointer-events: none;
   }
 </style>
