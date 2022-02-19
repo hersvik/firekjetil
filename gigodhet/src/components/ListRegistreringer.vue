@@ -14,6 +14,7 @@
         {{registration.isMostRecentEdited}}
         <span class="edited_tag">#{{registration.counter}}</span>
         {{registration.created.toDate().toLocaleDateString()}}
+        <span class="hasAgent" v-if="registration.agentUid"> G</span>
         <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
           {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}} (+{{registration.participants && registration.participants.length || 0}})
         </router-link>
@@ -122,5 +123,8 @@
   }
   .faded_removed {
     opacity: 0.4;
+  }
+  .hasAgent{
+    font-weight: bold;
   }
 </style>
