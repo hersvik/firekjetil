@@ -15,6 +15,7 @@
         <span class="edited_tag">#{{registration.counter}}</span>
         {{registration.created.toDate().toLocaleDateString()}}
         <span class="hasAgent" v-if="registration.agentUid"> G</span>
+        <span class="hasAgent" v-if="registration.agentUid === getters.user().uid"> A</span>
         <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
           {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}} (+{{registration.participants && registration.participants.length || 0}})
         </router-link>
@@ -39,13 +40,16 @@
     data () {
       return {
         registrations: [],
-        registrationsReadOnly: [],
+        registrationsWithAgentAccess: [],
         showRemoved: false,
       }
     },
     computed: {
       getters: () => getters,
       constants: () => constants,
+      registrationsReadOnly() {
+        return this.registrationsWithAgentAccess.filter(r => r.ownerUid !== getters.user().uid);
+      },
       chronologicalRegistrations() {
         if (!this || !this.registrations) {
           return;
@@ -100,7 +104,7 @@
       else if (getters.user().uid) {
         return {
           registrations: db.collection("registrations").where("ownerUid", "==", getters.user().uid),
-          registrationsReadOnly: db.collection("registrations").where("agentUid", "==", getters.user().uid)
+          registrationsWithAgentAccess: db.collection("registrations").where("agentUid", "==", getters.user().uid)//.where("ownerUid", "!=", getters.user().uid)
         };
       }
     },
