@@ -233,7 +233,9 @@
         return result;
       },
       isReadonly(){
-        return this.registration.ownerUid !== this.getters.user().uid && typeof this.registration.ownerUid !== 'undefined';
+        return this.registration.ownerUid !== this.getters.user().uid
+        && typeof this.registration.ownerUid !== 'undefined' // Nye påmeldinger er ikke readonly.
+        && this.getters.user().uid !== this.constants.adminUid;
       }
     },
     watch: {
