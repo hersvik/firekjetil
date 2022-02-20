@@ -1,29 +1,31 @@
 <template>
   <div class="container container_under_nav">
 
-    <h1>Deltagere</h1>
-    <h2>Oppsummering: ditt A-team</h2>
-    <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
+    <template v-if="myTeamRegistrations.length > 0">
+      <h1>Deltagere</h1>
+      <h2>Oppsummering: ditt A-team</h2>
+      <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
 
-    <h5 class="dayTitle">{{constants.campaignDays[index]}}</h5>
+      <h5 class="dayTitle">{{constants.campaignDays[index]}}</h5>
 
-      <div v-for="(registration) in myTeamRegistrations" :key="registration.id">
-        <li v-if="registration.primaryPerson.willAttendDay[index]">
-          <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
-            {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}}
-          </router-link>
-        </li>
-        <div v-for="(participant) in registration.participants" :key="participant.firstName + participant.lastName">
-          <li v-if="participant.willAttendDay[index]">
+        <div v-for="(registration) in myTeamRegistrations" :key="registration.id">
+          <li v-if="registration.primaryPerson.willAttendDay[index]">
             <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
-              {{participant.firstName}} {{participant.lastName}}
+              {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}}
             </router-link>
-              (meddeltager)
           </li>
+          <div v-for="(participant) in registration.participants" :key="participant.firstName + participant.lastName">
+            <li v-if="participant.willAttendDay[index]">
+              <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
+                {{participant.firstName}} {{participant.lastName}}
+              </router-link>
+                (meddeltager)
+            </li>
+          </div>
         </div>
-      </div>
 
-    </div>
+      </div>
+    </template>
 
 
     <h1>Påmeldinger</h1>
