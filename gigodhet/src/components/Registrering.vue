@@ -1,5 +1,15 @@
 <template>
-  <div class="container container_under_nav" :class="{readonly: isReadonly}">
+  <div v-if="!confirmedGeneralRegistration" class="container container_under_nav">
+    <h1>Påmelding</h1>
+    Har du, eller den du skal melde på, fått instruksjon om påmelding fra egen huskirke eller en egen gruppe? Følg i såfall den. Grupper kan nemlig ha forskjellige måter å gjøre påmelding på. <span style="color: silver">Dette avsnittet kan flyttes til forsiden. Vi kan også tydeliggjøre at hvem som helst kan melde på andre på vegne av dem (da er det den personen som gjør påmeldingen som har tilgang til å endre påmeldingnen for vedkommende). Det er også fullt mulig at noen huskirker etc ordner sin egen påmelding helt internt seg imellom og ordner oppdrag på egenhånd litt sånn som det har vært under pandemien. </span><br>
+    <br>
+    Vent! <br>
+    Hvis du har mottatt en egen lenke for påmelding fra din huskirke eller gruppe - bruk den! (Du mottar den direkte fra godhetslederen i gruppen din). <br>
+    <br>
+    Hvis ikke noe av dette gjelder deg,<br>
+    <button @click="confirmedGeneralRegistration=true">Start påmelding</button>
+  </div>
+  <div v-else class="container container_under_nav" :class="{readonly: isReadonly}">
     <router-link to="/regs">Tilbake</router-link>
     <h1>{{registration.event}}</h1>
     <h3>{{registration.id ? registration.primaryPerson.firstName+ ' + ' +registration.participants.length : "Påmelding"}}</h3>
@@ -208,6 +218,7 @@
         },
         alreadyLoaded: false,
         watchedRegistration: {},
+        confirmedGeneralRegistration: false,
       }
     },
     firestore () {
