@@ -51,6 +51,16 @@
             </select>
         </div>
 
+        <div>
+          <label>
+            Jeg ønsker å delta:
+          </label>
+          <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
+            <input type="checkbox" v-model="registration.primaryPerson.willAttendDay[index]"> {{constants.campaignDays[index]}}
+          </div>
+          <br>
+        </div>
+
         <div class="form-group">
           <label>
             Tlf.
@@ -119,6 +129,14 @@
           <option value="child">Barn (til og med 7. klasse)</option>
         </select>
       </div>
+      <div>
+        <label>
+          Deltager ønsker å delta:
+        </label>
+        <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
+        <input type="checkbox" v-model="participant.willAttendDay[index]"> {{constants.campaignDays[index]}}
+        </div>
+      </div>
     </div>
 
     <div class="form-group mb-5">
@@ -182,6 +200,7 @@
           primaryPerson: {
             firstName: getters.authDisplayNameSplitted().firstName,
             lastName: getters.authDisplayNameSplitted().lastName,
+            willAttendDay: new Array(constants.campaignDays.length).fill(false),
           },
           participants: [],
           dailyAttendance: [{}], // add {} for tuesday, etc
@@ -214,7 +233,7 @@
         return result;
       },
       isReadonly(){
-        return this.registration.ownerUid !== this.getters.user().uid;
+        return this.registration.ownerUid !== this.getters.user().uid && typeof this.registration.ownerUid !== 'undefined';
       }
     },
     watch: {
@@ -234,7 +253,7 @@
         // db.collection("enrollment").doc(enrolled.id).update({misc: enrolled.misc})
       },
       addParticipant() {
-        this.registration.participants.push({});
+        this.registration.participants.push({willAttendDay: new Array(constants.campaignDays.length).fill(false)});
       },
       removeGroupMember(idx) {
         if(confirm("Vil du fjerne meddeltager nummer "+(idx+1)+"? \n\nHusk å også bruke lagre-knappen nederst i skjema for å bekrefte endringer. ")){

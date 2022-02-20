@@ -1,7 +1,32 @@
 <template>
   <div class="container container_under_nav">
-    <h1>Påmeldinger</h1>
 
+    <h1>Deltagere</h1>
+    <h2>Oppsummering: ditt A-team</h2>
+    <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
+
+    <h5 class="dayTitle">{{constants.campaignDays[index]}}</h5>
+
+      <div v-for="(registration) in myTeamRegistrations" :key="registration.id">
+        <li v-if="registration.primaryPerson.willAttendDay[index]">
+          <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
+            {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}}
+          </router-link>
+        </li>
+        <div v-for="(participant) in registration.participants" :key="participant.firstName + participant.lastName">
+          <li v-if="participant.willAttendDay[index]">
+            <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
+              {{participant.firstName}} {{participant.lastName}}
+            </router-link>
+              (meddeltager)
+          </li>
+        </div>
+      </div>
+
+    </div>
+
+
+    <h1>Påmeldinger</h1>
     <li class="list-group">
       <ul class="list-group-item">
         + <router-link :to="{path: 'registrering'}">
@@ -26,6 +51,7 @@
       </ul>
     </li>
 
+    <div style="opacity: 0.1;">{{getters.user().uid}}</div><!--Temporary show Uid-->
   </div>
 </template>
 
@@ -95,6 +121,9 @@
         }
         return copy;
       },
+      myTeamRegistrations() {
+        return this.chronologicalRegistrations.filter(r => r.agentUid === this.getters.user().uid)
+      },
     },
     firestore () {
       if(getters.user().uid === constants.adminUid){
@@ -118,6 +147,12 @@
 </script>
 
 <style scoped>
+  h1 {
+    margin-top: 0.5em;
+  }
+  .dayTitle{
+    margin: 1em 0 0.5em;
+  }
   .edited_tag {
     opacity: 0.5;
   }
