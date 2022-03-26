@@ -147,7 +147,7 @@
     </div>
 
     <div class="form-group mb-5">
-      <button class="btn btn-light" @click="addParticipant">+ Legg til gruppedeltager</button>
+      <button class="btn btn-light" @click="addParticipant">+ Legg til meddeltager</button>
     </div>
 
     <div class="form-group mt-4 mb-5">
