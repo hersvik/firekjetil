@@ -1,13 +1,10 @@
 <template>
   <div v-if="!confirmedGeneralRegistration && !agent" class="container container_under_nav">
     <h1>Påmelding</h1>
-    Har du, eller den du skal melde på, fått instruksjon om påmelding fra egen huskirke eller en egen gruppe? Følg i såfall den. Grupper kan nemlig ha forskjellige måter å gjøre påmelding på. <span style="color: silver">Dette avsnittet kan flyttes til forsiden. Vi kan også tydeliggjøre at hvem som helst kan melde på andre på vegne av dem (da er det den personen som gjør påmeldingen som har tilgang til å endre påmeldingnen for vedkommende). Det er også fullt mulig at noen huskirker etc ordner sin egen påmelding helt internt seg imellom og ordner oppdrag på egenhånd litt sånn som det har vært under pandemien. </span><br>
+    Er du med i en <strong>huskirke</strong>? Da må du kun melde deg på via spesial-lenke som du mottar fra din egen huskirke. Hvis du trykket på lenken fra huskirken før du fikk logget på godhetstavanger.no må du trykke en gang til nå for å melde deg på. <br>
+
     <br>
-    Vent! <br>
-    Hvis du har mottatt en egen lenke for påmelding fra din huskirke eller gruppe - bruk den! (Du mottar den direkte fra godhetslederen i gruppen din). <br>
-    <br>
-    Hvis ikke noe av dette gjelder deg,<br>
-    <button @click="confirmedGeneralRegistration=true">Start påmelding</button>
+    <button class="btn btn-primary" @click="confirmedGeneralRegistration=true">Start påmelding - (<em>uten</em> huskirke)</button>
   </div>
   <div v-else class="container container_under_nav" :class="{readonly: isReadonly}">
     <router-link to="/regs">Tilbake</router-link>
@@ -62,9 +59,9 @@
 
         <div>
           <label>
-            Jeg ønsker å delta:
+            <strong>{{registration.primaryPerson.firstName || "Jeg"}}</strong> ønsker å delta:
           </label>
-          <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
+          <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index" class="day-checkbox">
             <input type="checkbox" v-model="registration.primaryPerson.willAttendDay[index]"> {{constants.campaignDays[index]}}
           </div>
           <br>
@@ -76,13 +73,13 @@
           </label>
           <input v-model="registration.primaryPerson.phone" class="form-control" placeholder="" type="number" />
         </div>
-        <div class="form-group">
+        <div v-if="!agent" class="form-group">
           <label>
             E-post
           </label>
           <input v-model="registration.primaryPerson.email" class="form-control" placeholder="" type="text" />
         </div>
-        <div class="form-group">
+        <div v-if="!agent" class="form-group">
             <label>
               Adresse, postnummer og -sted
             </label>
@@ -113,6 +110,7 @@
 
     <div class="mt-5">
       <h2>Meddeltagere</h2>
+      (Noen som skal delta sammen med deg og som vet at du herved melder dem på)
     </div>
     <div v-for="(participant, idx) in registration.participants" :key="idx" class="bg-light p-2 mb-2">
       <small class="form-text text-muted" style="display: inline;">Meddeltager {{idx + 1}} </small><small class="clickable_label" @click="removeGroupMember(idx)">[Fjerne]</small>
@@ -140,9 +138,9 @@
       </div>
       <div>
         <label>
-          Deltager ønsker å delta:
+          <strong>{{participant.firstName || "Denne deltageren"}}</strong> ønsker å delta:
         </label>
-        <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
+        <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index" class="day-checkbox">
         <input type="checkbox" v-model="participant.willAttendDay[index]"> {{constants.campaignDays[index]}}
         </div>
       </div>
@@ -152,25 +150,6 @@
       <button class="btn btn-light" @click="addParticipant">+ Legg til gruppedeltager</button>
     </div>
 
-    <div v-if="constants.hasDailyAttendanceFeature" class="form-row">
-      <div class="col">
-      </div>
-      <div class="col">
-        Antall voksne
-      </div>
-    </div>
-    <div v-if="constants.hasDailyAttendanceFeature" class="form-row">
-      <div class="col">
-        Mandag
-      </div>
-      <div class="col">
-        <select v-model="registration.dailyAttendance[0].adult" class="custom-select">
-          <option v-for="(p, idx) in adultNumberSelection" :key="idx">{{idx}}</option>
-        </select>
-      </div>
-    </div>
-
-    Hvilke dager i godhetsuka man ønsker å delta avtales i år primært med godhetslederen i huskirka eller leder for oppdraget du får tildelt, men du kan skrive en kommentar om det her.
     <div class="form-group mt-4 mb-5">
       <label>
         Eventuelt annet / kommentar
@@ -346,5 +325,8 @@
   }
   .readonly .clickable_label {
     pointer-events: none;
+  }
+  .day-checkbox{
+    margin-top: 0.3em;
   }
 </style>

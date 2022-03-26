@@ -53,7 +53,7 @@
       </ul>
     </li>
 
-    <div style="opacity: 0.1;">{{getters.user().uid}}</div><!--Temporary show Uid-->
+    <!--<div style="opacity: 0.1;">{{getters.user().uid}}</div>Temporary show Uid-->
   </div>
 </template>
 

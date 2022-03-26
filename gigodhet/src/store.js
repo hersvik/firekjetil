@@ -30,7 +30,6 @@ export const setters = {
 export const constants = {
   campaignDays: ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag'],
   adminUid: "M7BpZGRkH4hgut24BPknSOVB2H02",
-  hasDailyAttendanceFeature: false,
   dataDisclosure: "Ved bruk av dette skjema samtykker du til at opplysningene lagres en periode og håndteres av arrangementets sekretariat samt utvalgte nødvendige samarbeidspersoner - aktsomt og ut fra rimelig behov.",
   welcomeUnfinishedFormMessage: "Dersom skjemaet er uferdig kan du legge inn en kommentar om det og likevel lagre.",
 }
