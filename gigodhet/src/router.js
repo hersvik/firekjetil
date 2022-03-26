@@ -15,6 +15,10 @@ const router = new VueRouter({
         component: () => import('./components/ListRegistreringer.vue')
     },
     {
+        path: "/teamreg",
+        component: () => import('./components/TeamNavn.vue')
+    },
+    {
         path: "/cycle", // easter-egg app
         component: () => import('./components/CycleApp.vue')
     },

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!confirmedGeneralRegistration" class="container container_under_nav">
+  <div v-if="!confirmedGeneralRegistration && !agent" class="container container_under_nav">
     <h1>Påmelding</h1>
     Har du, eller den du skal melde på, fått instruksjon om påmelding fra egen huskirke eller en egen gruppe? Følg i såfall den. Grupper kan nemlig ha forskjellige måter å gjøre påmelding på. <span style="color: silver">Dette avsnittet kan flyttes til forsiden. Vi kan også tydeliggjøre at hvem som helst kan melde på andre på vegne av dem (da er det den personen som gjør påmeldingen som har tilgang til å endre påmeldingnen for vedkommende). Det er også fullt mulig at noen huskirker etc ordner sin egen påmelding helt internt seg imellom og ordner oppdrag på egenhånd litt sånn som det har vært under pandemien. </span><br>
     <br>
@@ -16,9 +16,8 @@
     <br />
     <em> {{constants.dataDisclosure}} </em>
 
-    <div v-if="!registration.id" class="alert alert-secondary bg-light mt-3" role="alert">
-      👉 Av hensyn til smittevernregler kobles man på en leder for en gruppe som har ansvar for gjengen. <br>
-      Hvis du er med i en <strong>huskirke</strong> i IMI-kirken som deltar på Godhet skal du i utgangspunktet ikke melde deg på her.
+    <div v-if="team && team.teamName" class="alert alert-secondary bg-light mt-3" role="alert">
+      👉 Du melder deg på via <em>{{team.teamName}}</em>
     </div>
 
     <form>
@@ -202,6 +201,14 @@
     beforeCreate() {
       setters.setActiveNav("pameldinger");
     },
+    created(){
+      db.collection('teams')
+      .doc(this.agent)
+      .get()
+      .then(snapshot => {
+        this.team = snapshot.data()
+      })
+    },
     name: "Registrering",
     props: ["id","agent"],
     data () {
@@ -219,12 +226,13 @@
         alreadyLoaded: false,
         watchedRegistration: {},
         confirmedGeneralRegistration: false,
+        team: {},
       }
     },
     firestore () {
       if (this.id) {
         return {
-          registration: db.collection("registrations").doc(this.id)
+          registration: db.collection("registrations").doc(this.id),
         }
       }
     },
@@ -297,7 +305,7 @@
             .then(() => {
               this.$router.push("/regs")
             })
-            .catch(function(error){ // trenger å verifiseres
+            .catch(function(error){
               alert("Kunne ikke lagre. ("+error+")")
             });
         }

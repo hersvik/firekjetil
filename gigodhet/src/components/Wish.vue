@@ -323,7 +323,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
                 this.whenAllSaved(isStaying);
               }
             })
-            .catch(function(error){ // trenger å verifiseres
+            .catch(function(error){
               alert("Kunne ikke lagre. ("+error+")")
             });
         }
