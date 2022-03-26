@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!confirmedGeneralRegistration && !agent" class="container container_under_nav">
+  <div v-if="!confirmedGeneralRegistration && !agent && !registration.id" class="container container_under_nav">
     <h1>Påmelding</h1>
     Er du med i en <strong>huskirke</strong>? Da må du kun melde deg på via spesial-lenke som du mottar fra din egen huskirke. Hvis du trykket på lenken fra huskirken før du fikk logget på godhetstavanger.no må du trykke en gang til nå for å melde deg på. <br>
 
