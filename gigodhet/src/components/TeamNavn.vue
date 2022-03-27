@@ -2,9 +2,10 @@
   <div class="container container_under_nav">
     <h1>Team registrering</h1>
     <div v-if="team && team.teamName">
-      Du har registert deg som kontaktperson for <em>{{team.teamName}}</em><br>
+      Du har registert deg som leder/agent for <em>{{team.teamName}}</em><br>
       Dine deltagere skal bruke denne påmeldings-linken: <br>
-      <code>godhetstavanger.no/registrering/agent/{{team.id}}</code>
+      <button @click="copyUrl" class="btn btn-secondary">{{copied ? "Kopiert !" : "Kopier"}}</button>
+      <code>godhetstavanger.no/registrering/agent/{{team.id}}</code><!--duplicated url in clipbaord line below-->
     </div>
     <div v-else>
       Registrer deg som team-leder ved å trykke på denne knappen:<br>
@@ -28,6 +29,7 @@
     data () {
       return {
         team: {},
+        copied: false,
       }
     },
     firestore () {
@@ -74,6 +76,10 @@
 
       },
 
+      copyUrl() {
+        navigator.clipboard.writeText("godhetstavanger.no/registrering/agent/"+this.team.id);
+        this.copied = true;
+      }
     }
   }
 </script>

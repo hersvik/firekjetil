@@ -3,6 +3,13 @@
 
     <template v-if="myTeamRegistrations.length > 0">
       <h1>Deltagere</h1>
+      <a :href="'/registrering/agent/'+getters.user().uid">
+        Direkte påmelding
+      </a>
+      -
+      <a href="/teamreg">
+        Send lenke
+      </a>
       <h2>Oppsummering: ditt A-team</h2>
       <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
 
