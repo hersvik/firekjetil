@@ -22,6 +22,9 @@
     <div v-if="team && team.teamName" class="alert alert-secondary bg-light mt-3" role="alert">
       👉 Du melder deg på via <em>{{team.teamName}}</em>
     </div>
+    <div v-if="agent && !team" class="alert alert-secondary bg-light mt-3" role="alert">
+      🔺 <em>Feil med lenken du brukte. Prøv på nytt eller be om ny lenke.</em>
+    </div>
 
     <form>
       <div v-if="getters.user().uid === constants.adminUid" class="alert alert-dark bg-secondary text-white mt-4">
@@ -174,11 +177,17 @@
     </div>
 
     {{constants.welcomeUnfinishedFormMessage}}
-    <div class="form-group">
-      <button v-if="!registration.removedBy" class="btn btn-primary" @click="save">Lagre og lukk</button>
-      <button v-if="registration.removedBy" @click="save(true)" class="btn btn-primary">Lagre og gjenopprett</button>
+    <div v-if="!(agent && !team)" class="form-group"><!-- agent && !team means error with team link, see user warning above-->
+      <button v-if="!registration.removedBy" class="btn btn-primary" @click="save">
+        Lagre og lukk
+      </button>
+      <button v-if="registration.removedBy" @click="save(true)" class="btn btn-primary">
+        Lagre og gjenopprett
+      </button>
 
-      <span v-if="id && !registration.removedBy" @click="removeRegistration" class="remove_registration clickable_label">[Skjul påmelding]</span>
+      <span v-if="id && !registration.removedBy" @click="removeRegistration" class="remove_registration clickable_label">
+        [Skjul påmelding]
+      </span>
     </div>
 
     *) Deltagere fra 8. klasse og ut videregående skole meldes på via ungdom@imikirken.no (Join)

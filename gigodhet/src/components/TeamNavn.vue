@@ -4,7 +4,7 @@
     <div v-if="team && team.teamName">
       Du har registert deg som leder/agent for <em>{{team.teamName}}</em><br>
       Dine deltagere skal bruke denne påmeldings-linken: <br>
-      <button @click="copyUrl" class="btn btn-secondary">{{copied ? "Kopiert !" : "Kopier"}}</button>
+      <!--button @click="copyUrl" class="btn btn-secondary">{{copied ? "Kopiert !" : "Kopier"}}</button (Not IOS security compatible)-->
       <code>godhetstavanger.no/registrering/agent/{{team.id}}</code><!--duplicated url in clipbaord line below-->
     </div>
     <div v-else>
