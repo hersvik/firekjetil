@@ -19,7 +19,7 @@
               <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
                 {{participant.firstName}} {{participant.lastName}}
               </router-link>
-                (meddeltager)
+                ({{participant.ageGroup == "child" ? "barn" : "meddeltager"}})
             </li>
           </div>
         </div>

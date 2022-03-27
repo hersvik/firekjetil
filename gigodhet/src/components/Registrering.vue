@@ -68,7 +68,7 @@
             <select v-model="registration.primaryPerson.ageGroup" class="custom-select">
               <option selected>-  Velg -</option>
               <option value="adult">Voksen</option>
-              <option value="child">Barn (til og med 7. klasse)</option>
+              <option value="child" disabled>Barn (til og med 7. klasse) - se meddeltager under)</option>
             </select>
         </div>
 
