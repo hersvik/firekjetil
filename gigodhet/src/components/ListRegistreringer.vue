@@ -10,7 +10,7 @@
       <a href="/teamreg">
         Send lenke
       </a>
-      <h2>Oppsummering: ditt A-team</h2>
+      <h2>Ditt A-team</h2>
       <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
 
       <h5 class="dayTitle">{{constants.campaignDays[index]}}</h5>
@@ -49,8 +49,8 @@
         <span class="edited_tag">#{{registration.counter}}</span>
         <span class="dot" v-if="registration.ownerUid === getters.user().uid"></span>
         {{registration.created.toDate().toLocaleDateString()}}
-        <span class="hasAgent" v-if="registration.agentUid"> G</span>
         <span class="hasAgent" v-if="registration.agentUid === getters.user().uid"> A</span>
+        <span class="hasAgent" v-else-if="registration.agentUid"> G</span>
         <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
           {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}} (+{{registration.participants && registration.participants.length || 0}})
         </router-link>
