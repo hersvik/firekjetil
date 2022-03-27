@@ -29,6 +29,15 @@
           Intern kommentar (...husk å lagre)
         </label>
         <input v-model="registration.status" class="form-control" type="text">
+        <br>
+
+        <label>
+          Team
+        </label>
+        <select v-model="registration.agentUid" class="custom-select">
+          <option value="">-  Uten team -</option>
+          <option v-for="(team, idx) in teams" :key="idx" :value="team.ownerUid">{{team.teamName}}</option>
+        </select>
 
         <a v-for="(ref, idx) in registration.missionDay0" :key="ref" :href="'/wish/'+ref" class="mt-4" style="display: block; color:white;" target="_blank">Åpne tildelt oppdrag nummer {{idx+1}}</a>
       </div>
@@ -187,11 +196,18 @@
       setters.setActiveNav("pameldinger");
     },
     created(){
+      if(this.agent){
+        db.collection('teams')
+        .doc(this.agent)
+        .get()
+        .then(snapshot => {
+          this.team = snapshot.data()
+        });
+      }
       db.collection('teams')
-      .doc(this.agent)
       .get()
-      .then(snapshot => {
-        this.team = snapshot.data()
+      .then(querySnapshot => {
+        this.teams = querySnapshot.docs.map(doc => doc.data())
       })
     },
     name: "Registrering",
@@ -213,6 +229,7 @@
         confirmedGeneralRegistration: false,
         confirmedHasCustomLink: false,
         team: {},
+        teams: [],
       }
     },
     firestore () {

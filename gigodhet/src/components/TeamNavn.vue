@@ -63,7 +63,6 @@
                 ownerUid: this.getters.user().uid // for db write-permission.
               }, {merge: true})
             .then(() => {
-              alert("Vellykket team-registrering")
             })
             .catch(function(error){
               alert("Kunne ikke lagre. ("+error+")")
