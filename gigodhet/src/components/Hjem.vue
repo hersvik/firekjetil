@@ -32,12 +32,13 @@
       </div>
 
       <hr class="my-4">
-      <p class="lead">Etter at du har sendt inn en påmelding eller et forslag kan du når som helst <span style="background-color: white;">redigere</span> informasjonen &ndash; bare naviger inn samme vei.
-      <span v-if="more">Vi beholder kun informasjon fra din siste endring. Godhet Stavanger vil kontakte deg angående påmeldingen din. Hvis du ønsker å endre påmeldingen din (eller ditt forslag til oppdrag) etter at du har fått svar på den, kan det være lurt å si ifra til personen som kontaktet deg i tillegg til å redigere her på egenhånd. Vedkommende leser ellers ikke nødvendigvis informasjonen din på nytt.
-        <span style="font-size: 0.8em"><br />Du kan også fjerne informasjonen din på egenhånd ved å evt. erstatte med tom info. Ta kontakt eventuelt ved ønske om å slette brukernavn eller slette tidspunkt for din siste redigering.</span>
-      </span>
-      <span @click="toggleMore()" style="color: silver; cursor: pointer;"> {{more ? "vis mindre" : "vis mer"}}</span>
-    </p>
+      <p class="lead">Etter at du har sendt inn en påmelding eller et forslag kan du når som helst <span style="background-color: white; border-right: solid 1px grey">redigere</span> det &ndash; bare naviger inn samme vei på nytt.
+      </p>
+      <div v-if="!getters.user() || !getters.user().uid">
+        <hr class="my-4">
+        <p class="lead">💚 Hvis du står fast kan eventuelt en du kjenner logge på med sitt eget passord og melde på deg eller andre. Da er det den personen som har tilgang til å lese eller redigere det som er sendt inn i etterkant.
+        </p>
+      </div>
     </div>
     Kontakt oss: stavanger@godhet.no
 
@@ -65,9 +66,6 @@
       }
     },
     methods: {
-      toggleMore() {
-        return this.more = !this.more;
-      },
     },
     computed: {
       getters(){

@@ -319,6 +319,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
             .then(() => {
               this.doneSavePart1 = true;
               this.suppressWatchOnce = true;
+              alert("Takk for at du holder informasjonen oppdatert!\n\nHvis du vet om noen som har lest den utdaterte informasjonen, vennligst varsle dem om at informasjonen nå er oppdatert, dersom du tror det er relevant.")
               if (this.doneSavePart2) {
                 this.whenAllSaved(isStaying);
               }

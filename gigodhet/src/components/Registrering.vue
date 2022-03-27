@@ -1,10 +1,16 @@
 <template>
   <div v-if="!confirmedGeneralRegistration && !agent && !registration.id" class="container container_under_nav">
     <h1>Påmelding</h1>
-    Er du med i en <strong>huskirke</strong>? Da må du kun melde deg på via spesial-lenke som du mottar fra din egen huskirke. Hvis du trykket på lenken fra huskirken før du fikk logget på godhetstavanger.no må du trykke en gang til nå for å melde deg på. <br>
-
-    <br>
-    <button class="btn btn-primary" @click="confirmedGeneralRegistration=true">Start påmelding - (<em>uten</em> huskirke)</button>
+    <div v-if="!confirmedHasCustomLink">
+      Er du med i en <strong>huskirke</strong>? I så fall trenger du en spesial-lenke fra din egen huskirke for å kunne melde deg på. <!--Uansett om du allerede har trykket på lenken fra huskirken (før du fikk logget på godhetstavanger.no), må du trykke på lenken nå for å melde deg på.--><br>
+      <button class="btn btn-primary" @click="confirmedHasCustomLink=true">Har lenke fra huskirken</button>
+      <br>
+      Ellers,<br>
+      <button class="btn btn-primary" @click="confirmedGeneralRegistration=true">Start påmelding <em>uten</em> huskirke</button>
+    </div>
+    <div v-else>
+       Bra, trykk på den lenken du har fått fra din huskirke (igjen) nå.
+    </div>
   </div>
   <div v-else class="container container_under_nav" :class="{readonly: isReadonly}">
     <router-link to="/regs">Tilbake</router-link>
@@ -205,6 +211,7 @@
         alreadyLoaded: false,
         watchedRegistration: {},
         confirmedGeneralRegistration: false,
+        confirmedHasCustomLink: false,
         team: {},
       }
     },
@@ -282,6 +289,7 @@
             .doc(this.id)
             .set(registration, {merge: true})
             .then(() => {
+              alert("Takk for at du holder informasjonen oppdatert!\n\nHvis du vet om noen som har lest den utdaterte informasjonen, vennligst varsle dem om at informasjonen nå er oppdatert, dersom du tror det er relevant.")
               this.$router.push("/regs")
             })
             .catch(function(error){
