@@ -36,7 +36,7 @@
       </p>
       <div v-if="!getters.user() || !getters.user().uid">
         <hr class="my-4">
-        <p class="lead">💚 Hvis du står fast kan eventuelt en du kjenner logge på med sitt eget passord og melde på deg eller andre. Da er det den personen som har tilgang til å lese eller redigere det som er sendt inn i etterkant.
+        <p class="lead">💚 Hvis du står fast kan (eventuelt) en du kjenner logge på med sitt eget passord, og melde på deg eller andre. Da er det denne personen som har tilgang til å lese eller redigere på vegne av deg i etterkant.
         </p>
       </div>
     </div>
