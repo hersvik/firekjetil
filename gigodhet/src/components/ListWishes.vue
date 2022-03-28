@@ -3,7 +3,7 @@
     <h1>Gi forslag til Godhetsoppdrag</h1>
 
     <div v-if="wishes.length" class="alert alert-secondary bg-light mt-3" role="alert">
-      <div class="mb-2"><strong>Takk for innmeldingen, den er tilgjengelig i listen under!</strong></div>
+      <div class="mb-2"><strong>Takk for innmeldingen, den ligger i listen under og du kan redigere den!</strong></div>
       <span style="font-size: 2em; float:  left; margin-right: 0.5em;">
         🙏
       </span>

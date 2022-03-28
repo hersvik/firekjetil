@@ -2,10 +2,11 @@
   <div v-if="!confirmedGeneralRegistration && !agent && !registration.id" class="container container_under_nav">
     <h1>Påmelding</h1>
     <div v-if="!confirmedHasCustomLink">
-      Er du med i en <strong>huskirke</strong>? I så fall trenger du en spesial-lenke fra din egen huskirke for å kunne melde deg på. <!--Uansett om du allerede har trykket på lenken fra huskirken (før du fikk logget på godhetstavanger.no), må du trykke på lenken nå for å melde deg på.--><br>
-      <button class="btn btn-primary" @click="confirmedHasCustomLink=true">Har lenke fra huskirken</button>
+      Er du med i en <strong>huskirke</strong>? I så fall trenger du din huskirkes egen spesial-lenke for å melde deg på.  <!--Uansett om du allerede har trykket på lenken fra huskirken (før du fikk logget på godhetstavanger.no), må du trykke på lenken nå for å melde deg på.--><br>
+      <button class="btn btn-primary" @click="confirmedHasCustomLink=true">Jeg har spesial-lenken fra huskirken</button>
       <br>
-      Ellers,<br>
+      Snakk med "Godhetsagenten" i din huskirke for å eventuelt få en slik lenke.<br>
+      <h5 style="margin-top: 1em;">Ikke med i huskirke</h5>
       <button class="btn btn-primary" @click="confirmedGeneralRegistration=true">Start påmelding <em>uten</em> huskirke</button>
     </div>
     <div v-else>
@@ -29,7 +30,7 @@
     <form>
       <div v-if="getters.user().uid === constants.adminUid" class="alert alert-dark bg-secondary text-white mt-4">
         <label>
-          Intern kommentar (...husk å lagre)
+          Intern kommentar (...husk å sende)
         </label>
         <input v-model="registration.status" class="form-control" type="text">
         <br>
@@ -47,7 +48,7 @@
 
 
       <div v-if="registration.removedBy" class="alert alert-danger">
-        Denne påmeldingen er deaktivert (skjult). Lagre på nytt for å gjennopprette.
+        Denne påmeldingen er deaktivert (skjult). Send på nytt for å gjennopprette.
       </div>
       <div class="bg-light p-2">
         <small class="form-text text-muted">Deltager (enkeltperson eller gruppeleder)</small>
@@ -91,15 +92,15 @@
           </label>
           <input v-model="registration.primaryPerson.phone" class="form-control" placeholder="" type="number" />
         </div>
-        <div v-if="!agent" class="form-group">
+        <div class="form-group">
           <label>
             E-post
           </label>
           <input v-model="registration.primaryPerson.email" class="form-control" placeholder="" type="text" />
         </div>
-        <div v-if="!agent" class="form-group">
+        <div class="form-group">
             <label>
-              Adresse, postnummer og -sted
+              Bosted /bydel
             </label>
             <input v-model="registration.primaryPerson.address" class="form-control" placeholder="" type="text" />
         </div>
@@ -112,7 +113,7 @@
           Familiegodhet (for barnefamilier)
         </label>
       </div>
-      <div class="form-group">
+      <div v-if="!agent" class="form-group">
         <label>
           Tilhørighet (valgfritt)
         </label>
@@ -179,10 +180,10 @@
     {{constants.welcomeUnfinishedFormMessage}}
     <div v-if="!(agent && !team)" class="form-group"><!-- agent && !team means error with team link, see user warning above-->
       <button v-if="!registration.removedBy" class="btn btn-primary" @click="save">
-        Lagre og lukk
+        Send
       </button>
       <button v-if="registration.removedBy" @click="save(true)" class="btn btn-primary">
-        Lagre og gjenopprett
+        Gjenopprett og send
       </button>
 
       <span v-if="id && !registration.removedBy" @click="removeRegistration" class="remove_registration clickable_label">
@@ -218,6 +219,9 @@
       .then(querySnapshot => {
         this.teams = querySnapshot.docs.map(doc => doc.data())
       })
+    },
+    mounted(){
+      this.registration.primaryPerson.email = this.registration.primaryPerson.email || this.getters.user().email
     },
     name: "Registrering",
     props: ["id","agent"],
@@ -275,7 +279,7 @@
         this.watchedRegistration.edited = null;
         if (this.alreadyLoaded
           && JSON.stringify(entry) !== JSON.stringify(this.watchedRegistration) ){
-            alert("Opplysningene i skjemaet ble endret utenfra og innholdet du ser oppdateres automatisk. \n\nEksisterende innhold i skjemaet blir dermed erstattet nå. \n\n(Når du lagrer, oppdateres visningen umiddelbart hos andre som ser på også)");
+            alert("Opplysningene i skjemaet ble endret utenfra og innholdet du ser oppdateres automatisk. \n\nEksisterende innhold i skjemaet blir dermed erstattet nå. \n\n(Når du sender, oppdateres visningen umiddelbart hos andre som ser på også)");
         }
         this.alreadyLoaded = true;
         this.watchedRegistration = entry;
@@ -289,7 +293,7 @@
         this.registration.participants.push({willAttendDay: new Array(constants.campaignDays.length).fill(false)});
       },
       removeGroupMember(idx) {
-        if(confirm("Vil du fjerne meddeltager nummer "+(idx+1)+"? \n\nHusk å også bruke lagre-knappen nederst i skjema for å bekrefte endringer. ")){
+        if(confirm("Vil du fjerne meddeltager nummer "+(idx+1)+"? \n\nHusk å også bruke send-knappen nederst i skjema for å bekrefte endringer. ")){
           this.registration.participants.splice(idx, 1);
         }
       },
@@ -331,7 +335,7 @@
 
       },
       removeRegistration() {
-        if( confirm("Vil du skjule påmeldingen? For å gjennopprette etterpå, klikk 'vis skjulte' i oversikten. (Administrator kan finne skjulte påmeldinger, men du kan tømme innholdet før du lagrer for å slette innholdet helt).") ){
+        if( confirm("Vil du skjule påmeldingen? For å gjennopprette etterpå, klikk 'vis skjulte' i oversikten. (Administrator kan finne skjulte påmeldinger, men du kan tømme innholdet før du sender for å slette innholdet helt).") ){
           this.alreadyLoaded = false;
           db.collection('registrations').doc(this.id).update({
             removedBy: getters.user().displayName,

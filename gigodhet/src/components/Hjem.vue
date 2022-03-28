@@ -5,6 +5,7 @@
     <div class="jumbotron" :class="{jumbotron__logged_in: getters.user().uid}">
       <h1 class="display-4">Godhet Stavanger &ndash; 2021</h1>
       <p class="lead"><strong>Uke 22</strong> &ndash; fra mandag 31. mai</p>
+      <p class="lead">Vi gjør <strong>godhet</strong> sammen</p>
       <hr class="my-4">
 
       <div v-if="!getters.user() || !getters.user().uid">
@@ -20,15 +21,17 @@
       <div v-else>
         <p class="lead">Yes, du er nå logget inn, <strong>kjør på</strong> videre:</p>
         <router-link to="/regs">
-          <button type="button" class="btn btn-primary btn-lg mr-3 mt-3">
-            Meld på som deltager
-          </button>
+          <button type="button" class="btn btn-primary btn-lg mr-2 mt-3">
+            Deltager-påmelding
+          </button><br>
         </router-link>
+        <span class="lead mb-3 mr-4">- deg selv (eller for noen andre)</span><br>
         <router-link to="/wishes">
-          <button type="button" class="btn btn-primary btn-lg mt-3">
+          <button type="button" class="btn btn-primary btn-lg mt-4">
             Foreslå oppdrag
-          </button>
+          </button><br>
         </router-link>
+        <span class="lead mb-3">- som noen kan utføre</span>
       </div>
 
       <hr class="my-4">

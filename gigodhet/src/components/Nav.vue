@@ -10,7 +10,7 @@
       <a @click='goToListRegistreringer' :class='{active: getters.activeNav() == "pameldinger"}'>
         Påmeldinger</a>
       <a @click='goToListWishes' :class='{active: getters.activeNav() == "foresporsler"}'>
-        Foreslå oppdrag
+        Mine forslag
       </a>
     </span>
     <div v-if="getters.user().uid" class="">{{loginName}}</div>

@@ -12,7 +12,7 @@
       <br>Dersom du tilhører en huskirke i IMI-Kirken som skal utføre oppdraget du ønsker å melde inn, trenger du ikke å melde det inn her.</span>
     </div>
 
-    <button v-if="id" class="btn mt-4" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Lagre</button>
+    <button v-if="id" class="btn mt-4" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Send</button>
     <form @input="onFormInput">
 
       <div v-if="getters.user().uid === constants.adminUid" class="alert alert-dark bg-secondary text-white mt-4">
@@ -57,7 +57,7 @@
 
       <div class="form-group mt-4">
         <label>
-          Utstyr på stedet (f.eks. stige, gressklipper)
+          Utstyr allerede på stedet (f.eks. stige, gressklipper)
         </label>
         <input v-model="wish.equipment" class="form-control" type="text">
       </div>
@@ -171,8 +171,8 @@
     <br />
     {{constants.welcomeUnfinishedFormMessage}}
     <div class="form-group pb-5">
-      <button v-if="id" class="btn mr-3" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Lagre</button>
-      <button class="btn btn-primary" @click="save(false)">Lagre og lukk</button>
+      <button v-if="id" class="btn mr-3" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Send</button>
+      <button class="btn btn-primary" @click="save(false)">Send og lukk</button>
     </div>
 
   </div>
@@ -188,6 +188,9 @@
   export default {
     beforeCreate() {
       setters.setActiveNav("foresporsler");
+    },
+    mounted(){
+      // this.wish.submitter.email = this.wish.submitter.email || this.getters.user().email;
     },
     name: "Wish",
     props: ["id"],
