@@ -3,9 +3,17 @@
     <h1>Team registrering</h1>
     <div v-if="team && team.teamName">
       Du har registert deg som leder/agent for <em>{{team.teamName}}</em><br>
-      Dine deltagere skal bruke denne påmeldings-linken: <br>
+      <br>
+      Dine deltagere skal bruke denne <strong>påmeldings-lenken</strong> (kun for din gruppe): <br>
       <!--button @click="copyUrl" class="btn btn-secondary">{{copied ? "Kopiert !" : "Kopier"}}</button (Not IOS security compatible)-->
       <code>godhetstavanger.no/registrering/agent/{{team.id}}</code><!--duplicated url in clipbaord line below-->
+      <br>
+      <button class="btn btn-secondary" @click="redirectToSms()">Send den på SMS</button><br>
+      (bruk mobiltelefonen)<br>
+      <br>
+      <a :href="'/registrering/agent/'+getters.user().uid">
+        Bruk lenken til å registrere deg selv også
+      </a>
     </div>
     <div v-else>
       Registrer deg som team-leder ved å trykke på denne knappen:<br>
@@ -79,7 +87,10 @@
       copyUrl() {
         navigator.clipboard.writeText("godhetstavanger.no/registrering/agent/"+this.team.id);
         this.copied = true;
-      }
+      },
+      redirectToSms() {
+        window.location.href='sms:&body=Godhet%20n%C3%A6rmer%20seg!%20Meld%20deg%20p%C3%A5%20direkte%20til%20gruppen%20v%C3%A5r%20her%2C%20s%C3%A5%20vet%20jeg%20hvilke%20dager%20folk%20sikter%20p%C3%A5%20%C3%A5%20delta%3A%20godhetstavanger.no%2Fregistrering%2Fagent%2F'+this.team.id;
+      },
     }
   }
 </script>
