@@ -43,7 +43,7 @@
           <option v-for="(team, idx) in teams" :key="idx" :value="team.ownerUid">{{team.teamName}}</option>
         </select>
 
-        <a v-for="(ref, idx) in registration.missionDay0" :key="ref" :href="'/wish/'+ref" class="mt-4" style="display: block; color:white;" target="_blank">Åpne tildelt oppdrag nummer {{idx+1}}</a>
+        <a v-for="(ref, idx) in registration.missionDay0" :key="ref" :href="'/wish/'+ref" class="mt-4" style="display: block; color:white;" target="_blank">Åpne tildelt oppdrag nummer {{idx+1}}</a><!-- todo: change anchor tag to router-link-->
       </div>
 
 

@@ -13,9 +13,9 @@
       <button class="btn btn-secondary" @click="redirectToSms()">Åpne som SMS</button><br>
       (bruk mobiltelefonen)<br>
       <br>
-      <a :href="'/registrering/agent/'+getters.user().uid">
+      <router-link :to="'/registrering/agent/'+getters.user().uid">
         😃 Bruk lenken til å registrere deg selv også
-      </a>
+      </router-link>
     </div>
     <div v-else>
       Registrer deg som team-leder ved å trykke på denne knappen:<br>

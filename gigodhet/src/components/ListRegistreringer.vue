@@ -2,13 +2,13 @@
   <div class="container container_under_nav">
     <template v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)">
       <h1>Deltagere</h1>
-      <a :href="'/registrering/agent/'+getters.user().uid">
+      <router-link :to="'/registrering/agent/'+getters.user().uid">
         Direkte påmelding
-      </a>
+      </router-link>
       -
-      <a href="/teamreg">
+      <router-link to="/teamreg">
         Send lenke
-      </a>
+      </router-link>
       <h2>Ditt A-team</h2>
       <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
 
