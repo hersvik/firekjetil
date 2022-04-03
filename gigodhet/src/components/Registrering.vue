@@ -239,7 +239,7 @@
           },
           participants: [],
           dailyAttendance: [{}], // add {} for tuesday, etc
-          event: "Godhet Stavanger 2021",
+          event: "Godhet Stavanger 2022",
         },
         alreadyLoaded: false,
         watchedRegistration: {},

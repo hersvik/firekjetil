@@ -204,7 +204,7 @@
             lastName: getters.authDisplayNameSplitted().lastName,
           },
           target: {},
-          event: "Godhet Stavanger 2021",
+          event: "Godhet Stavanger 2022",
           assigneesPerDay: [
             { registrationRefs: [] }
           ],
