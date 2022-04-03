@@ -13,7 +13,7 @@
        Bra, trykk på den lenken du har fått fra din huskirke (igjen) nå.
     </div>
   </div>
-  <div v-else class="container container_under_nav" :class="{readonly: isReadonly}">
+  <div v-else class="container container_under_nav" :class="{readonly: false}">
     <router-link to="/regs">Tilbake</router-link>
     <h1>{{registration.event}}</h1>
     <h3>{{registration.id ? registration.primaryPerson.firstName+ ' + ' +registration.participants.length : "Påmelding"}}</h3>
@@ -270,11 +270,11 @@
         }
         return result;
       },
-      isReadonly(){
-        return this.registration.ownerUid !== this.getters.user().uid
-        && typeof this.registration.ownerUid !== 'undefined' // Nye påmeldinger er ikke readonly.
-        && this.getters.user().uid !== this.constants.adminUid;
-      }
+      // isReadonly(){
+      //   return this.registration.ownerUid !== this.getters.user().uid // agenter blir readonly
+      //   && typeof this.registration.ownerUid !== 'undefined' // Nye påmeldinger er ikke readonly.
+      //   && this.getters.user().uid !== this.constants.adminUid;
+      // }
     },
     watch: {
       registration: function (entry){
