@@ -1,7 +1,6 @@
 <template>
   <div class="container container_under_nav">
-
-    <template v-if="myTeamRegistrations.length > 0">
+    <template v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)">
       <h1>Deltagere</h1>
       <a :href="'/registrering/agent/'+getters.user().uid">
         Direkte påmelding
@@ -72,12 +71,20 @@
     beforeCreate() {
       setters.setActiveNav("pameldinger");
     },
+    created(){
+      db.collection('teams')
+      .get()
+      .then(querySnapshot => {
+        this.teams = querySnapshot.docs.map(doc => doc.data())
+      })
+    },
     name: "ListRegistreringer",
     data () {
       return {
         registrations: [],
         registrationsWithAgentAccess: [],
         showRemoved: false,
+        teams: [],
       }
     },
     computed: {

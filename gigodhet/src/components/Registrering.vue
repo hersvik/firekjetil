@@ -21,7 +21,7 @@
     <em> {{constants.dataDisclosure}} </em>
 
     <div v-if="team && team.teamName" class="alert alert-secondary bg-light mt-3" role="alert">
-      👉 Du melder deg på via <em>{{team.teamName}}</em>
+      👉 Du melder deg på via <em>{{team.teamName}}</em> &ndash; <router-link to="/regs">Velg annen påmelding</router-link>
     </div>
     <div v-if="agent && !team" class="alert alert-secondary bg-light mt-3" role="alert">
       🔺 <em>Feil med lenken du brukte. Prøv på nytt eller be om ny lenke.</em>

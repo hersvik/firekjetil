@@ -2,21 +2,24 @@
   <div class="container container_under_nav">
     <h1>Team registrering</h1>
     <div v-if="team && team.teamName">
-      Du har registert deg som leder/agent for <em>{{team.teamName}}</em><br>
+      Teamet ditt er opprettet &ndash; <em>"{{team.teamName}}"</em><br>
       <br>
-      Dine deltagere skal bruke denne <strong>påmeldings-lenken</strong> (kun for din gruppe): <br>
-      <!--button @click="copyUrl" class="btn btn-secondary">{{copied ? "Kopiert !" : "Kopier"}}</button (Not IOS security compatible)-->
-      <code>godhetstavanger.no/registrering/agent/{{team.id}}</code><!--duplicated url in clipbaord line below-->
-      <br>
-      <button class="btn btn-secondary" @click="redirectToSms()">Send den på SMS</button><br>
+      Send <strong>en slik beskjed</strong> til ditt team: <br>
+
+      <div class="jumbotron" style="margin-bottom: 0">
+        Godhet nærmer seg! Meld deg på direkte til gruppen vår her, så vet jeg hvilke dager folk sikter på å delta:
+        <code>godhetstavanger.no/registrering/agent/{{team.id}}</code><!--duplicated url in sms method below-->
+      </div>
+      <button class="btn btn-secondary" @click="redirectToSms()">Åpne som SMS</button><br>
       (bruk mobiltelefonen)<br>
       <br>
       <a :href="'/registrering/agent/'+getters.user().uid">
-        Bruk lenken til å registrere deg selv også
+        😃 Bruk lenken til å registrere deg selv også
       </a>
     </div>
     <div v-else>
       Registrer deg som team-leder ved å trykke på denne knappen:<br>
+      <br>
       <button @click="save" class="btn btn-primary">Bekreft og opprett "{{suggestedTeamName}}"</button>
     </div>
   </div>
@@ -62,7 +65,6 @@
     methods: {
 
       save () {
-
         if (this.getters.user().uid) {
 
           db.collection('teams')
@@ -79,17 +81,34 @@
             });
         }
         else {
+
           alert("Systemfeil - mangler 'user Uid'.")
         }
 
       },
 
-      copyUrl() {
-        navigator.clipboard.writeText("godhetstavanger.no/registrering/agent/"+this.team.id);
-        this.copied = true;
-      },
       redirectToSms() {
-        window.location.href='sms:&body=Godhet%20n%C3%A6rmer%20seg!%20Meld%20deg%20p%C3%A5%20direkte%20til%20gruppen%20v%C3%A5r%20her%2C%20s%C3%A5%20vet%20jeg%20hvilke%20dager%20folk%20sikter%20p%C3%A5%20%C3%A5%20delta%3A%20godhetstavanger.no%2Fregistrering%2Fagent%2F'+this.team.id;
+        let urlPrefix = this.getMobileOperatingSystem() == "Android" ? "sms:?body=" : "sms:&body=";
+        window.location.href=urlPrefix+'Godhet%20n%C3%A6rmer%20seg!%20Meld%20deg%20p%C3%A5%20direkte%20til%20gruppen%20v%C3%A5r%20her%2C%20s%C3%A5%20vet%20jeg%20hvilke%20dager%20folk%20sikter%20p%C3%A5%20%C3%A5%20delta%3A%20godhetstavanger.no%2Fregistrering%2Fagent%2F'+this.team.id; // de/encoder https://meyerweb.com/eric/tools/dencoder/
+      },
+      getMobileOperatingSystem() {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        // // Windows Phone must come first because its UA also contains "Android"
+        // if (/windows phone/i.test(userAgent)) {
+        //     return "Windows Phone";
+        // }
+
+        if (/android/i.test(userAgent)) {
+            return "Android";
+        }
+
+        // iOS detection from: http://stackoverflow.com/a/9039885/177710
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            return "iOS";
+        }
+
+        return "unknown";
       },
     }
   }
