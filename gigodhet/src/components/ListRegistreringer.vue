@@ -49,7 +49,7 @@
         <span class="dot" v-if="registration.ownerUid === getters.user().uid"></span>
         {{registration.created.toDate().toLocaleDateString()}}
         <span class="hasAgent" v-if="registration.agentUid === getters.user().uid"> A</span>
-        <span class="hasAgent" v-else-if="registration.agentUid"> G</span>
+        <span class="hasAgent" v-else-if="registration.agentUid"> {{getRegistrationTeamName(registration.agentUid)}} </span>
         <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
           {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}} (+{{registration.participants && registration.participants.length || 0}})
         </router-link>
@@ -157,7 +157,12 @@
     methods: {
       showAll(){
         this.showRemoved = !this.showRemoved;
-      }
+      },
+      getRegistrationTeamName(agentUid){
+        let teamObject = this.teams.filter(t => t.ownerUid === agentUid)[0];
+        let teamName = teamObject && teamObject.teamName || "";
+        return teamName;
+      },
     }
   }
 </script>
