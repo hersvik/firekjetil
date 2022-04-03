@@ -17,8 +17,8 @@
     <router-link to="/regs">Tilbake</router-link>
     <h1>{{registration.event}}</h1>
     <h3>{{registration.id ? registration.primaryPerson.firstName+ ' + ' +registration.participants.length : "Påmelding"}}</h3>
-    <br />
-    <em> {{constants.dataDisclosure}} </em>
+    <div style="color: #6c757d; margin-bottom: 1em;" v-if="registration.lastUpdatedBy">(Sist oppdatert av {{registration.lastUpdatedBy}})</div>
+    <em style="margin-bottom: 2em"> {{constants.dataDisclosure}} </em>
 
     <div v-if="team && team.teamName" class="alert alert-secondary bg-light mt-3" role="alert">
       👉 Du melder deg på via <em>{{team.teamName}}</em> &ndash; <router-link to="/regs">Gå til annen påmelding</router-link>
@@ -50,7 +50,7 @@
       <div v-if="registration.removedBy" class="alert alert-danger">
         Denne påmeldingen er deaktivert (skjult). Send på nytt for å gjennopprette.
       </div>
-      <div class="bg-light p-2">
+      <div class="bg-light p-2 mt-3">
         <small class="form-text text-muted">Deltager (enkeltperson eller gruppeleder)</small>
         <div class="form-group">
             <label>
@@ -231,6 +231,7 @@
     data () {
       return {
         registration: {
+          lastUpdatedBy: "",
           primaryPerson: {
             firstName: getters.authDisplayNameSplitted().firstName,
             lastName: getters.authDisplayNameSplitted().lastName,
@@ -311,6 +312,7 @@
         this.registration.agentUid = this.registration.agentUid || null;
         this.registration.created = this.registration.created || new Date();
         this.registration.edited = new Date();
+        this.registration.lastUpdatedBy = getters.user().displayName;
 
         if (this.id) {
           // db.collection("registrations").doc(this.id).update({
