@@ -25,13 +25,13 @@
             Deltager-påmelding
           </button><br>
         </router-link>
-        <span class="lead mb-3 mr-4">- deg selv (eller for noen andre)</span><br>
+        <span class="lead mb-3 mr-4">&ndash; for deg selv, eller på vegne av noen andre</span><br>
         <router-link to="/wishes">
           <button type="button" class="btn btn-primary btn-lg mt-4">
             Foreslå oppdrag
           </button><br>
         </router-link>
-        <span class="lead mb-3">- som noen kan utføre</span>
+        <span class="lead mb-3">&ndash; som noen kan utføre</span>
       </div>
 
       <hr class="my-4">

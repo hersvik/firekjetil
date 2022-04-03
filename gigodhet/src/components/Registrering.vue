@@ -21,7 +21,7 @@
     <em> {{constants.dataDisclosure}} </em>
 
     <div v-if="team && team.teamName" class="alert alert-secondary bg-light mt-3" role="alert">
-      👉 Du melder deg på via <em>{{team.teamName}}</em> &ndash; <router-link to="/regs">Velg annen påmelding</router-link>
+      👉 Du melder deg på via <em>{{team.teamName}}</em> &ndash; <router-link to="/regs">Gå til annen påmelding</router-link>
     </div>
     <div v-if="agent && !team" class="alert alert-secondary bg-light mt-3" role="alert">
       🔺 <em>Feil med lenken du brukte. Prøv på nytt eller be om ny lenke.</em>
@@ -223,6 +223,9 @@
     mounted(){
       this.registration.primaryPerson.email = this.registration.primaryPerson.email || this.getters.user().email
     },
+    beforeUpdate(){
+      this.registration.agentUid = this.registration.agentUid || this.agent;
+    },
     name: "Registrering",
     props: ["id","agent"],
     data () {
@@ -305,7 +308,7 @@
         }
         this.alreadyLoaded = false; // Avoids watch alert
         this.registration.ownerUid = this.registration.ownerUid || getters.user().uid;
-        this.registration.agentUid = this.agent || this.registration.agentUid || null;
+        this.registration.agentUid = this.registration.agentUid || null;
         this.registration.created = this.registration.created || new Date();
         this.registration.edited = new Date();
 
