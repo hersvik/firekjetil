@@ -35,6 +35,9 @@
 
 
     <h1>Påmeldinger</h1>
+    <!--div v-for="(tiem, idx) in tiems" :key=idx>      <!- <------------------- disable BEFORE commit !!! ->
+      <input type="text" v-model="tiem.teamName" @input="onTiemEdit(tiem.id)" ref="tieminput">
+    </div-->
     <li class="list-group">
       <ul class="list-group-item">
         + <router-link :to="{path: 'registrering'}">
@@ -72,7 +75,7 @@
       setters.setActiveNav("pameldinger");
     },
     created(){
-      db.collection('teams')
+      db.collection('teams') //       <----------  to be replaced in firestore method (tiems) !!! !!! !!!
       .get()
       .then(querySnapshot => {
         this.teams = querySnapshot.docs.map(doc => doc.data())
@@ -85,6 +88,9 @@
         registrationsWithAgentAccess: [],
         showRemoved: false,
         teams: [],
+        tiems: [],
+        hasQueuedSave: false, // tiems
+        whiteTimerId: null, // tiems
       }
     },
     computed: {
@@ -144,13 +150,15 @@
     firestore () {
       if(getters.user().uid === constants.adminUid){
         return {
-          registrations: db.collection("registrations")
+          registrations: db.collection("registrations"),
+          // tiems: db.collection("tiems") // disable BEFORE commit
         };
       }
       else if (getters.user().uid) {
         return {
           registrations: db.collection("registrations").where("ownerUid", "==", getters.user().uid),
           registrationsWithAgentAccess: db.collection("registrations").where("agentUid", "==", getters.user().uid)//.where("ownerUid", "!=", getters.user().uid)
+          // future note: get tiems data for this scenario
         };
       }
     },
@@ -163,6 +171,40 @@
         let teamName = teamObject && teamObject.teamName || "";
         return teamName;
       },
+      onTiemEdit(tiemId){
+        clearTimeout(this.whiteTimerId);
+        this.$refs.tieminput[0].style.backgroundColor = "white";
+
+        if(!this.hasQueuedSave){
+          this.hasQueuedSave = true;
+          setTimeout(() => {
+            this.hasQueuedSave = false;
+            this.saveTiem(tiemId)
+          }, 2000);
+        }
+      },
+      saveTiem(tiemId){
+        let that=this;
+        db.collection('tiems')
+            .doc(tiemId)
+            .set(
+              {
+                teamName: this.tiems.filter(t => t.id == tiemId)[0].teamName,
+                ownerUid: this.getters.user().uid // for db write-permission.
+              },
+              {merge: true})
+            .then(() => {
+                that.$refs.tieminput[0].style.backgroundColor = "#cfc";
+                  this.whiteTimerId = setTimeout(() => {
+                    if(!this.hasQueuedSave)
+                      that.$refs.tieminput[0].style.backgroundColor = "white";
+                  }, 3000);
+            })
+            .catch(function(error){
+              alert("Kunne ikke lagre tiem. ("+error+")")
+            });
+
+      }
     }
   }
 </script>
