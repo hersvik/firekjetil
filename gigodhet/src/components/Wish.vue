@@ -134,7 +134,7 @@
       </div>
 
 
-      <div v-if="getters.user().uid === constants.adminUid && wish.id" class="form-group mt-5 mb-5">
+      <div v-if="false && getters.user().uid === constants.adminUid && wish.id" class="form-group mt-5 mb-5">
 
         <h3>
           Administrer deltagere på dette oppdraget
@@ -158,7 +158,7 @@
 
 
       </div>
-      <div v-else-if="getters.user().uid === constants.adminUid && !wish.id">
+      <div v-else-if="false && getters.user().uid === constants.adminUid && !wish.id">
         <h5>
           Administrer deltagere på dette oppdraget
         </h5>
