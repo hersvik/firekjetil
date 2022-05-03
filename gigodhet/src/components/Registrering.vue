@@ -21,7 +21,7 @@
     <em style="margin-bottom: 2em"> {{constants.dataDisclosure}} </em>
 
     <div v-if="team && team.teamName" class="alert alert-secondary bg-light mt-3" role="alert">
-      👉 Du melder deg på via <em>{{team.teamName}}</em> &ndash; <router-link to="/regs">Gå til annen påmelding</router-link>
+      👉 Du melder deg på via <em>{{team.teamName}}</em>. <router-link to="/regs">Til annen påmelding</router-link>
     </div>
     <div v-if="agent && !team" class="alert alert-secondary bg-light mt-3" role="alert">
       🔺 <em>Feil med lenken du brukte. Prøv på nytt eller be om ny lenke.</em>
@@ -324,7 +324,7 @@
             .doc(this.id)
             .set(registration, {merge: true})
             .then(() => {
-              alert("Takk for at du holder informasjonen oppdatert!\n\nHvis du vet om noen som har lest den utdaterte informasjonen, vennligst varsle dem om at informasjonen nå er oppdatert, dersom du tror det er relevant.")
+              alert("Takk for at du holder informasjonen oppdatert!\n\nHvis du har endret noen planer som påvirker noen du vet om, vennligst varsle dem.")
               this.$router.push("/regs")
             })
             .catch(function(error){

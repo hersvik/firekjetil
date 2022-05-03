@@ -28,14 +28,14 @@
         <span class="lead mb-3 mr-4">&ndash; for deg selv, eller på vegne av noen andre</span><br>
         <router-link to="/wishes">
           <button type="button" class="btn btn-primary btn-lg mt-4">
-            Foreslå oppdrag
+            Meld inn oppdrag
           </button><br>
         </router-link>
         <span class="lead mb-3">&ndash; som noen kan utføre</span>
       </div>
 
       <hr class="my-4">
-      <p class="lead">Etter at du har sendt inn en påmelding eller et forslag kan du når som helst <span style="background-color: white; border-right: solid 1px grey">redigere</span> det &ndash; bare naviger inn samme vei på nytt.
+      <p class="lead">Etter at du har sendt inn en påmelding eller et oppdrag kan du når som helst <span style="background-color: white; border-right: solid 1px grey">redigere</span> det &ndash; bare naviger inn samme vei på nytt.
       </p>
       <div v-if="!getters.user() || !getters.user().uid">
         <hr class="my-4">
@@ -52,7 +52,7 @@
     I samarbeid med <a href="http://godhet.no">godhet.no</a>
 
     <div style="margin-top: 1em; color: silver;">
-      <em>Oppdatert 3. april 2022</em>
+      <em>Oppdatert 3. mai 2022</em> - <router-link to="/teamreg">Team-registrering (midlertidig snarvei)</router-link>
     </div>
   </div>
 </template>

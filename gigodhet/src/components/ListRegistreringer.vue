@@ -9,7 +9,7 @@
       <router-link to="/teamreg">
         Send lenke
       </router-link>
-      <h2>Ditt A-team</h2>
+      <h2>Ditt team</h2>
       <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
 
       <h5 class="dayTitle">{{constants.campaignDays[index]}}</h5>

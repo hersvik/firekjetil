@@ -1,23 +1,22 @@
 <template>
   <div class="container container_under_nav">
     <router-link to="/wishes">Tilbake</router-link>
-    <h1>{{id ? wish.title : 'Gi forslag til oppdrag'}}</h1>
+    <h1>{{id ? wish.title : 'Meld inn oppdrag'}}</h1>
     <h3>{{wish.event}}</h3>
     <br />
     <em> {{constants.dataDisclosure}} </em>
 
-    <div class="alert alert-secondary bg-light mt-3" role="alert">
-      <!-- <span style="font-size: 2em; float:  left; margin-right: 0.5em;">❎Innmeldingen av forslag er <em><strong>stengt</strong></em> for i år!<br><br> -->
-      😊 Dersom du tilhører en huskirke i IMI-Kirken som skal utføre dette oppdraget du ønsker å melde inn, trenger du ikke å melde det inn her.
-    </div>
+    <!--div class="alert alert-secondary bg-light mt-3" role="alert">
+      <span style="font-size: 2em; float:  left; margin-right: 0.5em;">❎Innmeldingen av oppdrag er <em><strong>stengt</strong></em> for i år!<br><br>
+    </div-->
 
-    <button v-if="id" class="btn mt-4" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Send</button>
+    <!-- <button v-if="id" class="btn mt-4" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Send</button> -->
     <form @input="onFormInput">
 
       <div v-if="getters.user().uid === constants.adminUid" class="alert alert-dark bg-secondary text-white mt-4">
         <div class="form-group mt-3">
           <label>
-            Intern status
+            Intern status (husk Send)
           </label>
           <input v-model="wish.status" class="form-control" type="text">
         </div>
@@ -44,6 +43,13 @@
           Kort overskrift
         </label>
         <input v-model="wish.title" class="form-control" type="text">
+      </div>
+
+      <div class="form-group form-check mt-4 mb-5">
+        <input class="form-check-input" type="checkbox" v-model="wish.selfTask">
+        <label class="form-check-label">
+          Dette oppdraget tar vi ansvar for å utføre selv
+        </label>
       </div>
 
       <div class="form-group mt-4">
@@ -290,7 +296,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
         }
         else {
           this.isShowingEmailPreview = true;
-          alert("E-post forslaget vil nå forhåpentligvis åpnes i din e-post app.\n\nHusk å fjerne sensitiv informasjon før du sender eposten!");
+          alert("Epost-forslaget vil nå forhåpentligvis åpnes i din e-post app.\n\nHusk å fjerne sensitiv informasjon før du sender eposten!");
           window.location.href = 'mailto:'+this.wish.emailSendTo+'?cc=stavanger@godhet.no&subject='+this.wish.title+'&body='+this.emailText;
         }
       },
@@ -321,7 +327,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
             .then(() => {
               this.doneSavePart1 = true;
               this.suppressWatchOnce = true;
-              alert("Takk for at du holder informasjonen oppdatert!\n\nHvis du vet om noen som har lest den utdaterte informasjonen, vennligst varsle dem om at informasjonen nå er oppdatert, dersom du tror det er relevant.")
+              alert("Takk for at du holder informasjonen oppdatert!\n\nHvis du har endret noen planer som påvirker noen du vet om, vennligst varsle dem.")
               if (this.doneSavePart2) {
                 this.whenAllSaved(isStaying);
               }
