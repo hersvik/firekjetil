@@ -35,7 +35,7 @@
 
 
     <h1>Påmeldinger</h1>
-    <!--div v-for="(tiem, idx) in tiems" :key=idx>      <!- <------------------- disable BEFORE commit !!! ->
+    <!--Team status: <div v-for="(tiem, idx) in tiems" :key=idx>      <!- <------------------- disable BEFORE commit !!! ->
       <input type="text" v-model="tiem.teamName" @input="onTiemEdit(tiem.id)" ref="tieminput">
     </div-->
     <li class="list-group">
