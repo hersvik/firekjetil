@@ -60,6 +60,10 @@
         <span class="edited_tag">{{registration.displayEdited}} </span>
         <span v-if="getters.user().uid === constants.adminUid" v-tooltip:top="'Intern sekretariat-kommentar'">{{registration.status}}</span>
       </ul>
+      <ul v-if="getters.user().uid === constants.adminUid" class="list-group-item">
+        <input type="checkbox" v-model="hideTeams">
+          Skjul team
+      </ul>
     </li>
 
     <!--<div style="opacity: 0.1;">{{getters.user().uid}}</div>Temporary show Uid-->
@@ -91,6 +95,7 @@
         tiems: [],
         hasQueuedSave: false, // tiems
         whiteTimerId: null, // tiems
+        hideTeams: true,
       }
     },
     computed: {
@@ -124,7 +129,10 @@
 
         for (let i=0; i < sorted.length; i++) {
           let registration = sorted[i];
-          if (this.showRemoved || !registration.removedBy) {
+          let isVisible = this.showRemoved || !registration.removedBy;
+          let isAdmin = this.getters.user().uid === this.constants.adminUid;
+          let isIncluded = !isAdmin || !this.hideTeams || !registration.agentUid;
+          if (isVisible && isIncluded) {
               copy.push(registration)
           }
           else{
