@@ -61,8 +61,10 @@
         <span v-if="getters.user().uid === constants.adminUid" v-tooltip:top="'Intern sekretariat-kommentar'">{{registration.status}}</span>
       </ul>
       <ul v-if="getters.user().uid === constants.adminUid" class="list-group-item">
-        <input type="checkbox" v-model="hideTeams">
-          Skjul team
+        <label style="color: #007bff; cursor: pointer;">
+          <input type="checkbox" v-model="hideTeams">
+          Skjul teamene
+        </label>
       </ul>
     </li>
 
