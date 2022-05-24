@@ -35,7 +35,7 @@
       </div>
 
       <hr class="my-4">
-      <p class="lead">Etter at du har sendt inn en påmelding eller et oppdrag kan du når som helst <span style="background-color: white; border-right: solid 1px grey">redigere</span> det &ndash; bare naviger inn samme vei på nytt.
+      <p class="lead">Etter at du har sendt inn en påmelding eller et oppdrag kan du når som helst <span style="background-color: white; border-right: solid 1px silver">redigere</span> det. Du finner enkelt tilbake, alt du trenger å huske er godhetstavanger.no, eventuelt gå via godhet.no hvis det er lettere å huske.
       </p>
       <div v-if="!getters.user() || !getters.user().uid">
         <hr class="my-4">

@@ -2,14 +2,14 @@
   <div class="container container_under_nav">
     <template v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)">
       <h1>Deltagere</h1>
+      <h2>Ditt team</h2>
       <router-link :to="'/registrering/agent/'+getters.user().uid">
         Direkte påmelding
       </router-link>
       -
       <router-link to="/teamreg">
-        Send lenke
+        Send spesial-lenke
       </router-link>
-      <h2>Ditt team</h2>
       <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
 
       <h5 class="dayTitle">{{constants.campaignDays[index]}}</h5>
@@ -33,8 +33,15 @@
       </div>
     </template>
 
-
     <h1>Påmeldinger</h1>
+
+    <div v-if="registrations.length" class="alert alert-secondary bg-light mt-3" role="alert">
+      <span style="font-size: 1em; float:  left; margin-right: 0.5em;">
+        💪
+      </span>
+      <div class="">Åpne for å lese innsendt påmelding. Send dem inn på nytt ved endring! </div>
+    </div>
+
     <!--div v-for="(tiem, idx) in tiems" :key=idx>      <!- <------------------- disable BEFORE commit !!! ->
       <input type="text" v-model="tiem.teamName" @input="onTiemEdit(tiem.id)" ref="tieminput">
     </div-->

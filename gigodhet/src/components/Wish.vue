@@ -174,7 +174,7 @@
     </form>
 
     <br />
-    {{constants.welcomeUnfinishedFormMessage}}
+    Du kan enkelt oppdatere innholdet ved behov etter innsending.
     <div class="form-group pb-5">
       <button v-if="id" class="btn mr-3" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Send</button>
       <button class="btn btn-primary" @click="save(false)">Send og lukk</button>
