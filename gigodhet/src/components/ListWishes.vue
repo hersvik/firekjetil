@@ -1,6 +1,6 @@
 <template>
   <div class="container container_under_nav">
-    <h1>Gi forslag til Godhetsoppdrag</h1>
+    <h1>Meld inn oppdrag</h1>
 
     <div v-if="wishes.length" class="alert alert-secondary bg-light mt-3" role="alert">
       <div class="mb-2"><strong>Takk for innmeldingen, den ligger i listen under og du kan redigere den!</strong></div>
@@ -13,7 +13,7 @@
     <li class="list-group">
       <ul class="list-group-item">
         + <router-link :to="{path: 'wish'}">
-          Nytt forslag
+          Nytt oppdrag
         </router-link>
       </ul>
       <ul v-for="(wish) in chronologicalWishes" :key="wish.id" class="list-group-item">

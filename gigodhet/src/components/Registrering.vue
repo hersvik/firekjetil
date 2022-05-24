@@ -21,7 +21,7 @@
     <em style="margin-bottom: 2em"> {{constants.dataDisclosure}} </em>
 
     <div v-if="team && team.teamName" class="alert alert-secondary bg-light mt-3" role="alert">
-      👉 Du melder deg på via <em>{{team.teamName}}</em> &ndash; <router-link to="/regs">Gå til annen påmelding</router-link>
+      👉 Dette er en ny påmelding direkte til <em>{{team.teamName || "(Feil med team-navn)"}}</em>. <router-link to="/regs">Til annen påmelding</router-link>
     </div>
     <div v-if="agent && !team" class="alert alert-secondary bg-light mt-3" role="alert">
       🔺 <em>Feil med lenken du brukte. Prøv på nytt eller be om ny lenke.</em>
@@ -177,7 +177,7 @@
       </textarea>
     </div>
 
-    {{constants.welcomeUnfinishedFormMessage}}
+    Informasjonen trenger ikke være fullstendig i første omgang 😀 Vi foretrekker tidlig info og heller en ekstra oppdatering ved behov 👍
     <div v-if="!(agent && !team)" class="form-group"><!-- agent && !team means error with team link, see user warning above-->
       <button v-if="!registration.removedBy" class="btn btn-primary" @click="save">
         Send
@@ -283,7 +283,7 @@
         this.watchedRegistration.edited = null;
         if (this.alreadyLoaded
           && JSON.stringify(entry) !== JSON.stringify(this.watchedRegistration) ){
-            alert("Opplysningene i skjemaet ble endret utenfra og innholdet du ser oppdateres automatisk. \n\nEksisterende innhold i skjemaet blir dermed erstattet nå. \n\n(Når du sender, oppdateres visningen umiddelbart hos andre som ser på også)");
+            alert("Opplysningene i skjemaet ble endret utenfra. Les gjennom på nytt!");
         }
         this.alreadyLoaded = true;
         this.watchedRegistration = entry;
@@ -324,7 +324,7 @@
             .doc(this.id)
             .set(registration, {merge: true})
             .then(() => {
-              alert("Takk for at du holder informasjonen oppdatert!\n\nHvis du vet om noen som har lest den utdaterte informasjonen, vennligst varsle dem om at informasjonen nå er oppdatert, dersom du tror det er relevant.")
+              alert("Takk for at du holder informasjonen oppdatert!\n\nHvis du har endret noen planer som påvirker noen du vet om, vennligst varsle dem.")
               this.$router.push("/regs")
             })
             .catch(function(error){

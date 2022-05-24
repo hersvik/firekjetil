@@ -24,7 +24,7 @@
 <style>
 
   #wrapper_all.wish_section {
-    border-left: solid 1em purple;
+    border-left: solid 1em #f3d3f3;
   }
 
   body a {

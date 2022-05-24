@@ -2,14 +2,14 @@
   <div class="container container_under_nav">
     <template v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)">
       <h1>Deltagere</h1>
+      <h2>Ditt team</h2>
       <router-link :to="'/registrering/agent/'+getters.user().uid">
         Direkte påmelding
       </router-link>
       -
       <router-link to="/teamreg">
-        Send lenke
+        Send spesial-lenke
       </router-link>
-      <h2>Ditt A-team</h2>
       <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
 
       <h5 class="dayTitle">{{constants.campaignDays[index]}}</h5>
@@ -33,9 +33,16 @@
       </div>
     </template>
 
-
     <h1>Påmeldinger</h1>
-    <!--Team status: <div v-for="(tiem, idx) in tiems" :key=idx>      <!- <------------------- disable BEFORE commit !!! ->
+
+    <div v-if="registrations.length" class="alert alert-secondary bg-light mt-3" role="alert">
+      <span style="font-size: 1em; float:  left; margin-right: 0.5em;">
+        💪
+      </span>
+      <div class="">Åpne for å lese innsendt påmelding. Send dem inn på nytt ved endring! </div>
+    </div>
+
+    <!--div v-for="(tiem, idx) in tiems" :key=idx>      <!- <------------------- disable BEFORE commit !!! ->
       <input type="text" v-model="tiem.teamName" @input="onTiemEdit(tiem.id)" ref="tieminput">
     </div-->
     <li class="list-group">
@@ -59,6 +66,12 @@
         <span class="" v-if="registration.removedBy">Fjernet av {{registration.removedBy}} </span>
         <span class="edited_tag">{{registration.displayEdited}} </span>
         <span v-if="getters.user().uid === constants.adminUid" v-tooltip:top="'Intern sekretariat-kommentar'">{{registration.status}}</span>
+      </ul>
+      <ul v-if="getters.user().uid === constants.adminUid" class="list-group-item">
+        <label style="color: #007bff; cursor: pointer;">
+          <input type="checkbox" v-model="hideTeams">
+          Skjul teamene
+        </label>
       </ul>
     </li>
 
@@ -91,6 +104,7 @@
         tiems: [],
         hasQueuedSave: false, // tiems
         whiteTimerId: null, // tiems
+        hideTeams: true,
       }
     },
     computed: {
@@ -124,7 +138,10 @@
 
         for (let i=0; i < sorted.length; i++) {
           let registration = sorted[i];
-          if (this.showRemoved || !registration.removedBy) {
+          let isVisible = this.showRemoved || !registration.removedBy;
+          let isAdmin = this.getters.user().uid === this.constants.adminUid;
+          let isIncluded = !isAdmin || !this.hideTeams || !registration.agentUid;
+          if (isVisible && isIncluded) {
               copy.push(registration)
           }
           else{
