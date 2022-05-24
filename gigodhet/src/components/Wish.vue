@@ -378,7 +378,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
         this.watchedWish.edited = null;
         if (!this.suppressWatchOnce
           && JSON.stringify(entry) !== JSON.stringify(this.watchedWish) ){
-            alert("Opplysningene i skjemaet ble endret utenfra og innholdet du ser oppdateres automatisk. \n\nEksisterende innhold i skjemaet blir dermed erstattet nå. \n\n(Når du lagrer, oppdateres visningen umiddelbart hos andre som ser på også)");
+            alert("Opplysningene i skjemaet ble endret utenfra. Les gjennom på nytt!");
         }
         this.suppressWatchOnce = false; // enable next watch
         this.watchedWish = entry;

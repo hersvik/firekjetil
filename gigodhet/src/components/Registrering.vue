@@ -283,7 +283,7 @@
         this.watchedRegistration.edited = null;
         if (this.alreadyLoaded
           && JSON.stringify(entry) !== JSON.stringify(this.watchedRegistration) ){
-            alert("Opplysningene i skjemaet ble endret utenfra og innholdet du ser oppdateres automatisk. \n\nEksisterende innhold i skjemaet blir dermed erstattet nå. \n\n(Når du sender, oppdateres visningen umiddelbart hos andre som ser på også)");
+            alert("Opplysningene i skjemaet ble endret utenfra. Les gjennom på nytt!");
         }
         this.alreadyLoaded = true;
         this.watchedRegistration = entry;
