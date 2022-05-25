@@ -95,7 +95,7 @@
       if(getters.user().uid === constants.adminUid){
         return {
           registrations: db.collection("registrations"),
-          teams: db.collection("teams") // disable BEFORE commit
+          teams: db.collection("teams")
         };
       }
     },
@@ -117,28 +117,28 @@
           }, 2000);
         }
       },
-      saveTeam(teamId){
-        let that=this;
-        db.collection('teams')
-            .doc(teamId)
-            .set(
-              {
-                noteDay0: this.teams.filter(t => t.id == teamId)[0].noteDay0,
-                ownerUid: this.getters.user().uid // for db write-permission.
-              },
-              {merge: true})
-            .then(() => {
-                that.$refs.teaminput[0].style.backgroundColor = "#cfc";
-                  this.whiteTimerId = setTimeout(() => {
-                    if(!this.hasQueuedSave)
-                      that.$refs.teaminput[0].style.backgroundColor = "white";
-                  }, 3000);
-            })
-            .catch(function(error){
-              alert("Kunne ikke lagre team. ("+error+")")
-            });
+      // saveTeam(teamId){ // <----------- disabled for safety, not yet released. router also disabled.
+      //   let that=this;
+      //   db.collection('teams')
+      //       .doc(teamId)
+      //       .set(
+      //         {
+      //           noteDay0: this.teams.filter(t => t.id == teamId)[0].noteDay0,
+      //           ownerUid: this.getters.user().uid // for db write-permission.
+      //         },
+      //         {merge: true})
+      //       .then(() => {
+      //           that.$refs.teaminput[0].style.backgroundColor = "#cfc";
+      //             this.whiteTimerId = setTimeout(() => {
+      //               if(!this.hasQueuedSave)
+      //                 that.$refs.teaminput[0].style.backgroundColor = "white";
+      //             }, 3000);
+      //       })
+      //       .catch(function(error){
+      //         alert("Kunne ikke lagre team. ("+error+")")
+      //       });
 
-      }
+      // }
     }
   }
 </script>

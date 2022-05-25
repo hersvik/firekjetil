@@ -14,10 +14,10 @@ const router = new VueRouter({
         path: "/regs",
         component: () => import('./components/ListRegistreringer.vue')
     },
-    {
-        path: "/teams",
-        component: () => import('./components/ListTeams.vue')
-    },
+    // {
+    //     path: "/teams",
+    //     component: () => import('./components/ListTeams.vue')
+    // },
     {
         path: "/dash",
         component: () => import('./components/TeamDashboard.vue')
