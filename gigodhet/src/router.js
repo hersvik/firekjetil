@@ -19,6 +19,15 @@ const router = new VueRouter({
         component: () => import('./components/ListTeams.vue')
     },
     {
+        path: "/dash",
+        component: () => import('./components/TeamDashboard.vue')
+    },
+    {
+        path: "/dash/:teamid",
+        props: true,
+        component: () => import('./components/TeamDashboard.vue')
+    },
+    {
         path: "/teamreg",
         component: () => import('./components/TeamNavn.vue')
     },

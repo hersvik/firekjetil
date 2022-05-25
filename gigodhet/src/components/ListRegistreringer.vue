@@ -33,7 +33,11 @@
       </div>
     </template>
 
-    <h1>Påmeldinger</h1>
+    <h1>
+      Påmeldinger <span v-if="getters.user().uid === constants.adminUid">
+        [<router-link to="/dash">Velg team</router-link>]
+      </span>
+    </h1>
 
     <div v-if="registrations.length" class="alert alert-secondary bg-light mt-3" role="alert">
       <span style="font-size: 1em; float:  left; margin-right: 0.5em;">
