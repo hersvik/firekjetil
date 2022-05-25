@@ -162,6 +162,11 @@
           teams: db.collection("teams"),
         };
     },
+    watch: {
+      selectedTeamUid: function(teamUid) {
+        this.$router.replace({ path: '/dash/'+teamUid })
+      }
+    },
     methods: {
       getRegistrationTeamName(agentUid){
         let teamObject = this.teams.filter(t => t.ownerUid === agentUid)[0];
