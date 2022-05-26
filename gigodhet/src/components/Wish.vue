@@ -1,6 +1,6 @@
 <template>
   <div class="container container_under_nav">
-    <a href="#" @click="$router.go(-1)">Tilbake</a>
+    <a @click="$router.go(-1)">Tilbake</a>
     <h1>{{id ? wish.title : 'Meld inn oppdrag'}}</h1>
     <h3>{{wish.event}}</h3>
     <br />

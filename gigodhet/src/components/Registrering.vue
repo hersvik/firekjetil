@@ -14,7 +14,7 @@
     </div>
   </div>
   <div v-else class="container container_under_nav" :class="{readonly: false}">
-    <a href="#" @click="$router.go(-1)">Tilbake</a>
+    <a @click="$router.go(-1)">Tilbake</a>
     <!-- <router-link to="/regs">Tilbake</router-link> -->
     <h1>{{registration.event}}</h1>
     <h3>{{registration.id ? registration.primaryPerson.firstName+ ' + ' +registration.participants.length : "Påmelding"}}</h3>
