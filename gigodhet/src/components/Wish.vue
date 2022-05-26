@@ -1,6 +1,6 @@
 <template>
   <div class="container container_under_nav">
-    <router-link to="/wishes">Tilbake</router-link>
+    <a href="#" @click="$router.go(-1)">Tilbake</a>
     <h1>{{id ? wish.title : 'Meld inn oppdrag'}}</h1>
     <h3>{{wish.event}}</h3>
     <br />
@@ -176,8 +176,8 @@
     <br />
     Du kan enkelt oppdatere innholdet ved behov etter innsending.
     <div class="form-group pb-5">
-      <button v-if="id" class="btn mr-3" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Send</button>
-      <button class="btn btn-primary" @click="save(false)">Send og lukk</button>
+      <!-- <button v-if="id" class="btn mr-3" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Send</button> -->
+      <button class="btn btn-primary" @click="save(false)">Send</button>
     </div>
 
   </div>
@@ -304,7 +304,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
         this.isEdited = false;
 
         if (!isStaying) {
-          this.$router.push("/wishes");
+          this.$router.back();//.push("/wishes");
         }
       },
 

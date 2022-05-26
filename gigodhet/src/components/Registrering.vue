@@ -14,7 +14,8 @@
     </div>
   </div>
   <div v-else class="container container_under_nav" :class="{readonly: false}">
-    <router-link to="/regs">Tilbake</router-link>
+    <a href="#" @click="$router.go(-1)">Tilbake</a>
+    <!-- <router-link to="/regs">Tilbake</router-link> -->
     <h1>{{registration.event}}</h1>
     <h3>{{registration.id ? registration.primaryPerson.firstName+ ' + ' +registration.participants.length : "Påmelding"}}</h3>
     <div style="color: #6c757d; margin-bottom: 1em;" v-if="registration.lastUpdatedBy">(Sist oppdatert av {{registration.lastUpdatedBy}})</div>
@@ -325,7 +326,7 @@
             .set(registration, {merge: true})
             .then(() => {
               alert("Takk for at du holder informasjonen oppdatert!\n\nHvis du har endret noen planer som påvirker noen du vet om, vennligst varsle dem.")
-              this.$router.push("/regs")
+              this.$router.back()//.push("/regs")
             })
             .catch(function(error){
               alert("Kunne ikke lagre. ("+error+")")
