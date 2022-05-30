@@ -24,6 +24,7 @@
           <em>{{wish.submitter.firstName}} {{wish.submitter.lastName}}</em>: <strong>{{wish.title}}</strong>  for {{wish.target.firstName}} {{wish.target.lastName}}
         </router-link>
         <span class="edited_tag">{{wish.displayEdited}} </span>
+        <span v-if="getters.user().uid === constants.adminUid"><strong>{{getTeamName(wish.ownerUid)}} </strong></span>
         <span v-if="getters.user().uid === constants.adminUid" v-tooltip:top="'Admin-status (intern)'">{{wish.status}}</span>
       </ul>
     </li>
@@ -39,10 +40,18 @@
     beforeCreate() {
       setters.setActiveNav("foresporsler");
     },
+    created(){
+      db.collection('teams') //       <----------  to be replaced in firestore method (tiems) !!! !!! !!!
+      .get()
+      .then(querySnapshot => {
+        this.teams = querySnapshot.docs.map(doc => doc.data())
+      })
+    },
     name: "ListWishes",
     data () {
       return {
-        wishes: []
+        wishes: [],
+        teams: [],
       }
     },
     computed: {
@@ -95,7 +104,11 @@
       }
     },
     methods: {
-
+      getTeamName(agentUid){
+        let teamObject = this.teams.filter(t => t.ownerUid === agentUid)[0];
+        let teamName = teamObject && teamObject.teamName || "";
+        return teamName;
+      },
     }
   }
 </script>
