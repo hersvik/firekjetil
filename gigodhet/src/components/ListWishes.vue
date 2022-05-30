@@ -16,9 +16,10 @@
           Nytt oppdrag
         </router-link>
       </ul>
-      <ul v-for="(wish) in chronologicalWishes" :key="wish.id" class="list-group-item">
+      <ul v-for="(wish) in chronologicalWishes" :key="wish.id" class="list-group-item" :class="{done: wish.done}">
         {{wish.isMostRecentEdited}}
         {{wish.created.toDate().toLocaleDateString()}}
+        <span v-if="wish.done"><strong>Utført </strong></span>
         <router-link :to="{name: 'endreWish', params:{id: wish.id} }">
           <em>{{wish.submitter.firstName}} {{wish.submitter.lastName}}</em>: <strong>{{wish.title}}</strong>  for {{wish.target.firstName}} {{wish.target.lastName}}
         </router-link>
@@ -102,5 +103,8 @@
 <style scoped>
   .edited_tag {
     opacity: 0.3;
+  }
+  .done {
+    background-color: #f9f9f9;
   }
 </style>

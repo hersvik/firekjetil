@@ -173,6 +173,13 @@
 
     </form>
 
+    <div class="form-group form-check mt-4 mb-5">
+      <input class="form-check-input" type="checkbox" v-model="wish.done">
+      <label class="form-check-label">
+        Dette oppdraget er nå fullført
+      </label>
+    </div>
+
     <br />
     Du kan enkelt oppdatere innholdet ved behov etter innsending.
     <div class="form-group pb-5">
