@@ -1,4 +1,5 @@
 .firebase/*
+.zshrc
 
 
 .DS_Store
