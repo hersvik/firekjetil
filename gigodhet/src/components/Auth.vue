@@ -1,10 +1,18 @@
 <template lang="html">
   <div>
     <div class="sentrer_hjemlink">
-      Tilbake til
-      <router-link to="/">Godhetstavanger.no</router-link>
+      Godhetstavanger.no
+    </div>
+    <div class="sentrer_hjemlink">
+      Enten oppgi en "ny" eller tidligere brukt epost-adresse 
+      <br>(Gjenbruk av epost gir tilgang til egne påmeldinger etc.) 
     </div>
     <div id="firebaseui-auth-container"></div>
+    <div class="sentrer_hjemlink">
+      Tilbake til
+      <router-link to="/">Godhetstavanger.no</router-link>
+      <br><br>Dersom epost-adressen er ekte kan den redde deg ved glemt passord. <br>Det er mulig å dikte opp en falsk epost-adresse men bruk uansett samme epost-adresse innad i samme år / dvs. for samme godhetsuke.
+    </div>
   </div>
 </template>
 <script>
