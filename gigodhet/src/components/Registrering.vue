@@ -33,13 +33,13 @@
         <label>
           Intern kommentar (...husk å sende)
         </label>
-        <input v-model="registration.status" class="form-control" type="text">
+        <input v-model="registration.status" @input="setIsEdited" class="form-control" type="text">
         <br>
 
         <label>
           Team
         </label>
-        <select v-model="registration.agentUid" class="custom-select">
+        <select v-model="registration.agentUid" @change.once="setIsEdited" class="custom-select">
           <option value="">-  Uten team -</option>
           <option v-for="(team, idx) in teams" :key="idx" :value="team.ownerUid">{{team.teamName}}</option>
         </select>
@@ -57,20 +57,20 @@
             <label>
               Fornavn
             </label>
-            <input v-model="registration.primaryPerson.firstName" class="form-control" placeholder="" type="text" />
+            <input v-model="registration.primaryPerson.firstName" @input="setIsEdited" class="form-control" placeholder="" type="text" />
         </div>
         <div class="form-group">
             <label>
               Etternavn
             </label>
-            <input v-model="registration.primaryPerson.lastName" class="form-control" placeholder="" type="text" />
+            <input v-model="registration.primaryPerson.lastName" @input="setIsEdited" class="form-control" placeholder="" type="text" />
         </div>
 
         <div class="form-group">
             <label>
               Aldersgruppe*
             </label>
-            <select v-model="registration.primaryPerson.ageGroup" class="custom-select">
+            <select v-model="registration.primaryPerson.ageGroup" @change.once="setIsEdited" class="custom-select">
               <option selected>-  Velg -</option>
               <option value="adult">Voksen</option>
               <option value="child" disabled>Barn (til og med 7. klasse) - se meddeltager under)</option>
@@ -82,7 +82,7 @@
             <strong>{{registration.primaryPerson.firstName || "Jeg"}}</strong> ønsker å delta:
           </label>
           <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index" class="day-checkbox">
-            <input type="checkbox" v-model="registration.primaryPerson.willAttendDay[index]"> {{constants.campaignDays[index]}}
+            <input type="checkbox" v-model="registration.primaryPerson.willAttendDay[index]" @input="setIsEdited"> {{constants.campaignDays[index]}}
           </div>
           <br>
         </div>
@@ -91,25 +91,25 @@
           <label>
             Tlf.
           </label>
-          <input v-model="registration.primaryPerson.phone" class="form-control" placeholder="" type="number" />
+          <input v-model="registration.primaryPerson.phone" @input="setIsEdited" class="form-control" placeholder="" type="number" />
         </div>
         <div class="form-group">
           <label>
             E-post
           </label>
-          <input v-model="registration.primaryPerson.email" class="form-control" placeholder="" type="text" />
+          <input v-model="registration.primaryPerson.email" @input="setIsEdited" class="form-control" placeholder="" type="text" />
         </div>
         <div class="form-group">
             <label>
               Bosted /bydel
             </label>
-            <input v-model="registration.primaryPerson.address" class="form-control" placeholder="" type="text" />
+            <input v-model="registration.primaryPerson.address" @input="setIsEdited" class="form-control" placeholder="" type="text" />
         </div>
 
       </div>
 
       <div class="form-group form-check mt-4 mb-5">
-        <input class="form-check-input" type="checkbox" v-model="registration.familiegodhet">
+        <input class="form-check-input" type="checkbox" v-model="registration.familiegodhet" @input.once="setIsEdited">
         <label class="form-check-label">
           Familiegodhet (for barnefamilier)
         </label>
@@ -118,13 +118,13 @@
         <label>
           Tilhørighet (valgfritt)
         </label>
-        <input v-model="registration.belonging" class="form-control" placeholder=" ~ Menighet / huskirke / leder(e) / el.l. ~" type="text" />
+        <input v-model="registration.belonging" @input="setIsEdited" class="form-control" placeholder=" ~ Menighet / huskirke / leder(e) / el.l. ~" type="text" />
       </div>
       <div class="form-group">
         <label>
           Kompetanser (valgfritt)
         </label>
-        <input v-model="registration.competancies" class="form-control" placeholder=" ~ Eksempelvis: 1 person blomsterspesialist ~" type="text" />
+        <input v-model="registration.competancies" @input="setIsEdited" class="form-control" placeholder=" ~ Eksempelvis: 1 person blomsterspesialist ~" type="text" />
       </div>
     </form>
 
@@ -133,24 +133,24 @@
       (Noen som skal delta sammen med deg og som vet at du herved melder dem på)
     </div>
     <div v-for="(participant, idx) in registration.participants" :key="idx" class="bg-light p-2 mb-2">
-      <small class="form-text text-muted" style="display: inline;">Meddeltager {{idx + 1}} </small><small class="clickable_label" @click="removeGroupMember(idx)">[Fjerne]</small>
+      <small class="form-text text-muted" style="display: inline;">Meddeltager {{idx + 1}} </small><small class="clickable_label" @click="removeGroupMember(idx)" @click.once="setIsEdited">[Fjerne]</small>
       <div class="form-group">
           <label>
             Fornavn
           </label>
-          <input v-model="participant.firstName" class="form-control" placeholder=" - Fornavn -" type="text" />
+          <input v-model="participant.firstName" @input="setIsEdited" class="form-control" placeholder=" - Fornavn -" type="text" />
       </div>
       <div class="form-group">
         <label>
           Etternavn
         </label>
-        <input v-model="participant.lastName" class="form-control" placeholder=" - Etternavn -" type="text" />
+        <input v-model="participant.lastName" @input="setIsEdited" class="form-control" placeholder=" - Etternavn -" type="text" />
       </div>
       <div class="form-group">
         <label>
           Aldersgruppe*
         </label>
-        <select v-model="participant.ageGroup" class="custom-select">
+        <select v-model="participant.ageGroup" @input="setIsEdited" class="custom-select">
           <option selected>-  Velg -</option>
           <option value="adult">Voksen</option>
           <option value="child">Barn (til og med 7. klasse)</option>
@@ -161,26 +161,26 @@
           <strong>{{participant.firstName || "Denne deltageren"}}</strong> ønsker å delta:
         </label>
         <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index" class="day-checkbox">
-        <input type="checkbox" v-model="participant.willAttendDay[index]"> {{constants.campaignDays[index]}}
+        <input type="checkbox" v-model="participant.willAttendDay[index]" @input.once="setIsEdited"> {{constants.campaignDays[index]}}
         </div>
       </div>
     </div>
 
     <div class="form-group mb-5">
-      <button class="btn btn-light" @click="addParticipant">+ Legg til meddeltager</button>
+      <button class="btn btn-light" @click="addParticipant" @click.once="setIsEdited">+ Legg til meddeltager</button>
     </div>
 
     <div class="form-group mt-4 mb-5">
       <label>
         Eventuelt annet / kommentar
       </label>
-      <textarea v-model="registration.misc" class="form-control" type="text" rows="3">
+      <textarea v-model="registration.misc" @input="setIsEdited" class="form-control" type="text" rows="3">
       </textarea>
     </div>
 
-    Informasjonen trenger ikke være fullstendig i første omgang 😀 Vi foretrekker tidlig info og heller en ekstra oppdatering ved behov 👍
+    Informasjonen trenger ikke være fullstendig i første omgang 😀 Vi foretrekker tidlig info og evt. en ekstra oppdatering ved behov 👍
     <div v-if="!(agent && !team)" class="form-group"><!-- agent && !team means error with team link, see user warning above-->
-      <button v-if="!registration.removedBy" class="btn btn-primary" @click="save">
+      <button v-if="!registration.removedBy" class="btn btn-primary" @click="save" :disabled="!this.isEdited">
         Send
       </button>
       <button v-if="registration.removedBy" @click="save(true)" class="btn btn-primary">
@@ -243,6 +243,8 @@
           event: "Godhet Stavanger 2022",
         },
         alreadyLoaded: false,
+        isEdited: false,
+        saveClicked: false,
         watchedRegistration: {},
         confirmedGeneralRegistration: false,
         confirmedHasCustomLink: false,
@@ -280,6 +282,7 @@
     },
     watch: {
       registration: function (entry){
+        /* Watch for changes through network (shallow object watch, not stringified) */
         entry.edited = null;
         this.watchedRegistration.edited = null;
         if (this.alreadyLoaded
@@ -291,8 +294,9 @@
       }
     },
     methods: {
-      updateEnrollment() { // (enrolled)
-        // db.collection("enrollment").doc(enrolled.id).update({misc: enrolled.misc})
+      setIsEdited() {
+        this.isEdited = true;
+        console.log("tteesst")
       },
       addParticipant() {
         this.registration.participants.push({willAttendDay: new Array(constants.campaignDays.length).fill(false)});
@@ -304,7 +308,10 @@
       },
 
       save (wantReactivation) {
-
+        if (this.saveClicked) {
+          return;
+        }
+        this.saveClicked = true;
         if(wantReactivation){
           this.registration.removedBy = "";
         }
@@ -373,4 +380,10 @@
   .day-checkbox{
     margin-top: 0.3em;
   }
+
+  button.btn.btn-primary:disabled {
+    background-color: silver;
+    border: silver;
+    cursor: default;
+}
 </style>
