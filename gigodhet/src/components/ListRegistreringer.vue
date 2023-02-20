@@ -1,15 +1,21 @@
 <template>
   <div class="container container_under_nav">
     <template v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)">
-      <h1>Deltagere</h1>
-      <h2>Ditt team</h2>
-      <router-link :to="'/registrering/agent/'+getters.user().uid">
-        Direkte påmelding
-      </router-link>
-      -
+      <h1>Ditt team</h1>
+      <h2>Du er gruppeleder</h2>
+
       <router-link to="/teamreg">
-        Send spesial-lenke
+        Send invitasjon via SMS eller melding
       </router-link>
+      <br>
+      <span class="highlight_background_optimistic" style="padding: 3px; line-height: 2em;">
+      - eller -
+      </span>
+      <br>
+      <router-link :to="'/registrering/agent/'+getters.user().uid">
+        Direkte-påmelding til ditt team
+      </router-link>
+      
       <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
 
       <h5 class="dayTitle">{{constants.campaignDays[index]}}</h5>
@@ -36,26 +42,26 @@
     <h1>
       Påmeldinger <span v-if="getters.user().uid === constants.adminUid">
         [<router-link to="/dash">Velg team</router-link>]
-      </span>
+        </span>
+        <small @click="showAll" class="show_removed" v-if="atLeastOneRemoved && !showRemoved">[vis skjulte]</small>
+        <small @click="showAll" class="show_removed" v-if="atLeastOneRemoved && showRemoved">[skjul igjen]</small>
     </h1>
 
     <div v-if="registrations.length" class="alert alert-secondary bg-light mt-3" role="alert">
       <span style="font-size: 1em; float:  left; margin-right: 0.5em;">
         💪
       </span>
-      <div class="">Åpne for å lese innsendt påmelding. Send dem inn på nytt ved endring! </div>
+      <div class="">Se nedenfor for å lese innsendt påmelding. Send dem inn på nytt ved endring! </div>
     </div>
 
     <!--div v-for="(tiem, idx) in tiems" :key=idx>      <!- <------------------- disable BEFORE commit !!! ->
       <input type="text" v-model="tiem.teamName" @input="onTiemEdit(tiem.id)" ref="tieminput">
     </div-->
     <li class="list-group">
-      <ul class="list-group-item">
+      <ul class="list-group-item highlight_background_optimistic">
         + <router-link :to="{path: 'registrering'}">
-          Ny påmelding
+          Lag ny påmelding
         </router-link>
-        <small @click="showAll" class="show_removed" v-if="!showRemoved">[vis skjulte]</small>
-        <small @click="showAll" class="show_removed" v-if="showRemoved">[skjul igjen]</small>
       </ul>
       <ul v-for="(registration) in chronologicalRegistrations" :key="registration.id" class="list-group-item" :class="{faded_removed: registration.removedBy}">
         {{registration.isMostRecentEdited}}
@@ -104,6 +110,7 @@
         registrations: [],
         registrationsWithAgentAccess: [],
         showRemoved: false,
+        // atLeastOneRemoved: false,
         teams: [],
         tiems: [],
         hasQueuedSave: false, // tiems
@@ -116,6 +123,9 @@
       constants: () => constants,
       registrationsReadOnly() {
         return this.registrationsWithAgentAccess.filter(r => r.ownerUid !== getters.user().uid);
+      },
+      atLeastOneRemoved() {
+        return this.registrations.some(r => !!r.removedBy);
       },
       chronologicalRegistrations() {
         if (!this || !this.registrations) {
@@ -241,8 +251,9 @@
     opacity: 0.5;
   }
   .show_removed {
+    font-size: 1rem;
     float: right;
-    opacity: 0.5;
+    opacity: 0.3;
     cursor: pointer;
   }
   .faded_removed {
@@ -257,7 +268,13 @@
     background-color: #bbb;
     border-radius: 50%;
     display: inline-block;
-    margin: 0 0.2em
-;
+    margin: 0 0.2em;
+  }
+  .highlight_background_optimistic{
+    background-color: #cfffdd;
+    border: solid 1px #93d9a8;
+  }
+  .highlight_background_optimistic a{
+    color: black;
   }
 </style>
