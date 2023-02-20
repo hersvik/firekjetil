@@ -178,9 +178,9 @@
       </textarea>
     </div>
 
-    Informasjonen trenger ikke være fullstendig i første omgang 😀 Vi foretrekker tidlig info og heller en ekstra oppdatering ved behov 👍
+    Informasjonen trenger ikke være fullstendig i første omgang 😀 Vi foretrekker tidlig info og evt. en ekstra oppdatering ved behov 👍
     <div v-if="!(agent && !team)" class="form-group"><!-- agent && !team means error with team link, see user warning above-->
-      <button v-if="!registration.removedBy" class="btn btn-primary" @click="save">
+      <button v-if="!registration.removedBy" class="btn btn-primary" @click="save" :disabled="!this.isEdited">
         Send
       </button>
       <button v-if="registration.removedBy" @click="save(true)" class="btn btn-primary">
@@ -222,7 +222,8 @@
       })
     },
     mounted(){
-      this.registration.primaryPerson.email = this.registration.primaryPerson.email || this.getters.user().email
+      this.registration.primaryPerson.email = this.registration.primaryPerson.email || this.getters.user().email;
+      console.log("Påmelding", this.id, "- åpnet", new Date().toLocaleTimeString());
     },
     beforeUpdate(){
       this.registration.agentUid = this.registration.agentUid || this.agent;
@@ -243,7 +244,10 @@
           event: "Godhet Stavanger 2022",
         },
         alreadyLoaded: false,
+        isEdited: false,
+        saveClicked: false,
         watchedRegistration: {},
+        watchedStringifiedReg: "",
         confirmedGeneralRegistration: false,
         confirmedHasCustomLink: false,
         team: {},
@@ -264,6 +268,11 @@
       getters(){
         return getters;
       },
+      stringifiedTimelessReg(){
+        let timelessReg = {...this.registration};
+        timelessReg.edited = null;
+        return JSON.stringify(timelessReg);
+      },
       adultNumberSelection: function() {
         let result= this.registration.participants.filter(el => el.ageGroup == 'adult');
         result.push({});
@@ -280,6 +289,7 @@
     },
     watch: {
       registration: function (entry){
+        /* Watch for changes through network (shallow object watch, not stringified) */
         entry.edited = null;
         this.watchedRegistration.edited = null;
         if (this.alreadyLoaded
@@ -288,12 +298,28 @@
         }
         this.alreadyLoaded = true;
         this.watchedRegistration = entry;
-      }
+      },
+      stringifiedTimelessReg: function (){
+        if(!this.id) {
+          this.setIsEdited(); // new reg.
+          return;
+        }
+        if(this.watchedStringifiedReg === ""){
+          let timelessReg = this.registration;
+          timelessReg.edited = null;//ignore edited timestamp.
+          timelessReg.agentUid = this.agent;
+          this.watchedStringifiedReg = JSON.stringify(timelessReg);
+        }
+        if(this.stringifiedTimelessReg !== this.watchedStringifiedReg){
+          this.setIsEdited();
+        }
+      },
     },
     methods: {
-      updateEnrollment() { // (enrolled)
-        // db.collection("enrollment").doc(enrolled.id).update({misc: enrolled.misc})
-      },
+      setIsEdited() {
+         this.isEdited = true;
+         console.log("Påmelding", this.id, "- redigert", new Date().toLocaleTimeString());
+       },
       addParticipant() {
         this.registration.participants.push({willAttendDay: new Array(constants.campaignDays.length).fill(false)});
       },
@@ -304,6 +330,11 @@
       },
 
       save (wantReactivation) {
+        if (this.saveClicked) {
+          console.log("Skipped repeated send!")
+          return;
+        }
+        this.saveClicked = true;
 
         if(wantReactivation){
           this.registration.removedBy = "";
@@ -325,6 +356,7 @@
             .doc(this.id)
             .set(registration, {merge: true})
             .then(() => {
+              console.log("Påmelding", this.id, "- Lagret OK")
               alert("Takk for at du holder informasjonen oppdatert!\n\nHvis du har endret noen planer som påvirker noen du vet om, vennligst varsle dem.")
               this.$router.back()//.push("/regs")
             })
@@ -336,6 +368,7 @@
           db.collection("registrations").add(this.registration)
             .then(() => {
               this.$router.push("/regs");
+              console.log("Påmelding lagt til, lagret OK")
             });
         }
 
@@ -373,4 +406,10 @@
   .day-checkbox{
     margin-top: 0.3em;
   }
+
+  button.btn.btn-primary:disabled {
+     background-color: silver;
+     border: silver;
+     cursor: not-allowed;
+ }
 </style>

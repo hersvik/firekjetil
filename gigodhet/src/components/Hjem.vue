@@ -52,7 +52,7 @@
     I samarbeid med <a href="http://godhet.no">godhet.no</a>
 
     <div style="margin-top: 1em; color: silver;">
-      <em>Oppdatert 3. mai 2022</em> - <router-link to="/teamreg">Team-registrering (midlertidig snarvei)</router-link>
+      <em>Oppdatert 3. mai 2022</em> - <a href="/teamreg">Team-registrering (midlertidig snarvei)</a>
     </div>
   </div>
 </template>
