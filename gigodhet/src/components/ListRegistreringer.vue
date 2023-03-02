@@ -107,7 +107,6 @@
         registrations: [],
         registrationsWithAgentAccess: [],
         showRemoved: false,
-        // atLeastOneRemoved: false,
         teams: [],
         tiems: [],
         hasQueuedSave: false, // tiems
@@ -122,7 +121,7 @@
         return this.registrationsWithAgentAccess.filter(r => r.ownerUid !== getters.user().uid);
       },
       atLeastOneRemoved() {
-        return this.registrations.some(r => !!r.removedBy);
+        return this.registrations.some(r => !!r.removedBy) || this.registrationsWithAgentAccess.some(r => !!r.removedBy);
       },
       chronologicalRegistrations() {
         if (!this || !this.registrations) {
