@@ -1,19 +1,16 @@
 <template>
   <div class="container container_under_nav">
-    <template v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)">
-      <h1>Ditt team</h1>
-      <h2>Du er gruppeleder</h2>
 
-      <router-link to="/teamreg">
-        Send invitasjon via SMS eller melding
+    <h1>Du er gruppeleder</h1>
+    <div v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)" class="bg-light" style="border: 1px solid silver; border-radius: 4px; padding: 1em">
+
+      <h2>Ditt team</h2>
+      <router-link to="/teamreg" class="btn btn-outline-secondary">
+        Send invitasjon
       </router-link>
-      <br>
-      <span class="highlight_background_optimistic" style="padding: 3px; line-height: 2em;">
       - eller -
-      </span>
-      <br>
-      <router-link :to="'/registrering/agent/'+getters.user().uid">
-        Direkte-påmelding til ditt team
+      <router-link :to="'/registrering/agent/'+getters.user().uid" class="btn btn-outline-secondary">
+        Påmelding direkte
       </router-link>
       
       <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
@@ -37,7 +34,7 @@
         </div>
 
       </div>
-    </template>
+    </div>
 
     <h1>
       Påmeldinger <span v-if="getters.user().uid === constants.adminUid">
