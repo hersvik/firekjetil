@@ -24,6 +24,9 @@
     <div v-if="team && team.teamName" class="alert alert-secondary bg-light mt-3" role="alert">
       👉 Dette er en ny påmelding direkte til <em>{{team.teamName || "(Feil med team-navn)"}}</em>. <router-link to="/regs">Til annen påmelding</router-link>
     </div>
+    <div v-if="registration && registration.agentUid" class="alert alert-secondary bg-light mt-3" role="alert">
+      Tilhørighet: <em>{{teamName || "(Teknisk feil med team-tilhørighet)"}}</em>. 
+    </div>
     <div v-if="agent && !team" class="alert alert-secondary bg-light mt-3" role="alert">
       🔺 <em>Feil med lenken du brukte. Prøv på nytt eller be om ny lenke.</em>
     </div>
@@ -268,6 +271,12 @@
       getters(){
         return getters;
       },
+      teamName(){
+        let teamsFiltered = this.teams.filter(t => t.ownerUid === this.registration.agentUid);
+        if (teamsFiltered.length !== 1 || !teamsFiltered[0].teamName)
+          return null;
+        return teamsFiltered[0].teamName;
+      },
       stringifiedTimelessReg(){
         let timelessReg = {...this.registration};
         timelessReg.edited = null;
@@ -307,7 +316,7 @@
         if(this.watchedStringifiedReg === ""){
           let timelessReg = this.registration;
           timelessReg.edited = null;//ignore edited timestamp.
-          timelessReg.agentUid = this.agent;
+          timelessReg.agentUid = timelessReg.agentUid || this.agent;
           this.watchedStringifiedReg = JSON.stringify(timelessReg);
         }
         if(this.stringifiedTimelessReg !== this.watchedStringifiedReg){
