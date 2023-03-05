@@ -10,7 +10,6 @@
       <span style="font-size: 2em; float:  left; margin-right: 0.5em;">❎Innmeldingen av oppdrag er <em><strong>stengt</strong></em> for i år!<br><br>
     </div-->
 
-    <!-- <button v-if="id" class="btn mt-4" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Send</button> -->
     <form @input="onFormInput">
 
       <div v-if="getters.user().uid === constants.adminUid" class="alert alert-dark bg-secondary text-white mt-4">
@@ -183,7 +182,6 @@
     <br />
     Du kan enkelt oppdatere innholdet ved behov etter innsending.
     <div class="form-group pb-5">
-      <!-- <button v-if="id" class="btn mr-3" :class="isEdited ? 'btn-primary': 'btn-light'" @click="save(true)">Send</button> -->
       <button class="btn btn-primary" @click="save(false)">Send</button>
     </div>
 
@@ -225,6 +223,7 @@
         registrations: [],
         suppressWatchOnce: true,
         isEdited: false,
+        saveClicked: false,
         doneSavePart1: false,
         doneSavePart2: false,
         isShowingEmailPreview: false,
@@ -316,6 +315,12 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
       },
 
       save(isStaying) {
+        if (this.saveClicked) {
+          console.log("Skipped repeated send!")
+          return;
+        }
+        this.saveClicked = true;
+
         this.suppressWatchOnce = true;
 
         const assigneesPerDay = this.wish.assigneesPerDay;
