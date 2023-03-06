@@ -10,11 +10,11 @@
 
       <div v-if="!getters.user() || !getters.user().uid">
         <p class="lead">For å <strong>melde deg på</strong>, <br />eller for å <strong>komme med forslag</strong> til oppdrag: </p>
-        <router-link to="/auth">
+        <a href="/auth">
           <button type="button" class="btn btn-primary btn-lg">
             Denne veien inn
           </button>
-        </router-link>
+        </a>
       </div>
       <div v-else>
         <p class="lead">Yes, du er nå logget inn, <strong>kjør på</strong> videre:</p>
@@ -37,7 +37,7 @@
       </p>
       <div v-if="!getters.user() || !getters.user().uid">
         <hr class="my-4">
-        <p class="lead">💚 Hvis du står fast kan hvem som helst registrere her på dine vegne, ved å logge inn først. Alternativt kan du skrive epost til stavanger@godhet.no
+        <p class="lead">💚 Hvis du står fast kan hvem som helst registrere her på dine vegne, ved å logge seg selv inn først. Alternativt kan du skrive epost til stavanger@godhet.no
         </p>
       </div>
     </div>
