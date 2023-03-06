@@ -12,11 +12,9 @@
         <p class="lead">For å <strong>melde deg på</strong>, <br />eller for å <strong>komme med forslag</strong> til oppdrag: </p>
         <router-link to="/auth">
           <button type="button" class="btn btn-primary btn-lg">
-            Start her
+            Denne veien inn
           </button>
         </router-link>
-        <!-- <span style="color: silver;"> PC eller smartelefon</span> -->
-        <p class="lead">Ved første innlogging kan du opprette et passord (velg "email") eller velge "google" for å bruke din google konto. Hvis du ønsker å vende tilbake en annen gang, er det nok å huske hvilken epostadresse du brukte, så kan du få nytt passord ved behov. </p>
       </div>
       <div v-else>
         <p class="lead">Yes, du er nå logget inn, <strong>kjør på</strong> videre:</p>
@@ -35,11 +33,11 @@
       </div>
 
       <hr class="my-4">
-      <p class="lead">Etter at du har sendt inn en påmelding eller et oppdrag kan du når som helst <span style="background-color: white; border-right: solid 1px silver">redigere</span> det. Du finner enkelt tilbake, alt du trenger å huske er godhetstavanger.no, eventuelt gå via godhet.no hvis det er lettere å huske.
+      <p class="lead">Du kan når som helst <span style="background-color: white; border-right: solid 1px silver">redigere</span> de påmeldinger eller oppdrag du har meldt inn. Dette er <strong>godhetstavanger.no</strong> (via godhet.no).
       </p>
       <div v-if="!getters.user() || !getters.user().uid">
         <hr class="my-4">
-        <p class="lead">💚 Hvis du står fast kan (eventuelt) en du kjenner logge på med sitt eget passord, og melde på deg eller andre. Da er det denne personen som har tilgang til å lese eller redigere på vegne av deg i etterkant.
+        <p class="lead">💚 Hvis du står fast kan hvem som helst registrere her på dine vegne, ved å logge inn først. Alternativt kan du skrive epost til stavanger@godhet.no
         </p>
       </div>
     </div>
