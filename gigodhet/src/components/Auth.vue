@@ -12,25 +12,25 @@
     </div>
 
     <div class="jumbotron bg-light rounded-lg" style="border:solid 1px #eee; margin: 1em;">
-      <a href="#" @click="showWhy = !showWhy">Hvorfor skal jeg logge inn?</a>
+      <a href="#how_why" id="how_why" @click="showWhy = !showWhy">Hvorfor skal jeg logge inn?</a>
       <div v-if="showWhy">
         Du logger inn for å kunne gjøre endringer ved behov senere. Mest sannsynlig forblir du pålogget på telefonen/enheten din, så det er kjapt og enkelt å komme tilbake.
       </div>
       <br>
       <br>
-      <a href="#" @click="showWhatIfForget = !showWhatIfForget">Hva om jeg glemmer passordet mitt?</a>
+      <a href="#how_forget" id="how_forget" @click="showWhatIfForget = !showWhatIfForget">Hva om jeg glemmer passordet mitt?</a>
       <div v-if="showWhatIfForget">
         Du trenger ikke huske passordet ditt, det er bare bonus faktisk, så lenge epost-adressen er riktig vel å merke. Systemet sender deg hjelp til å logge inn igjen hvis du ber om det. Du forblir vanligvis pålogget på telefonen/enheten din, så det vil ofte ikke være et behov uansett.
       </div>
       <br>
       <br>
-      <a href="#" @click="showHowAnonymous = !showHowAnonymous">Hva om jeg ikke vil oppgi en epost adresse, evt. være anonym?</a>
+      <a href="#how_anonymous" id="how_anonymous" @click="showHowAnonymous = !showHowAnonymous">Hva om jeg ikke vil oppgi en epost adresse, evt. være anonym?</a>
       <div v-if="showHowAnonymous">
-        I det tilfellet er det mulig å dikte opp en fantasi-epost og bruke kallenavn el.l som navn, etc. Skriv i så fall gjerne ned eposten for innlogging, og husk passordet også i tilfelle du skulle bli logget ut. Du kan skrive i skjema hvordan vi evt. kan kontakte deg etter at du har logget på.
+        I det tilfellet er det mulig å dikte opp en fantasi-epost og bruke kallenavn, etc. Skriv i så fall gjerne ned eposten for innlogging, og husk passordet i tilfelle du skulle bli logget ut og ønsker tilgang på dine opplysninger igjen. I skjemaene blir du spurt på nytt om hvem du er, så der velger du selv hvilke opplysninger du vil oppgi.
       </div>
       <br>
       <br>
-      <a href="#" @click="showHowFallback = !showHowFallback">Hva om jeg likevel ikke vil eller klarer å logge inn?</a>
+      <a href="#how_fallback" id="how_fallback" @click="showHowFallback = !showHowFallback">Hva om jeg likevel ikke vil eller klarer å logge inn?</a>
       <div v-if="showHowFallback">
         Du kan sende forespørsler eller påmeldinger til stavanger@godhet.no, så får du svar når vi har mottatt meldingen din.
       </div>
