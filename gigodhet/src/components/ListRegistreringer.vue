@@ -1,8 +1,8 @@
 <template>
   <div class="container container_under_nav">
 
-    <h1>Du er gruppeleder</h1>
     <div v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)" class="bg-light" style="border: 1px solid silver; border-radius: 4px; padding: 1em">
+      <h1 style="margin-top: 0; margin-bottom: 0.5em">Du er gruppeleder</h1>
 
       <h2>Ditt team</h2>
       <router-link to="/teamreg" class="btn btn-outline-secondary">
@@ -65,7 +65,7 @@
         <span class="edited_tag">#{{registration.counter}}</span>
         <span class="dot" v-if="registration.ownerUid === getters.user().uid"></span>
         {{registration.created.toDate().toLocaleDateString()}}
-        <span class="hasAgent" v-if="registration.agentUid === getters.user().uid"> A</span>
+        <span class="hasAgent" v-if="registration.agentUid === getters.user().uid"> I ditt team</span>
         <span class="hasAgent" v-else-if="registration.agentUid"> {{getRegistrationTeamName(registration.agentUid)}} </span>
         <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
           {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}} (+{{registration.participants && registration.participants.length || 0}})
