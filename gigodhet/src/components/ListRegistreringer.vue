@@ -5,11 +5,11 @@
       <h1 style="margin-top: 0; margin-bottom: 0.5em">Du er gruppeleder</h1>
 
       <h2>Ditt team</h2>
-      <router-link to="/teamreg" class="btn btn-outline-secondary">
+      <router-link to="/teamreg" class="btn btn-outline-secondary btn_green_outline">
         Send invitasjon
       </router-link>
-      - eller -
-      <router-link :to="'/registrering/agent/'+getters.user().uid" class="btn btn-outline-secondary">
+        - eller -
+      <router-link :to="'/registrering/agent/'+getters.user().uid" class="btn btn-outline-secondary btn_green_outline">
         Påmelding direkte
       </router-link>
       
@@ -57,7 +57,10 @@
     <li class="list-group">
       <ul class="list-group-item highlight_background_optimistic">
         + <router-link :to="{path: 'registrering'}">
-          Lag ny påmelding
+          Lag ny påmelding 
+          <span v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)" style="color: hwb(138deg 37% 34%); font-style: italic;">
+            (NB: For ditt eget team se knapper over)
+          </span>
         </router-link>
       </ul>
       <ul v-for="(registration) in chronologicalRegistrations" :key="registration.id" class="list-group-item" :class="{faded_removed: registration.removedBy}">
@@ -267,10 +270,14 @@
     margin: 0 0.2em;
   }
   .highlight_background_optimistic{
-    background-color: #cfffdd;
+    background-color: #e4ffec;
     border: solid 1px #93d9a8;
   }
   .highlight_background_optimistic a{
     color: black;
+  }
+  .btn_green_outline {
+    border: solid 1px #93d9a8;
+    background-color: #cfffdd;
   }
 </style>
