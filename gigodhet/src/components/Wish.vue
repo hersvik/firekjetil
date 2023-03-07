@@ -10,7 +10,7 @@
       <span style="font-size: 2em; float:  left; margin-right: 0.5em;">❎Innmeldingen av oppdrag er <em><strong>stengt</strong></em> for i år!<br><br>
     </div-->
 
-    <form @input="onFormInput">
+    <form>
 
       <div v-if="getters.user().uid === constants.adminUid" class="alert alert-dark bg-secondary text-white mt-4">
         <div class="form-group mt-3">
@@ -182,7 +182,7 @@
     <br />
     Du kan enkelt oppdatere innholdet ved behov etter innsending.
     <div class="form-group pb-5">
-      <button class="btn btn-primary" @click="save(false)">Send</button>
+      <button class="btn btn-primary" @click="save(false)" :disabled="!this.isEdited">Send</button>
     </div>
 
   </div>
@@ -223,6 +223,7 @@
         registrations: [],
         suppressWatchOnce: true,
         isEdited: false,
+        watchedStringifiedReg: "",
         saveClicked: false,
         doneSavePart1: false,
         doneSavePart2: false,
@@ -266,6 +267,11 @@
           return b.participants.length - a.participants.length || aName.localeCompare(bName);
         });
       },
+      stringifiedTimelessReg(){
+        let timelessReg = {...this.wish};
+        timelessReg.edited = null;
+        return JSON.stringify(timelessReg);
+      },
       emailText() {
         return `%0D%0A
 %0D%0A
@@ -283,6 +289,10 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
       },
     },
     methods: {
+      setIsEdited() {
+         this.isEdited = true;
+         console.log("Påmelding", this.id, "- redigert", new Date().toLocaleTimeString());
+       },
       addExtraAssigneeForDay(day) {
         this.wish.assigneesPerDay[day].registrationRefs.push("");
       },
@@ -290,11 +300,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
         if(confirm("Fjerne deltager fra oppdraget \n\nHusk å klikke lagre i skjemaet for at endringen skal få effekt. ") ){
           let filtered = this.wish.assigneesPerDay[day].registrationRefs.filter(el => el !== ref)
           this.wish.assigneesPerDay[day].registrationRefs = filtered;
-          this.isEdited = true;
         }
-      },
-      onFormInput() {
-        this.isEdited = true;
       },
       makeEmail() {
         if (this.isEdited) {
@@ -394,7 +400,22 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
         }
         this.suppressWatchOnce = false; // enable next watch
         this.watchedWish = entry;
-      }
+      },
+      stringifiedTimelessReg: function (){
+        if(!this.id) {
+          this.setIsEdited(); // new reg.
+          return;
+        }
+        if(this.watchedStringifiedReg === ""){
+          let timelessReg = this.wish;
+          timelessReg.edited = null;//ignore edited timestamp.
+          // timelessReg.agentUid = timelessReg.agentUid || this.agent; // <- when this.agent is implemented for wish.
+          this.watchedStringifiedReg = JSON.stringify(timelessReg);
+        }
+        if(this.stringifiedTimelessReg !== this.watchedStringifiedReg){
+          this.setIsEdited();
+        }
+      },
      },
   }
 
@@ -436,4 +457,9 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
   .clickable_tag {
     cursor: pointer !important;
   }
+  button.btn.btn-primary:disabled {
+     background-color: silver;
+     border: silver;
+     cursor: not-allowed;
+ }
 </style>
