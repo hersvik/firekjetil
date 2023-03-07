@@ -10,7 +10,7 @@
       </router-link>
         - eller -
       <router-link :to="'/registrering/agent/'+getters.user().uid" class="btn btn-outline-secondary btn_green_outline">
-        Påmelding direkte
+        Meld på direkte
       </router-link>
       
       <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
@@ -58,10 +58,10 @@
       <ul class="list-group-item highlight_background_optimistic">
         + <router-link :to="{path: 'registrering'}">
           Lag ny påmelding 
+        </router-link>
           <span v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)" style="color: hwb(138deg 37% 34%); font-style: italic;">
             (NB: For ditt eget team se knapper over)
           </span>
-        </router-link>
       </ul>
       <ul v-for="(registration) in chronologicalRegistrations" :key="registration.id" class="list-group-item" :class="{faded_removed: registration.removedBy}">
         {{registration.isMostRecentEdited}}
@@ -279,5 +279,8 @@
   .btn_green_outline {
     border: solid 1px #93d9a8;
     background-color: #cfffdd;
+  }
+  .btn_green_outline:hover {
+    background-color: silver;
   }
 </style>
