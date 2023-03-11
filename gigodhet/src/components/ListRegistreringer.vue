@@ -6,11 +6,11 @@
 
       <h2>Ditt team</h2>
       <router-link to="/teamreg" class="btn btn-outline-secondary btn_green_outline">
-        Send invitasjon
+        Lag invitasjon
       </router-link>
         - eller -
       <router-link :to="'/registrering/agent/'+getters.user().uid" class="btn btn-outline-secondary btn_green_outline">
-        Meld på direkte
+        Meld på noen
       </router-link>
       
       <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
