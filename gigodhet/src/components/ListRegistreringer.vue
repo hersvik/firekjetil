@@ -2,7 +2,7 @@
   <div class="container container_under_nav">
 
     <div v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)" class="bg-light" style="border: 1px solid silver; border-radius: 4px; padding: 1em">
-      <h1 style="margin-top: 0; margin-bottom: 0.5em">Du er gruppeleder</h1>
+      <h1 style="margin-top: 0; margin-bottom: 0.5em">Du er teamleder</h1>
 
       <h2>Ditt team</h2>
       <router-link to="/teamreg" class="btn btn-outline-secondary btn_green_outline">
@@ -44,7 +44,7 @@
         <small @click="showAll" class="show_removed" v-if="atLeastOneRemoved && showRemoved">[skjul igjen]</small>
     </h1>
 
-    <div v-if="registrations.length" class="alert alert-secondary bg-light mt-3" role="alert">
+    <div v-if="registrations.length" class="alert alert-secondary bg-light mt-3" role="alert" style="clear: both">
       <span style="font-size: 1em; float:  left; margin-right: 0.5em;">
         💪
       </span>
@@ -254,6 +254,7 @@
     float: right;
     opacity: 0.3;
     cursor: pointer;
+    line-height: 2em;
   }
   .faded_removed {
     opacity: 0.4;

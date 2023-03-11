@@ -245,6 +245,7 @@
           participants: [],
           dailyAttendance: [{}], // add {} for tuesday, etc
           event: "Godhet Stavanger 2022",
+          agentUid: "",
         },
         alreadyLoaded: false,
         isEdited: false,
@@ -280,6 +281,7 @@
       stringifiedTimelessReg(){
         let timelessReg = {...this.registration};
         timelessReg.edited = null;
+        timelessReg.agentUid = timelessReg.agentUid || this.agent || "";
         return JSON.stringify(timelessReg);
       },
       adultNumberSelection: function() {
@@ -308,18 +310,11 @@
         this.alreadyLoaded = true;
         this.watchedRegistration = entry;
       },
-      stringifiedTimelessReg: function (){
-        if(!this.id) {
-          this.setIsEdited(); // new reg.
-          return;
-        }
+      stringifiedTimelessReg: function (newStringified){
         if(this.watchedStringifiedReg === ""){
-          let timelessReg = this.registration;
-          timelessReg.edited = null;//ignore edited timestamp.
-          timelessReg.agentUid = timelessReg.agentUid || this.agent;
-          this.watchedStringifiedReg = JSON.stringify(timelessReg);
+          this.watchedStringifiedReg = newStringified;
         }
-        if(this.stringifiedTimelessReg !== this.watchedStringifiedReg){
+        if(newStringified !== this.watchedStringifiedReg){
           this.setIsEdited();
         }
       },
