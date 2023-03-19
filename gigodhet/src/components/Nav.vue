@@ -9,7 +9,7 @@
       </a>
       <a @click='goToListRegistreringer' :class='{active: getters.activeNav() == "pameldinger"}'>
         Påmeldinger</a>
-      <a @click='goToListWishes' :class='{active: getters.activeNav() == "foresporsler"}'>
+      <a @click='goToListWishes' class="wish_nav" :class='{active: getters.activeNav() == "foresporsler"}'>
         Oppdrag
       </a>
     </span>
@@ -55,6 +55,9 @@
   }
   .nav__wrapper .active {
     border: solid 1px #007bff
+  }
+  .nav__wrapper .active.wish_nav {
+    background-color: #fff6ff;
   }
   a:hover {
     color: #0056b3;
