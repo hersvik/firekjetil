@@ -13,6 +13,7 @@
     <form>
 
       <div v-if="getters.user().uid === constants.adminUid" class="alert alert-dark bg-secondary text-white mt-4">
+        
         <div class="form-group mt-3">
           <label>
             Intern status (husk Send)
@@ -34,6 +35,15 @@
         <pre v-if="isShowingEmailPreview" style="white-space: pre-wrap;">E-post, emne: {{wish.title}} <br>cc: stavanger@godhet.no
           {{emailTextHtml}}
         </pre>
+
+        <label>
+          Team
+        </label>
+        <select v-model="wish.agentUid" class="custom-select">
+          <option value="">-  Uten team -</option>
+          <option v-for="(team, idx) in teams" :key="idx" :value="team.ownerUid">{{team.teamName}}</option>
+        </select>
+
       </div>
 
 
@@ -199,8 +209,16 @@
     beforeCreate() {
       setters.setActiveNav("foresporsler");
     },
+    created() {
+      // Sekretariatet only (make if-statement?)
+      db.collection('teams')
+      .get()
+      .then(querySnapshot => {
+        this.teams = querySnapshot.docs.map(doc => doc.data())
+      })
+    },
     mounted(){
-      // this.wish.submitter.email = this.wish.submitter.email || this.getters.user().email;
+      console.log("Oppdrag", this.id, "- åpnet", new Date().toLocaleTimeString());
     },
     name: "Wish",
     props: ["id"],
@@ -219,16 +237,18 @@
           assigneesPerDay: [
             { registrationRefs: [] }
           ],
+          agentUid: "",
         },
         registrations: [],
         suppressWatchOnce: true,
         isEdited: false,
-        watchedStringifiedReg: "",
+        watchedStringifiedWish: "",
         saveClicked: false,
         doneSavePart1: false,
         doneSavePart2: false,
         isShowingEmailPreview: false,
-        watchedWish: {}
+        watchedWish: {},
+        teams: [],
       }
     },
     firestore () {
@@ -267,10 +287,10 @@
           return b.participants.length - a.participants.length || aName.localeCompare(bName);
         });
       },
-      stringifiedTimelessReg(){
-        let timelessReg = {...this.wish};
-        timelessReg.edited = null;
-        return JSON.stringify(timelessReg);
+      stringifiedTimelessWish(){
+        let timelessWish = {...this.wish};
+        timelessWish.edited = null;
+        return JSON.stringify(timelessWish);
       },
       emailText() {
         return `%0D%0A
@@ -401,18 +421,15 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
         this.suppressWatchOnce = false; // enable next watch
         this.watchedWish = entry;
       },
-      stringifiedTimelessReg: function (){
+      stringifiedTimelessWish: function (newStringified){
         if(!this.id) {
           this.setIsEdited(); // new reg.
           return;
         }
-        if(this.watchedStringifiedReg === ""){
-          let timelessReg = this.wish;
-          timelessReg.edited = null;//ignore edited timestamp.
-          // timelessReg.agentUid = timelessReg.agentUid || this.agent; // <- when this.agent is implemented for wish.
-          this.watchedStringifiedReg = JSON.stringify(timelessReg);
+        if(this.watchedStringifiedWish === ""){
+          this.watchedStringifiedWish = newStringified;
         }
-        if(this.stringifiedTimelessReg !== this.watchedStringifiedReg){
+        if(newStringified !== this.watchedStringifiedWish){
           this.setIsEdited();
         }
       },
@@ -450,7 +467,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
 </script>
 
 <style scoped>
-  /* input, button, textarea {
+  /* input, button, textarea { /* for blocking wish form for users * /
     pointer-events: none;
     background-color: silver;
   } */
