@@ -1,7 +1,7 @@
 <template>
   <div class="container container_under_nav">
 
-    <div v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)" class="bg-light" style="border: 1px solid silver; border-radius: 4px; padding: 1em">
+    <div v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)" class="bg-light" style="margin-top:1em; margin-bottom: 2em; border: 0px solid #eee;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; border-radius: 4px; padding: 1em">
       <h1 style="margin-top: 0; margin-bottom: 0.5em">Du er teamleder</h1>
 
       <h2>Ditt team</h2>
@@ -187,7 +187,7 @@
       else if (getters.user().uid) {
         return {
           registrations: db.collection("registrations").where("ownerUid", "==", getters.user().uid),
-          registrationsWithAgentAccess: db.collection("registrations").where("agentUid", "==", getters.user().uid)//.where("ownerUid", "!=", getters.user().uid)
+          registrationsWithAgentAccess: db.collection("registrations").where("agentUid", "==", getters.user().uid)
           // future note: get tiems data for this scenario
         };
       }
