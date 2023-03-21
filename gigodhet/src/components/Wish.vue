@@ -37,7 +37,7 @@
         </pre>
 
         <label class="mt-4">
-          <strong><em>Team tildeling</em></strong> - Bekreft først at skjemaet ikke inneholder sensitive opplysninger: <input type="checkbox" v-model="wish.confirmedNonsensitive">
+          <strong><em>Team tildeling</em></strong> - <span :class="{fade_confirmation_label: wish.confirmedNonsensitive}">Bekreftet at skjemaet ikke inneholder sensitive opplysninger: </span> <input type="checkbox" v-model="wish.confirmedNonsensitive" :disabled="wish.confirmedNonsensitive">
         </label>
         <select v-model="wish.agentUid" class="custom-select" :disabled="!wish.confirmedNonsensitive">
           <option value="">-  Uten team -</option>
@@ -479,5 +479,8 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
      background-color: silver;
      border: silver;
      cursor: not-allowed;
+ }
+ .fade_confirmation_label{
+  opacity: 50%;
  }
 </style>
