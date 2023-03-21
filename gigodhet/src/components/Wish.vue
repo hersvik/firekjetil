@@ -365,7 +365,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
             .then(() => {
               this.doneSavePart1 = true;
               this.suppressWatchOnce = true;
-              alert("Takk for at du holder informasjonen oppdatert!\n\nHvis du har endret noen planer som påvirker noen du vet om, vennligst varsle dem.")
+              alert("Takk, lagret :)\n\nSi gjerne ifra om disse endringene til dem som blir påvirket, hvis du har mulighet!")
               if (this.doneSavePart2) {
                 this.whenAllSaved(isStaying);
               }
