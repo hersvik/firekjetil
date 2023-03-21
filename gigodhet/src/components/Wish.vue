@@ -54,10 +54,15 @@
         <input v-model="wish.title" class="form-control" type="text">
       </div>
 
-      <div class="form-group form-check mt-4 mb-5">
+      <div v-if="!wish.agentUid" class="form-group form-check mt-4 mb-5">
         <input class="form-check-input" type="checkbox" v-model="wish.selfTask">
         <label class="form-check-label">
           Dette oppdraget tar vi ansvar for å utføre selv
+        </label>
+      </div>
+      <div v-if="wish.agentUid" class="form-group form-check mt-4 mb-5">
+        <label class="form-check-label" style="color: grey">
+          Dette oppdraget er tildelt <strong>{{ teams.filter(t => t.ownerUid == wish.agentUid)[0].teamName }}</strong>
         </label>
       </div>
 

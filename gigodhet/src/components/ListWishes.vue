@@ -18,6 +18,7 @@
       </ul>
       <ul v-for="(wish) in chronologicalWishes" :key="wish.id" class="list-group-item" :class="{done: wish.done}">
         {{wish.isMostRecentEdited}}
+        <span class="dot" v-if="wish.ownerUid === getters.user().uid"></span>
         {{wish.created.toDate().toLocaleDateString()}}
         <span v-if="wish.done"><strong>Utført </strong></span>
         <router-link :to="{name: 'endreWish', params:{id: wish.id} }">
@@ -134,5 +135,14 @@
   }
   .done {
     background-color: #f9f9f9;
+  }
+
+  .dot {
+    height: 0.8em;
+    width: 0.8em;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 0.2em;
   }
 </style>

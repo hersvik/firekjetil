@@ -33,7 +33,7 @@
       </div>
 
       <hr class="my-4">
-      <p class="lead">Du kan når som helst <span style="background-color: white; border-right: solid 1px silver">redigere</span> de påmeldinger eller oppdrag du har meldt inn. Dette er <strong>godhetstavanger.no</strong> (via godhet.no).
+      <p class="lead">Du kan når som helst <span style="background-color: white; border-right: solid 1px silver">redigere</span> påmeldinger eller oppdrag som du har meldt inn. Bare kom tilbake hit til <strong>godhetstavanger.no</strong> (evt. via godhet.no).
       </p>
       <div v-if="!getters.user() || !getters.user().uid">
         <hr class="my-4">
