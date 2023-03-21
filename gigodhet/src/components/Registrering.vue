@@ -361,7 +361,7 @@
             .set(registration, {merge: true})
             .then(() => {
               console.log("Påmelding", this.id, "- Lagret OK")
-              alert("Takk, lagret :)\n\nSi gjerne ifra om disse endringene til dem som blir påvirket, hvis du har mulighet!")
+              alert("Lagret ✅ Tusen takk!\n\nSi gjerne ifra, til dem som blir påvirket av disse endringene, hvis du har mulighet 😃")
               this.$router.back()//.push("/regs")
             })
             .catch(function(error){

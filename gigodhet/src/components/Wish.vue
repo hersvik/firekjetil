@@ -21,7 +21,7 @@
           <input v-model="wish.status" class="form-control" type="text">
         </div>
 
-        <div class="form-group mt-5">
+        <div class="form-group">
           <label>
             Lag e-post til
           </label>
@@ -36,10 +36,10 @@
           {{emailTextHtml}}
         </pre>
 
-        <label>
-          Team
+        <label class="mt-4">
+          <strong><em>Team tildeling</em></strong> - Bekreft først at skjemaet ikke inneholder sensitive opplysninger: <input type="checkbox" v-model="wish.confirmedNonsensitive">
         </label>
-        <select v-model="wish.agentUid" class="custom-select">
+        <select v-model="wish.agentUid" class="custom-select" :disabled="!wish.confirmedNonsensitive">
           <option value="">-  Uten team -</option>
           <option v-for="(team, idx) in teams" :key="idx" :value="team.ownerUid">{{team.teamName}}</option>
         </select>
@@ -71,7 +71,7 @@
 
       <div class="form-group mt-4">
         <label>
-          Utstyr allerede på stedet (f.eks. stige, gressklipper)
+          Utstyr allerede på stedet (f.eks. vaskeutstyr, gressklipper)
         </label>
         <input v-model="wish.equipment" class="form-control" type="text">
       </div>
@@ -238,6 +238,7 @@
             { registrationRefs: [] }
           ],
           agentUid: "",
+          confirmedNonsensitive: false,
         },
         registrations: [],
         suppressWatchOnce: true,
@@ -365,7 +366,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
             .then(() => {
               this.doneSavePart1 = true;
               this.suppressWatchOnce = true;
-              alert("Takk, lagret :)\n\nSi gjerne ifra om disse endringene til dem som blir påvirket, hvis du har mulighet!")
+              alert("Lagret ✅ Tusen takk!\n\nSi gjerne ifra, til dem som blir påvirket av disse endringene, hvis du har mulighet 😃")
               if (this.doneSavePart2) {
                 this.whenAllSaved(isStaying);
               }
