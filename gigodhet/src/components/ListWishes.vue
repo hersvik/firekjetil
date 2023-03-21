@@ -52,6 +52,7 @@
       return {
         wishes: [],
         teams: [],
+        wishesWithAgentAccess: [],
       }
     },
     computed: {
@@ -59,6 +60,9 @@
         return constants;
       },
       getters: () => getters,
+      wishesOnlyAgentAcess() {
+        return this.wishesWithAgentAccess.filter(r => r.ownerUid !== getters.user().uid);
+      },
       chronologicalWishes() {
         if (!this || !this.wishes) {
           return;
@@ -74,9 +78,19 @@
         }
         let uidMostRecentEdited = uidRecentEdit;
 
-        // Sort a list copy, insert .dispayEdited and .isMostRecentEdited
-        let copy = this.wishes.slice();
-        for(let wish of copy){
+        let combined = this.wishes.slice().concat(this.wishesOnlyAgentAcess.slice());
+        let sorted = combined;
+        sorted.sort((a, b) => {
+          return a.created.seconds - b.created.seconds;
+        });
+
+        let copy = [];
+
+        for(let i=0; i < sorted.length; i++){
+          let wish = sorted[i];
+
+          copy.push(wish)
+
           if(wish.edited.seconds !== wish.created.seconds){
             let hoursAgo = (Date.now() - wish.edited.toMillis())/1000/60/60/24;
             wish.displayEdited = "(endret " + hoursAgo.toFixed(1) + " dager siden)";
@@ -99,7 +113,8 @@
       }
       else if (getters.user().uid) {
         return {
-          wishes: db.collection("wishes").where("ownerUid", "==", getters.user().uid)
+          wishes: db.collection("wishes").where("ownerUid", "==", getters.user().uid),
+          wishesWithAgentAccess: db.collection("wishes").where("agentUid", "==", getters.user().uid)
         };
       }
     },
