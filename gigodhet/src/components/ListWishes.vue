@@ -21,7 +21,7 @@
         {{wish.created.toDate().toLocaleDateString()}}
         <span v-if="wish.done"><strong>Utført </strong></span>
         <router-link :to="{name: 'endreWish', params:{id: wish.id} }">
-          <em>{{wish.submitter.firstName}} {{wish.submitter.lastName}}</em>: <strong>{{wish.title}}</strong>  for {{wish.target.firstName}} {{wish.target.lastName}}
+          <em>{{wish.target.address}}</em>: <strong>{{wish.title}}</strong>  for {{wish.target.firstName}} {{wish.target.lastName}}
         </router-link>
         <span class="edited_tag">{{wish.displayEdited}} </span>
         <span v-if="getters.user().uid === constants.adminUid"><strong>{{getTeamName(wish.ownerUid)}} </strong></span>
