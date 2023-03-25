@@ -48,7 +48,7 @@
       <span style="font-size: 1em; float:  left; margin-right: 0.5em;">
         💪
       </span>
-      <div class="">Se nedenfor for å lese innsendt påmelding. Send dem inn på nytt ved endring! </div>
+      <div class="">Takk for påmeldingen! Se nedenfor for å lese innsendt påmelding. Gjerne gjør endringer ved å sende inn på nytt! 😃 Du vil bli kontaktet når godhetsuken nærmer seg. Navnet på teamet (lederen) du hører til dukker opp sammen med påmeldingen når du har blitt tildelt team. </div>
     </div>
 
     <!--div v-for="(tiem, idx) in tiems" :key=idx>      <!- <------------------- disable BEFORE commit !!! ->
