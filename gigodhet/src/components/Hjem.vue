@@ -17,7 +17,7 @@
         </a>
       </div>
       <div v-else>
-        <p class="lead">Yes, du er nå logget inn, <strong>kjør på</strong> videre:</p>
+        <p class="lead logged_in"><strong>Du er logget inn 👍</strong> Se videre:</p>
         <router-link to="/regs">
           <button type="button" class="btn btn-primary btn-lg mr-2 mt-3">
             Deltager-påmelding
@@ -85,4 +85,13 @@
   .jumbotron__logged_in {
     background-color: #cfffdd;
   }
+
+  .logged_in {
+    background-color: white;
+    padding-left: 16px;
+    padding-top: 0.5em;
+    position: relative;
+    left: -16px;
+    border-left: solid blue 2px;
+    }
 </style>
