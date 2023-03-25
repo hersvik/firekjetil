@@ -71,6 +71,9 @@ const router = new VueRouter({
         path: "/wishes",
         component: () => import("./components/ListWishes.vue")
     },
-  ]
+  ],
+  scrollBehavior() {
+      return {x: 0, y: 0}
+  }
 });
 export default router;
