@@ -16,6 +16,20 @@
           Nytt oppdrag
         </router-link>
       </ul>
+      <ul v-if="getters.user().uid === constants.adminUid" class="list-group-item">
+        <label style="color: #007bff; cursor: pointer;">
+          <input type="radio" value="unassigned" v-model="statusesFilter">
+          Vis ledige oppdrag
+        </label><br>
+        <label style="color: #007bff; cursor: pointer;">
+          <input type="radio" value="assigned" v-model="statusesFilter">
+          Vis fordelte oppdrag
+        </label><br>
+        <label style="color: #007bff; cursor: pointer;">
+          <input type="radio" value="all" v-model="statusesFilter">
+          Vis begge
+        </label>
+      </ul>
       <ul v-for="(wish) in chronologicalWishes" :key="wish.id" class="list-group-item" :class="{done: wish.done}">
         {{wish.isMostRecentEdited}}
         <span class="dot" v-if="wish.ownerUid === getters.user().uid"></span>
@@ -36,12 +50,14 @@
 <script>
   import { db } from '../main';
   import {getters, setters, constants} from '../store';
+  import router from '../router';
 
   export default {
     beforeCreate() {
       setters.setActiveNav("foresporsler");
     },
     created(){
+      this.statusesFilter = this.statuses;
       db.collection('teams') //       <----------  to be replaced in firestore method (tiems) !!! !!! !!!
       .get()
       .then(querySnapshot => {
@@ -49,11 +65,13 @@
       })
     },
     name: "ListWishes",
+    props: ["statuses"],
     data () {
       return {
         wishes: [],
         teams: [],
         wishesWithAgentAccess: [],
+        statusesFilter: undefined,
       }
     },
     computed: {
@@ -89,8 +107,17 @@
 
         for(let i=0; i < sorted.length; i++){
           let wish = sorted[i];
-
-          copy.push(wish)
+          // let isVisible = this.showRemoved || !registration.removedBy;
+          // let isAdmin = this.getters.user().uid === this.constants.adminUid;
+          let isIncluded = this.statusesFilter === "all" 
+                        || this.statusesFilter === "assigned" && wish.agentUid 
+                        || this.statusesFilter === "unassigned" && !wish.agentUid;
+          if (/*isVisible && */ isIncluded) {
+              copy.push(wish)
+          }
+          else{
+            continue;
+          }
 
           if(wish.edited.seconds !== wish.created.seconds){
             let hoursAgo = (Date.now() - wish.edited.toMillis())/1000/60/60/24;
@@ -125,7 +152,24 @@
         let teamName = teamObject && teamObject.teamName || "";
         return teamName;
       },
-    }
+    },
+    watch: {
+      statusesFilter: function(activeStatuses) {
+        
+        if (activeStatuses === this.statuses)
+          return;
+        
+        if (activeStatuses === "all") {
+          router.replace("/wishes");
+        }
+        else if (activeStatuses === "assigned") {
+          router.replace("/wishes/assigned");
+        }
+        else if (activeStatuses === "unassigned") {
+          router.replace("/wishes/unassigned");
+        }
+      },
+    },
   }
 </script>
 

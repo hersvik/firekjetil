@@ -74,6 +74,17 @@ const router = new VueRouter({
     },
     {
         path: "/wishes",
+        props: {statuses: "all"},
+        component: () => import("./components/ListWishes.vue")
+    },
+    {
+        path: "/wishes/assigned",
+        props: {statuses: "assigned"},
+        component: () => import("./components/ListWishes.vue")
+    },
+    {
+        path: "/wishes/unassigned",
+        props: {statuses: "unassigned"},
         component: () => import("./components/ListWishes.vue")
     },
   ],
