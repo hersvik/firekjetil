@@ -41,7 +41,7 @@
         </label>
         <select v-model="wish.agentUid" class="custom-select" :disabled="!wish.confirmedNonsensitive">
           <option value="">-  Uten team -</option>
-          <option v-for="(team, idx) in teams" :key="idx" :value="team.ownerUid">{{team.teamName}}</option>
+          <option v-for="(team, idx) in teams" :key="idx" :value="team.ownerUid">{{team && team.teamName}}</option>
         </select>
 
       </div>
@@ -187,7 +187,7 @@
 
     </form>
 
-    <div class="form-group form-check mt-4 mb-5">
+    <div v-if="this.id" class="form-group form-check mt-4 mb-5">
       <input class="form-check-input" type="checkbox" v-model="wish.done">
       <label class="form-check-label">
         Dette oppdraget er nå fullført
@@ -262,7 +262,7 @@
         result.wish = db.collection("wishes").doc(this.id)
       }
       if (getters.user().uid === constants.adminUid) {
-        result.registrations = db.collection("registrations");
+        result.registrations = db.collection("registrations");//unused for now?
       }
       return result;
     },
