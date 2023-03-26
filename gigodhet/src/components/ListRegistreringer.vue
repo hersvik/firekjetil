@@ -63,6 +63,12 @@
             (NB: For ditt eget team se knapper over)
           </span>
       </ul>
+      <ul v-if="getters.user().uid === constants.adminUid" class="list-group-item">
+        <label style="color: #007bff; cursor: pointer;">
+          <input type="checkbox" v-model="showHavingTeam">
+          Vis dem som <em>har team</em> også
+        </label>
+      </ul>
       <ul v-for="(registration) in chronologicalRegistrations" :key="registration.id" class="list-group-item" :class="{faded_removed: registration.removedBy}">
         {{registration.isMostRecentEdited}}
         <span class="edited_tag">#{{registration.counter}}</span>
@@ -77,12 +83,6 @@
         <span class="edited_tag">{{registration.displayEdited}} </span>
         <span v-if="getters.user().uid === constants.adminUid" v-tooltip:top="'Intern sekretariat-kommentar'">{{registration.status}}</span>
       </ul>
-      <ul v-if="getters.user().uid === constants.adminUid" class="list-group-item">
-        <label style="color: #007bff; cursor: pointer;">
-          <input type="checkbox" v-model="hideTeams">
-          Skjul teamene
-        </label>
-      </ul>
     </li>
 
     <!--<div style="opacity: 0.1;">{{getters.user().uid}}</div>Temporary show Uid-->
@@ -91,6 +91,7 @@
 
 <script>
   import { db } from '../main';
+  import router from '../router';
   import {getters, setters, constants} from '../store';
 
   export default {
@@ -98,6 +99,8 @@
       setters.setActiveNav("pameldinger");
     },
     created(){
+      this.showHavingTeam = this.includeHasTeam
+                        
       db.collection('teams') //       <----------  to be replaced in firestore method (tiems) !!! !!! !!!
       .get()
       .then(querySnapshot => {
@@ -105,6 +108,7 @@
       })
     },
     name: "ListRegistreringer",
+    props: ["includeHasTeam"],
     data () {
       return {
         registrations: [],
@@ -114,7 +118,7 @@
         tiems: [],
         hasQueuedSave: false, // tiems
         whiteTimerId: null, // tiems
-        hideTeams: true,
+        showHavingTeam: undefined,
       }
     },
     computed: {
@@ -153,7 +157,7 @@
           let registration = sorted[i];
           let isVisible = this.showRemoved || !registration.removedBy;
           let isAdmin = this.getters.user().uid === this.constants.adminUid;
-          let isIncluded = !isAdmin || !this.hideTeams || !registration.agentUid;
+          let isIncluded = !isAdmin || this.showHavingTeam || !registration.agentUid;
           if (isVisible && isIncluded) {
               copy.push(registration)
           }
@@ -234,6 +238,18 @@
               alert("Kunne ikke lagre tiem. ("+error+")")
             });
 
+      }
+    },
+    watch: {
+      showHavingTeam: function(shouldShow){
+        
+        if(this.includeHasTeam === this.showHavingTeam)
+          return; // no change, loading etc. 
+
+        if(shouldShow)
+          router.push("/regs/all");
+        else
+          router.push("/regs");
       }
     }
   }

@@ -14,6 +14,11 @@ const router = new VueRouter({
         path: "/regs",
         component: () => import('./components/ListRegistreringer.vue')
     },
+    {
+        path: "/regs/all",
+        props: {includeHasTeam: true},
+        component: () => import("./components/ListRegistreringer.vue")
+    },
     // {
     //     path: "/teams",
     //     component: () => import('./components/ListTeams.vue')
