@@ -87,6 +87,11 @@ const router = new VueRouter({
         props: {statuses: "unassigned"},
         component: () => import("./components/ListWishes.vue")
     },
+    {
+        path: "/wishes/discarded",
+        props: {statuses: "discarded"},
+        component: () => import("./components/ListWishes.vue")
+    },
   ],
   scrollBehavior() {
       return {x: 0, y: 0}

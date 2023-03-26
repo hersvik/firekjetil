@@ -26,9 +26,9 @@
             Lag e-post til
           </label>
           <div class="input-group">
-            <input v-model="wish.emailSendTo" class="form-control" type="text">
+            <input v-model="wish.emailSendTo" class="form-control" type="text" :disabled="wish.isDiscarded">
             <div class="input-group-append">
-              <button @click="makeEmail" class="btn btn-primary" type="button">Lag e-post</button>
+              <button @click="makeEmail" class="btn btn-primary" type="button" :disabled="wish.isDiscarded">Lag e-post</button>
             </div>
           </div>
         </div>
@@ -39,11 +39,12 @@
         <label class="mt-4">
           <strong><em>Team tildeling</em></strong> - <span :class="{fade_confirmation_label: wish.confirmedNonsensitive}">Bekreftet at skjemaet ikke inneholder sensitive opplysninger: </span> <input type="checkbox" v-model="wish.confirmedNonsensitive" :disabled="wish.confirmedNonsensitive">
         </label>
-        <select v-model="wish.agentUid" class="custom-select" :disabled="!wish.confirmedNonsensitive">
+        <select v-model="wish.agentUid" class="custom-select" :disabled="!wish.confirmedNonsensitive || wish.isDiscarded">
           <option value="">-  Uten team -</option>
           <option v-for="(team, idx) in teams" :key="idx" :value="team.ownerUid">{{team && team.teamName}}</option>
         </select>
 
+        <span style="color: silver">(Sett tilside <input type="checkbox" v-model="wish.isDiscarded" :disabled="!!wish.agentUid">)</span>
       </div>
 
 

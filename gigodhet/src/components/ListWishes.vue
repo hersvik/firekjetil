@@ -27,7 +27,11 @@
         </label><br>
         <label style="color: #007bff; cursor: pointer;">
           <input type="radio" value="all" v-model="statusesFilter">
-          Vis begge
+          Vis begge deler
+        </label><br>
+        <label style="opacity: 1; color: #007bff; cursor: pointer;">
+          <input type="radio" value="discarded" v-model="statusesFilter">
+          Satt tilside
         </label>
       </ul>
       <ul v-for="(wish) in chronologicalWishes" :key="wish.id" class="list-group-item" :class="{done: wish.done}">
@@ -112,7 +116,7 @@
           let isIncluded = this.statusesFilter === "all" 
                         || this.statusesFilter === "assigned" && wish.agentUid 
                         || this.statusesFilter === "unassigned" && !wish.agentUid;
-          if (/*isVisible && */ isIncluded) {
+          if (!wish.isDiscarded && isIncluded || this.statusesFilter === "discarded" && wish.isDiscarded) {
               copy.push(wish)
           }
           else{
@@ -167,6 +171,9 @@
         }
         else if (activeStatuses === "unassigned") {
           router.replace("/wishes/unassigned");
+        }
+        else if (activeStatuses === "discarded") {
+          router.replace("/wishes/discarded");
         }
       },
     },
