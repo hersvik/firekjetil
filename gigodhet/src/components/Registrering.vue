@@ -24,9 +24,6 @@
     <div v-if="team && team.teamName" class="alert alert-secondary bg-light mt-3" role="alert">
       👉 Dette er en ny påmelding direkte til <em>{{team.teamName || "(Feil med team-navn)"}}</em>. <router-link to="/regs">Til annen påmelding</router-link>
     </div>
-    <div v-if="registration && registration.agentUid" class="alert alert-secondary bg-light mt-3" role="alert">
-      Tilhørighet: <em>{{teamName || "(Teknisk feil med team-tilhørighet)"}}</em>. 
-    </div>
     <div v-if="agent && !team" class="alert alert-secondary bg-light mt-3" role="alert">
       🔺 <em>Feil med lenken du brukte. Prøv på nytt eller be om ny lenke.</em>
     </div>
@@ -51,6 +48,9 @@
       </div>
 
 
+      <div v-if="registration && registration.agentUid" class="alert alert-secondary bg-light mt-3" role="alert">
+        Tilhørighet: <em>{{teamName || "ikke funnet"}}</em>. 
+      </div>
       <div v-if="registration.removedBy" class="alert alert-danger">
         Denne påmeldingen er deaktivert. Send på nytt for å gjennopprette.
       </div>
