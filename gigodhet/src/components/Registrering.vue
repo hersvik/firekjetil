@@ -52,7 +52,7 @@
 
 
       <div v-if="registration.removedBy" class="alert alert-danger">
-        Denne påmeldingen er deaktivert (skjult). Send på nytt for å gjennopprette.
+        Denne påmeldingen er deaktivert. Send på nytt for å gjennopprette.
       </div>
       <div class="bg-light p-2 mt-3">
         <small class="form-text text-muted">Deltager (enkeltperson eller gruppeleder)</small>
@@ -191,7 +191,7 @@
       </button>
 
       <span v-if="id && !registration.removedBy" @click="removeRegistration" class="remove_registration clickable_label">
-        [Skjul påmelding]
+        [Deaktiver påmelding]
       </span>
     </div>
 
@@ -378,7 +378,7 @@
 
       },
       removeRegistration() {
-        if( confirm("Vil du skjule påmeldingen? For å gjennopprette etterpå, klikk 'vis skjulte' i oversikten. (Administrator kan finne skjulte påmeldinger, men du kan tømme innholdet før du sender for å slette innholdet helt).") ){
+        if( confirm("Vil du deaktivere påmeldingen? For å gjennopprette etterpå, klikk 'vis deaktiverte' i oversikten. (Administrator kan finne deaktiverte påmeldinger, men du kan tømme innholdet før du sender for å slette innholdet helt).") ){
           this.alreadyLoaded = false;
           db.collection('registrations').doc(this.id).update({
             removedBy: getters.user().displayName,
