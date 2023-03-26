@@ -215,8 +215,7 @@
       setters.setActiveNav("foresporsler");
     },
     created() {
-      // Sekretariatet only (make if-statement?)
-      db.collection('teams')
+      db.collection('teams').orderBy("teamName", "asc")
       .get()
       .then(querySnapshot => {
         this.teams = querySnapshot.docs.map(doc => doc.data())

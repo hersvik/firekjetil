@@ -218,7 +218,7 @@
           this.team = snapshot.data()
         });
       }
-      db.collection('teams')
+      db.collection('teams').orderBy("teamName", "asc")
       .get()
       .then(querySnapshot => {
         this.teams = querySnapshot.docs.map(doc => doc.data())
