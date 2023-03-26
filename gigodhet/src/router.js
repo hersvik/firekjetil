@@ -12,12 +12,14 @@ const router = new VueRouter({
     },
     {
         path: "/regs",
-        component: () => import('./components/ListRegistreringer.vue')
+        component: () => import('./components/ListRegistreringer.vue'),
+        meta: {noScroll: true}
     },
     {
         path: "/regs/all",
         props: {includeHasTeam: true},
-        component: () => import("./components/ListRegistreringer.vue")
+        component: () => import("./components/ListRegistreringer.vue"),
+        meta: {noScroll: true}
     },
     // {
     //     path: "/teams",
@@ -75,26 +77,33 @@ const router = new VueRouter({
     {
         path: "/wishes",
         props: {statuses: "all"},
-        component: () => import("./components/ListWishes.vue")
+        component: () => import("./components/ListWishes.vue"),
+        meta: {noScroll: true}
     },
     {
         path: "/wishes/assigned",
         props: {statuses: "assigned"},
-        component: () => import("./components/ListWishes.vue")
+        component: () => import("./components/ListWishes.vue"),
+        meta: {noScroll: true}
     },
     {
         path: "/wishes/unassigned",
         props: {statuses: "unassigned"},
-        component: () => import("./components/ListWishes.vue")
+        component: () => import("./components/ListWishes.vue"),
+        meta: {noScroll: true}
     },
     {
         path: "/wishes/discarded",
         props: {statuses: "discarded"},
-        component: () => import("./components/ListWishes.vue")
+        component: () => import("./components/ListWishes.vue"),
+        meta: {noScroll: true}
     },
   ],
-  scrollBehavior() {
-      return {x: 0, y: 0}
+  scrollBehavior(to, /*from, savedPosition*/) {
+    if(to.meta.noScroll)
+        return;
+    else
+        return {x: 0, y: 0}
   }
 });
 export default router;
