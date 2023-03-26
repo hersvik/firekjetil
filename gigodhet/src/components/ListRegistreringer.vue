@@ -247,9 +247,9 @@
           return; // no change, loading etc. 
 
         if(shouldShow)
-          router.push("/regs/all");
+          router.replace("/regs/all");
         else
-          router.push("/regs");
+          router.replace("/regs");
       }
     }
   }
