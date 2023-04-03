@@ -33,7 +33,7 @@
       </div>
 
       <hr class="my-4">
-      <p class="lead">Du kan når som helst <span style="background-color: white; border-right: solid 1px silver">redigere</span> påmeldinger eller oppdrag som du har meldt inn. Bare kom tilbake hit til <strong>godhetstavanger.no</strong> (evt. via godhet.no).
+      <p class="lead">Etter innsending kan du fortsatt <span style="background-color: white; border-right: solid 1px silver">endre</span> påmeldinger eller oppdrag som du har meldt inn, men det er ikke et krav at du må oppdatere på egenhånd om det føles tungvint. For å endre selv kommer du tilbake hit til <strong>godhetstavanger.no</strong> (evt. gå via godhet.no). </p><p>Si veldig gjerne ifra til teamlederen du får tildelt (godhetsagenten) om du har gjort endringer. Denne teamlederen kan lese og endre infoen din på egenhånd også, begrenset til  de personene teamlederen har i teamet sitt :) 
       </p>
       <div v-if="!getters.user() || !getters.user().uid">
         <hr class="my-4">
