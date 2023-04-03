@@ -146,7 +146,7 @@
 
     <div class="mt-5">
       <h2>Meddeltagere</h2>
-      (Noen som skal delta sammen med deg og som vet at du herved melder dem på)
+      (Noen som skal delta sammen med deg og som vet at du herved melder dem på, uten selvstendig kontaktinfo. For mer utfyllende påmelding, kan du sende inn separate påmeldinger for dem.)
     </div>
     <div v-for="(participant, idx) in registration.participants" :key="idx" class="bg-light p-2 mb-2">
       <small class="form-text text-muted" style="display: inline;">Meddeltager {{idx + 1}} </small><small class="clickable_label" @click="removeGroupMember(idx)">[Fjerne]</small>
