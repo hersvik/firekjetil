@@ -90,6 +90,19 @@
           <br>
         </div>
 
+        <div>
+          <label>
+            <strong>{{registration.primaryPerson.firstName || "Jeg"}}</strong> ønsker å spise:
+          </label>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="registration.primaryPerson.wantDinner[0]"> Middag på imi mandag
+          </div>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="registration.primaryPerson.wantDinner[1]"> Middag på imi tirsdag
+          </div>
+          <br>
+        </div>
+
         <div class="form-group">
           <label>
             Tlf.
@@ -167,6 +180,20 @@
         <input type="checkbox" v-model="participant.willAttendDay[index]"> {{constants.campaignDays[index]}}
         </div>
       </div>
+      <br>
+      <div>
+          <label>
+            <strong>{{participant.firstName || "Jeg"}}</strong> ønsker å spise:
+          </label>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="participant.wantDinner[0]"> Middag på imi mandag
+          </div>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="participant.wantDinner[1]"> Middag på imi tirsdag
+          </div>
+          <br>
+        </div>
+
     </div>
 
     <div class="form-group mb-5">
@@ -241,6 +268,7 @@
             firstName: getters.authDisplayNameSplitted().firstName,
             lastName: getters.authDisplayNameSplitted().lastName,
             willAttendDay: new Array(constants.campaignDays.length).fill(false),
+            wantDinner: new Array(2).fill(false),
           },
           participants: [],
           dailyAttendance: [{}], // add {} for tuesday, etc
@@ -325,7 +353,10 @@
          console.log("Påmelding", this.id, "- redigert", new Date().toLocaleTimeString());
        },
       addParticipant() {
-        this.registration.participants.push({willAttendDay: new Array(constants.campaignDays.length).fill(false)});
+        this.registration.participants.push({
+          willAttendDay: new Array(constants.campaignDays.length).fill(false),
+          wantDinner: new Array(2).fill(false),
+        });
       },
       removeGroupMember(idx) {
         if(confirm("Vil du fjerne meddeltager nummer "+(idx+1)+"? \n\nHusk å også bruke send-knappen nederst i skjema for å bekrefte endringer. ")){
