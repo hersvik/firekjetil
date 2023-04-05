@@ -95,10 +95,10 @@
             <strong>{{registration.primaryPerson.firstName || "Jeg"}}</strong> ønsker å spise:
           </label>
           <div class="day-checkbox">
-            <input type="checkbox" v-model="registration.primaryPerson.wantDinner[0]"> Middag på imi mandag
+            <input type="checkbox" v-model="registration.primaryPerson.wantDinnerMonday"> Middag på imi mandag
           </div>
           <div class="day-checkbox">
-            <input type="checkbox" v-model="registration.primaryPerson.wantDinner[1]"> Middag på imi tirsdag
+            <input type="checkbox" v-model="registration.primaryPerson.wantDinnerTuesday"> Middag på imi tirsdag
           </div>
           <br>
         </div>
@@ -186,10 +186,10 @@
             <strong>{{participant.firstName || "Jeg"}}</strong> ønsker å spise:
           </label>
           <div class="day-checkbox">
-            <input type="checkbox" v-model="participant.wantDinner[0]"> Middag på imi mandag
+            <input type="checkbox" v-model="participant.wantDinnerMonday"> Middag på imi mandag
           </div>
           <div class="day-checkbox">
-            <input type="checkbox" v-model="participant.wantDinner[1]"> Middag på imi tirsdag
+            <input type="checkbox" v-model="participant.wantDinnerTuesday"> Middag på imi tirsdag
           </div>
           <br>
         </div>
@@ -268,7 +268,6 @@
             firstName: getters.authDisplayNameSplitted().firstName,
             lastName: getters.authDisplayNameSplitted().lastName,
             willAttendDay: new Array(constants.campaignDays.length).fill(false),
-            wantDinner: new Array(2).fill(false),
           },
           participants: [],
           dailyAttendance: [{}], // add {} for tuesday, etc
@@ -355,7 +354,6 @@
       addParticipant() {
         this.registration.participants.push({
           willAttendDay: new Array(constants.campaignDays.length).fill(false),
-          wantDinner: new Array(2).fill(false),
         });
       },
       removeGroupMember(idx) {
