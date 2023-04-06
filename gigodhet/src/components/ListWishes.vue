@@ -111,8 +111,6 @@
 
         for(let i=0; i < sorted.length; i++){
           let wish = sorted[i];
-          // let isVisible = this.showRemoved || !registration.removedBy;
-          // let isAdmin = this.getters.user().uid === this.constants.adminUid;
           let isIncluded = this.statusesFilter === "all" 
                         || this.statusesFilter === "assigned" && wish.agentUid 
                         || this.statusesFilter === "unassigned" && !wish.agentUid;

@@ -37,7 +37,7 @@
         {{wish.isMostRecentEdited}}
         {{wish.created.toDate().toLocaleDateString()}}
         <router-link :to="{name: 'endreWish', params:{id: wish.id} }">
-          <em>{{wish.submitter.firstName}} {{wish.submitter.lastName}}</em>: <strong>{{wish.title}}</strong>  for {{wish.target.firstName}} {{wish.target.lastName}}
+          <em>{{wish.target.address}}</em>: <strong>{{wish.title}}</strong>  for {{wish.target.firstName}} {{wish.target.lastName}}
         </router-link>
         <span class="edited_tag">{{wish.displayEdited}} </span>
         <span v-if="getters.user().uid === constants.adminUid" v-tooltip:top="'Admin-status (intern)'">{{wish.status}}</span>
@@ -131,9 +131,18 @@
         }
         let uidMostRecentEdited = uidRecentEdit;
 
-        // Sort a list copy, insert .dispayEdited and .isMostRecentEdited
-        let copy = this.wishes.slice();
-        for(let wish of copy){
+        
+        let copy = [];
+
+        for(let i=0; i < this.wishes.length; i++){
+          let wish = this.wishes[i];
+          if (!wish.isDiscarded) { //UI also prohibits discarding before un-assigning
+              copy.push(wish)
+          }
+          else{
+            continue;
+          }
+
           if(wish.edited.seconds !== wish.created.seconds){
             let hoursAgo = (Date.now() - wish.edited.toMillis())/1000/60/60/24;
             wish.displayEdited = "(endret " + hoursAgo.toFixed(1) + " dager siden)";
@@ -145,7 +154,7 @@
         }
         return copy
         .sort((a, b) => a.created.seconds - b.created.seconds)
-        .filter(w => w.ownerUid === this.selectedTeamUid);
+        .filter(w => w.agentUid === this.selectedTeamUid);// only agent-assigned? yes 
       },
 
       myTeamRegistrations() {
