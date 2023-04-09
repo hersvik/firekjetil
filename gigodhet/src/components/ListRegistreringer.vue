@@ -71,10 +71,9 @@
         </label>
       </ul>
       <ul v-for="(registration) in chronologicalRegistrations" :key="registration.id" class="list-group-item" :class="{faded_removed: registration.removedBy}">
-        {{registration.isMostRecentEdited}}
         <span class="edited_tag">#{{registration.counter}}</span>
-        <span class="dot" v-if="registration.ownerUid === getters.user().uid"></span>
-        {{registration.created.toDate().toLocaleDateString()}}
+        <span class="dot" v-if="registration.isMostRecentEdited"></span>
+        {{registration.created.toDate().toLocaleDateString()}}<span v-if="registration.ownerUid === getters.user().uid">.</span>
         <span class="hasAgent" v-if="registration.agentUid === getters.user().uid"> I ditt team</span>
         <span class="hasAgent" v-else-if="registration.agentUid"> {{getRegistrationTeamName(registration.agentUid)}} </span>
         <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
@@ -135,22 +134,23 @@
         if (!this || !this.registrations) {
           return;
         }
-        // Find most recently edited
-        let uidRecentEdit;
-        let secondsRecentEdit = 0;
-        for(let registration of this.registrations){
-          if(registration.edited && registration.edited.seconds > secondsRecentEdit) {
-            secondsRecentEdit = registration.edited.seconds;
-            uidRecentEdit = registration.id;
-          }
-        }
-        let uidMostRecentEdited = uidRecentEdit;
 
         let combined = this.registrations.slice().concat(this.registrationsReadOnly.slice());
         let sorted = combined;
         sorted.sort((a, b) => {
           return a.created.seconds - b.created.seconds;
         });
+
+        // Find most recently edited
+        let uidRecentEdit;
+        let secondsRecentEdit = 0;
+        for(let registration of combined){
+          if(registration.edited && registration.edited.seconds > secondsRecentEdit) {
+            secondsRecentEdit = registration.edited.seconds;
+            uidRecentEdit = registration.id;
+          }
+        }
+        let uidMostRecentEdited = uidRecentEdit;
 
         let copy = [];
 
@@ -171,9 +171,7 @@
             let hoursAgo = (Date.now() - registration.edited.toMillis())/1000/60/60/24;
             registration.displayEdited = "(endret " + hoursAgo.toFixed(1) + " dager siden)"; // inserted property
 
-            registration.isMostRecentEdited = registration.id === uidMostRecentEdited // inserted property
-                                              ? "->"
-                                              : "";
+            registration.isMostRecentEdited = registration.id === uidMostRecentEdited; // inserted property
           }
         }
         return copy;
@@ -282,7 +280,7 @@
   .dot {
     height: 0.8em;
     width: 0.8em;
-    background-color: #bbb;
+    background-color: rgb(148, 207, 252);
     border-radius: 50%;
     display: inline-block;
     margin: 0 0.2em;

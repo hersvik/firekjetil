@@ -39,15 +39,15 @@
         </label>
       </ul>
       <ul v-for="(wish) in chronologicalWishes" :key="wish.id" class="list-group-item" :class="{done: wish.done}">
-        {{wish.isMostRecentEdited}}
-        <span class="dot" v-if="wish.ownerUid === getters.user().uid"></span>
-        {{wish.created.toDate().toLocaleDateString()}}
+        <span class="dot" v-if="wish.isMostRecentEdited"></span>
+        {{wish.created.toDate().toLocaleDateString()}}<span v-if="wish.ownerUid === getters.user().uid">.</span>
         <span v-if="wish.done"><strong>Utført </strong></span>
         <router-link :to="{name: 'endreWish', params:{id: wish.id} }">
-          <em>{{wish.target.address}}</em>: <strong>{{wish.title}}</strong>  for {{wish.target.firstName}} {{wish.target.lastName}}
+          <em> {{wish.target.address || "ingen adresse"}}</em>: <strong>{{wish.title || "(mangler overskrift)"}}</strong>   {{wish.target.firstName || wish.target.lastName ? "for " + wish.target.firstName + wish.target.lastName : ""}}
         </router-link>
         <span class="edited_tag">{{wish.displayEdited}} </span>
         <span v-if="getters.user().uid === constants.adminUid"><strong>{{getTildeltTeamName(wish.agentUid)}} </strong></span>
+        <span v-if="getters.user().uid === wish.agentUid"><strong> Tildelt Ditt team </strong></span>
         <span v-if="getters.user().uid === constants.adminUid" v-tooltip:top="'Admin-status (intern)'">{{wish.status}}</span>
       </ul>
     </li>
@@ -94,22 +94,23 @@
         if (!this || !this.wishes) {
           return;
         }
-        // Find most recently edited
-        let uidRecentEdit;
-        let secondsRecentEdit = 0;
-        for(let wish of this.wishes){
-          if(wish.edited && wish.edited.seconds > secondsRecentEdit) {
-            secondsRecentEdit = wish.edited.seconds;
-            uidRecentEdit = wish.id;
-          }
-        }
-        let uidMostRecentEdited = uidRecentEdit;
 
         let combined = this.wishes.slice().concat(this.wishesOnlyAgentAcess.slice());
         let sorted = combined;
         sorted.sort((a, b) => {
           return a.created.seconds - b.created.seconds;
         });
+
+        // Find most recently edited
+        let uidRecentEdit;
+        let secondsRecentEdit = 0;
+        for(let wish of combined){
+          if(wish.edited && wish.edited.seconds > secondsRecentEdit) {
+            secondsRecentEdit = wish.edited.seconds;
+            uidRecentEdit = wish.id;
+          }
+        }
+        let uidMostRecentEdited = uidRecentEdit;
 
         let copy = [];
 
@@ -129,9 +130,7 @@
             let hoursAgo = (Date.now() - wish.edited.toMillis())/1000/60/60/24;
             wish.displayEdited = "(endret " + hoursAgo.toFixed(1) + " dager siden)";
 
-            wish.isMostRecentEdited = wish.id === uidMostRecentEdited
-                                              ? "->"
-                                              : "";
+            wish.isMostRecentEdited = wish.id === uidMostRecentEdited;
           }
         }
         return copy.sort((a, b) => {
@@ -194,7 +193,7 @@
   .dot {
     height: 0.8em;
     width: 0.8em;
-    background-color: #bbb;
+    background-color: rgb(148, 207, 252);
     border-radius: 50%;
     display: inline-block;
     margin: 0 0.2em;
