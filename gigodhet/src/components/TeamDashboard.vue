@@ -8,6 +8,9 @@
       <option v-for="(team, idx) in sortedTeams" :key="idx" :value="team.ownerUid">{{team.teamName}}</option>
     </select>
 
+    <h1>Team status/link</h1>
+    <a :href="externalUrl" target="_blank">{{ externalUrl }}</a>
+
     <template>
       <h1>Deltagere</h1>
       <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
@@ -44,6 +47,9 @@
       </ul>
     </li>
 
+    <h1>Endre status/link</h1>
+    <input type="text" v-model="externalUrl"><button :class="{ saved: isSaved}" @click="saveExternalLink">Lagre link</button>
+
   </div>
 </template>
 
@@ -66,6 +72,8 @@
         registrationsWithAgentAccess: [],
         teams: [],
         selectedTeamUid: this.teamid || "",
+        externalUrl: "",
+        isSaved: false,
       }
     },
     computed: {
@@ -177,15 +185,43 @@
     },
     watch: {
       selectedTeamUid: function(teamUid) {
-        this.$router.replace({ path: '/dash/'+teamUid })
+        this.$router.replace({ path: '/dash/'+teamUid });
+        this.updateExternalUrl();
+      },
+      teams: function(){
+        this.updateExternalUrl();
       }
     },
     methods: {
+
       getRegistrationTeamName(agentUid){
         let teamObject = this.teams.filter(t => t.ownerUid === agentUid)[0];
         let teamName = teamObject && teamObject.teamName || "";
         return teamName;
       },
+
+      saveExternalLink () {
+        if (this.selectedTeamUid) {
+
+          db.collection('teams')
+            .doc(this.selectedTeamUid)
+            .set({externalLink: this.externalUrl}, {merge: true})
+            .then(() => {
+              // alert("Lagret ✅ ")
+              this.isSaved = true;
+              setTimeout(() => this.isSaved = false, 2000);
+            })
+            .catch(function(error){
+              alert("Kunne ikke lagre. ("+error+")")
+            });
+        }
+      },
+
+      updateExternalUrl(){
+        let teamObject = this.teams.filter(t => t.ownerUid === this.selectedTeamUid)[0];
+        this.externalUrl = teamObject && teamObject.externalLink || "";
+      },
+
     }
   }
 </script>
@@ -199,5 +235,8 @@
   }
   .edited_tag {
     opacity: 0.5;
+  }
+  button.saved{
+    background-color: rgb(114, 237, 114);
   }
 </style>
