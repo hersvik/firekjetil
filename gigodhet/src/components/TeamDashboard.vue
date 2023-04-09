@@ -2,10 +2,27 @@
   <div class="container container_under_nav">
     <router-link to="/regs">Tilbake</router-link><br><br>
 
+    Filter: <strong>Krev deltagere</strong> (ignorerer med-deltagere / uten fullstendig påmelding)<br>
+    <input type="checkbox" v-model="filterDays[0]"><label> mandag</label><br>
+    <input type="checkbox" v-model="filterDays[1]"><label> tirsdag</label><br>
+    <input type="checkbox" v-model="filterDays[2]"><label> onsdag</label><br>
+    <input type="checkbox" v-model="filterDays[3]"><label> torsdag</label><br>
+    <input type="checkbox" v-model="filterDays[4]"><label> fredag</label><br>
+
     <span style="color: silver">Velg team å se på:</span>
     <select v-model="selectedTeamUid" class="custom-select">
       <option value="">-  Velg team -</option>
-      <option v-for="(team, idx) in sortedTeams" :key="idx" :value="team.ownerUid">{{team.teamName}}</option>
+      <option 
+        v-for="(team, idx) in sortedTeams" :key="idx" :value="team.ownerUid" 
+        :disabled="
+              filterDays[0] && !teamDays[team.ownerUid][0]
+          || filterDays[1] && !teamDays[team.ownerUid][1]
+          || filterDays[2] && !teamDays[team.ownerUid][2]
+          || filterDays[3] && !teamDays[team.ownerUid][3]
+          || filterDays[4] && !teamDays[team.ownerUid][4]
+        ">
+          {{team.teamName}}
+        </option>
     </select>
 
     <h1>Team status/link</h1>
@@ -63,24 +80,36 @@
     },
     mounted(){
     },
-    name: "ListRegistreringer",
+    name: "TeamDashboard",
     props: ["teamid"],
     data () {
       return {
         registrations: [],
         wishes: [],
-        registrationsWithAgentAccess: [],
         teams: [],
         selectedTeamUid: this.teamid || "",
         externalUrl: "",
         isSaved: false,
+        filterDays: [false, false, false, false, false],
       }
     },
     computed: {
       getters: () => getters,
       constants: () => constants,
-      registrationsReadOnly() {
-        return this.registrationsWithAgentAccess.filter(r => r.ownerUid !== getters.user().uid);
+
+      teamDays(){
+        let hasMember = {};
+        for(let team of this.teams){
+          hasMember[team.ownerUid] = [];
+          for (let i=0; i<5; i++) {
+            hasMember[team.ownerUid][i] 
+              = this.registrations.some(
+                r => r.primaryPerson.willAttendDay[i]
+                && r.agentUid == team.ownerUid
+              );
+          }
+        }
+        return hasMember;
       },
 
       chronologicalRegistrations() {
@@ -98,8 +127,8 @@
         }
         let uidMostRecentEdited = uidRecentEdit;
 
-        let combined = this.registrations.slice().concat(this.registrationsReadOnly.slice());
-        let sorted = combined;
+        let shallow = this.registrations.slice();
+        let sorted = shallow;
         sorted.sort((a, b) => {
           return a.created.seconds - b.created.seconds;
         });
