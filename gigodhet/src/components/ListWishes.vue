@@ -1,6 +1,10 @@
 <template>
   <div class="container container_under_nav">
-    <h1>Meld inn oppdrag</h1>
+    <h1>Oppdrag 
+      <span v-if="getters.user().uid === constants.adminUid">
+        <router-link to="/dash">{Teamene}</router-link>
+      </span>
+    </h1>
 
     <div v-if="wishes.length" class="alert alert-secondary bg-light mt-3" role="alert">
       <div class="mb-2"><strong>Takk for innmeldingen, den ligger i listen under og du kan redigere den!</strong></div>
@@ -13,7 +17,7 @@
     <li class="list-group">
       <ul class="list-group-item">
         + <router-link :to="{path: 'wish'}">
-          Nytt oppdrag
+          Foreslå nytt oppdrag
         </router-link>
       </ul>
       <ul v-if="getters.user().uid === constants.adminUid" class="list-group-item">
@@ -43,7 +47,7 @@
           <em>{{wish.target.address}}</em>: <strong>{{wish.title}}</strong>  for {{wish.target.firstName}} {{wish.target.lastName}}
         </router-link>
         <span class="edited_tag">{{wish.displayEdited}} </span>
-        <span v-if="getters.user().uid === constants.adminUid"><strong>{{getTeamName(wish.ownerUid)}} </strong></span>
+        <span v-if="getters.user().uid === constants.adminUid"><strong>{{getTildeltTeamName(wish.agentUid)}} </strong></span>
         <span v-if="getters.user().uid === constants.adminUid" v-tooltip:top="'Admin-status (intern)'">{{wish.status}}</span>
       </ul>
     </li>
@@ -149,10 +153,11 @@
       }
     },
     methods: {
-      getTeamName(agentUid){
+      getTildeltTeamName(agentUid){
         let teamObject = this.teams.filter(t => t.ownerUid === agentUid)[0];
         let teamName = teamObject && teamObject.teamName || "";
-        return teamName;
+        if(!teamName) return "";
+        return "tildelt " + teamName;
       },
     },
     watch: {
@@ -183,7 +188,7 @@
     opacity: 0.3;
   }
   .done {
-    background-color: #f9f9f9;
+    background-color: #fff6ff;
   }
 
   .dot {

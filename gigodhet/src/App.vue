@@ -32,7 +32,7 @@
   }
 
   .container_under_nav {
-    padding-top: 8em;
+    padding-top: 9em;
   }
 
   /* Disable horizontal scrolling on mobile (two css statemnts involving body)*/

@@ -37,11 +37,12 @@
     </div>
 
     <h1>
-      Påmeldinger <span v-if="getters.user().uid === constants.adminUid">
-        [<router-link to="/dash">Velg team</router-link>]
-        </span>
-        <small @click="showAll" class="show_removed" v-if="atLeastOneRemoved && !showRemoved">[vis deaktiverte]</small>
-        <small @click="showAll" class="show_removed" v-if="atLeastOneRemoved && showRemoved">[skjul dem igjen]</small>
+      Påmeldinger 
+      <span v-if="getters.user().uid === constants.adminUid">
+        <router-link to="/dash">{Teamene}</router-link>
+      </span>
+      <small @click="showAll" class="show_removed" v-if="atLeastOneRemoved && !showRemoved">[vis deaktiverte]</small>
+      <small @click="showAll" class="show_removed" v-if="atLeastOneRemoved && showRemoved">[skjul dem igjen]</small>
     </h1>
 
     <div v-if="registrations.length" class="alert alert-secondary bg-light mt-3" role="alert" style="clear: both">
