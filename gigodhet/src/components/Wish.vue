@@ -63,7 +63,7 @@
       </div>
       <div v-if="wish.agentUid" class="form-group form-check mt-4 mb-5">
         <label class="form-check-label" style="color: grey">
-          Dette oppdraget er tildelt <strong>{{ teams.filter(t => t.ownerUid == wish.agentUid)[0].teamName }}</strong>
+          Dette oppdraget er tildelt: <strong>{{ teamName || "ikke funnet" }}</strong>
         </label>
       </div>
 
@@ -297,6 +297,12 @@
         let timelessWish = {...this.wish};
         timelessWish.edited = null;
         return JSON.stringify(timelessWish);
+      },
+      teamName(){
+        let teamsFiltered = this.teams.filter(t => t.ownerUid === this.wish.agentUid);
+        if (teamsFiltered.length !== 1 || !teamsFiltered[0].teamName)
+          return null;
+        return teamsFiltered[0].teamName;
       },
       emailText() {
         return `%0D%0A
