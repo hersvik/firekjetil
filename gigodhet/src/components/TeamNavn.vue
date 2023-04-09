@@ -72,7 +72,8 @@
             .set(
               {
                 teamName: this.suggestedTeamName,
-                ownerUid: this.getters.user().uid // for db write-permission.
+                ownerUid: this.getters.user().uid, // for db write-permission.
+                created: new Date(),
               }, {merge: true})
             .then(() => {
             })
