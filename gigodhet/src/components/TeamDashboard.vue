@@ -100,7 +100,11 @@
 
         for (let i=0; i < sorted.length; i++) {
           let registration = sorted[i];
-          copy.push(registration)
+          
+          if(!registration.removedBy){
+
+            copy.push(registration)
+          }
 
           registration.counter = i+1;
           if (registration.edited.seconds !== registration.created.seconds) {
