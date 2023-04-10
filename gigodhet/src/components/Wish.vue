@@ -3,6 +3,8 @@
     <a @click="$router.go(-1)">Tilbake</a>
     <h1>{{id ? wish.title : 'Meld inn oppdrag'}}</h1>
     <h3>{{wish.event}}</h3>
+    <div style="color: #6c757d; margin-bottom: 1em;" v-if="wish.lastUpdatedBy">(Sist oppdatert av {{wish.lastUpdatedBy}})</div>
+
     <br />
     <em> {{constants.dataDisclosure}} </em>
 
@@ -366,6 +368,8 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
         this.wish.ownerUid = this.wish.ownerUid || getters.user().uid;
         this.wish.created = this.wish.created || new Date();
         this.wish.edited = new Date();
+        this.wish.lastUpdatedBy = getters.user().displayName;
+
 
         if (this.id) {
           const wish= { ...this.wish} // to exclude non-enumerable "id"-property

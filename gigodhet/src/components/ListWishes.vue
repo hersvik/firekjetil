@@ -128,7 +128,7 @@
 
           if(wish.edited.seconds !== wish.created.seconds){
             let hoursAgo = (Date.now() - wish.edited.toMillis())/1000/60/60/24;
-            wish.displayEdited = "(endret " + hoursAgo.toFixed(1) + " dager siden)";
+            wish.displayEdited = "(endret " + hoursAgo.toFixed(1) + " dager siden av "+ wish.lastUpdatedBy +")";
 
             wish.isMostRecentEdited = wish.id === uidMostRecentEdited;
           }

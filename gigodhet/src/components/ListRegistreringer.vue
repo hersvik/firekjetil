@@ -169,7 +169,7 @@
           if (registration.edited.seconds !== registration.created.seconds) {
 
             let hoursAgo = (Date.now() - registration.edited.toMillis())/1000/60/60/24;
-            registration.displayEdited = "(endret " + hoursAgo.toFixed(1) + " dager siden)"; // inserted property
+            registration.displayEdited = "(endret " + hoursAgo.toFixed(1) + " dager siden av "+ registration.lastUpdatedBy +")"; // inserted property
 
             registration.isMostRecentEdited = registration.id === uidMostRecentEdited; // inserted property
           }
