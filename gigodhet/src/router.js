@@ -21,16 +21,17 @@ const router = new VueRouter({
         component: () => import("./components/ListRegistreringer.vue"),
         meta: {noScroll: true}
     },
-    // {
-    //     path: "/teams",
-    //     component: () => import('./components/ListTeams.vue')
-    // },
+    {
+        path: "/teams",
+        component: () => import('./components/TeamsChronologically.vue')
+    },
     {
         path: "/dash",
         component: () => import('./components/TeamDashboard.vue')
     },
     {
         path: "/dash/:teamid",
+        name: "dashTeamid",
         props: true,
         component: () => import('./components/TeamDashboard.vue')
     },

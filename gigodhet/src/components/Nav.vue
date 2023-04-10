@@ -1,7 +1,7 @@
 <template>
   <div v-if="$route.path !== '/auth'" class="nav__wrapper">
     <span v-if="$route.path !== '/spendings' && $route.path !== '/cycle'">
-      <span class="header_banner">
+      <span class="header_banner" @click="$router.push('/')" style="cursor: pointer">
         Godhetstavanger.no
       </span>
       <a @click='goToHjem' :class='{active: getters.activeNav() == "hjem"}'>

@@ -1,15 +1,17 @@
 <template>
   <div class="container container_under_nav">
-    <router-link to="/regs">Tilbake</router-link><br><br>
+    <a @click="$router.go(-1)">Tilbake</a><br><br>
 
-    Filter: <strong>Har deltagere</strong> (nb, ignorerer "meddeltagere")<br>
-    <input type="checkbox" v-model="filterDays[0]"><label> mandag</label><br>
-    <input type="checkbox" v-model="filterDays[1]"><label> tirsdag</label><br>
-    <input type="checkbox" v-model="filterDays[2]"><label> onsdag</label><br>
-    <input type="checkbox" v-model="filterDays[3]"><label> torsdag</label><br>
-    <input type="checkbox" v-model="filterDays[4]"><label> fredag</label><br>
+    <div class="filter_checkboxes" style="color: silver">
+      <input type="checkbox" v-model="filterDays[0]"><label>må ha folk mandag</label><br>
+      <input type="checkbox" v-model="filterDays[1]"><label>må ha folk tirsdag</label><br>
+      <input type="checkbox" v-model="filterDays[2]"><label>må ha folk onsdag</label><br>
+      <input type="checkbox" v-model="filterDays[3]"><label>må ha folk torsdag</label><br>
+      <input type="checkbox" v-model="filterDays[4]"><label>må ha folk fredag</label><br>
+      nb, filterne over ignorerer "meddeltagere"<br><br>
 
-    <span style="color: silver">Velg team å se på:</span>
+      Velg team å se på:
+    </div>
     <select v-model="selectedTeamUid" class="custom-select">
       <option value="">-  Velg team -</option>
       <option 
@@ -72,11 +74,11 @@
 
 <script>
   import { db } from '../main';
-  import {getters, setters, constants} from '../store';
+  import {getters, constants} from '../store';
 
   export default {
     beforeCreate() {
-      setters.setActiveNav("pameldinger");
+      // setters.setActiveNav("pameldinger");
     },
     mounted(){
     },
@@ -267,5 +269,8 @@
   }
   button.saved{
     background-color: rgb(114, 237, 114);
+  }
+  .filter_checkboxes input[type="checkbox"] {
+    margin-right: 0.3em;
   }
 </style>

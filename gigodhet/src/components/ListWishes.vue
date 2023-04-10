@@ -2,7 +2,7 @@
   <div class="container container_under_nav">
     <h1>Oppdrag 
       <span v-if="getters.user().uid === constants.adminUid">
-        <router-link to="/dash">{Teamene}</router-link>
+        <router-link to="/teams">{Teamene}</router-link>
       </span>
     </h1>
 

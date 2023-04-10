@@ -39,7 +39,7 @@
     <h1>
       Påmeldinger 
       <span v-if="getters.user().uid === constants.adminUid">
-        <router-link to="/dash">{Teamene}</router-link>
+        <router-link to="/teams">{Teamene}</router-link>
       </span>
       <small @click="showAll" class="show_removed" v-if="atLeastOneRemoved && !showRemoved">[vis deaktiverte]</small>
       <small @click="showAll" class="show_removed" v-if="atLeastOneRemoved && showRemoved">[skjul dem igjen]</small>
