@@ -2,7 +2,7 @@
   <div class="container container_under_nav">
     <router-link to="/regs">Tilbake</router-link><br><br>
 
-    Filter: <strong>Krev deltagere</strong> (ignorerer med-deltagere / uten fullstendig påmelding)<br>
+    Filter: <strong>Har deltagere</strong> (nb, ignorerer "meddeltagere")<br>
     <input type="checkbox" v-model="filterDays[0]"><label> mandag</label><br>
     <input type="checkbox" v-model="filterDays[1]"><label> tirsdag</label><br>
     <input type="checkbox" v-model="filterDays[2]"><label> onsdag</label><br>
