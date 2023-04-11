@@ -18,7 +18,8 @@
     <!-- <router-link to="/regs">Tilbake</router-link> -->
     <h1>{{registration.event}}</h1>
     <h3>{{registration.id ? registration.primaryPerson.firstName+ ' + ' +registration.participants.length : "Påmelding"}}</h3>
-    <div style="color: #6c757d; margin-bottom: 1em;" v-if="registration.lastUpdatedBy">(Sist oppdatert av {{registration.lastUpdatedBy}})</div>
+    <div style="color: #6c757d; margin-bottom: 1em;" v-if="registration.created">Opprettet {{registration.created.toDate().toLocaleDateString()}}</div>
+    <div style="color: #6c757d; margin-bottom: 1em;" v-if="registration.lastUpdatedBy">(Sist endret av {{registration.lastUpdatedBy}})</div>
     <em style="margin-bottom: 2em"> {{constants.dataDisclosure}} </em>
 
     <div v-if="team && team.teamName" class="alert alert-secondary bg-light mt-3" role="alert">

@@ -3,7 +3,8 @@
     <a @click="$router.go(-1)">Tilbake</a>
     <h1>{{id ? wish.title : 'Meld inn oppdrag'}}</h1>
     <h3>{{wish.event}}</h3>
-    <div style="color: #6c757d; margin-bottom: 1em;" v-if="wish.lastUpdatedBy">(Sist oppdatert av {{wish.lastUpdatedBy}})</div>
+    <div style="color: #6c757d; margin-bottom: 1em;" v-if="wish.created">Opprettet {{wish.created.toDate().toLocaleDateString()}}</div>
+    <div style="color: #6c757d; margin-bottom: 1em;" v-if="wish.lastUpdatedBy">(Sist endret av {{wish.lastUpdatedBy}})</div>
 
     <br />
     <em> {{constants.dataDisclosure}} </em>
