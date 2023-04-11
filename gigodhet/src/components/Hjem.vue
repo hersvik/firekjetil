@@ -92,7 +92,7 @@
     padding-left: 16px;
     padding-top: 0.5em;
     position: relative;
-    left: -16px;
+    /* left: -16px; */
     border-left: solid blue 2px;
     }
 </style>
