@@ -286,7 +286,7 @@
           },
           participants: [],
           dailyAttendance: [{}], // add {} for tuesday, etc
-          event: "Godhet Stavanger 2022",
+          event: "Godhet Stavanger 2023",
           agentUid: "",
         },
         alreadyLoaded: false,

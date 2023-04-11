@@ -3,9 +3,9 @@
 
 
     <div class="jumbotron" :class="{jumbotron__logged_in: getters.user().uid}">
-      <h1 class="display-4">Godhet Stavanger &ndash; 2022</h1><!--remember year duplicated in wish.event and reg.event-->
-      <p class="lead"><strong>Uke 22</strong> &ndash; fra mandag 30. mai</p>
-      <p class="lead">Vi gjør <strong>godhet</strong> sammen</p>
+      <h1 class="display-4">Godhet Stavanger &ndash; 2023</h1><!--remember year duplicated in wish.event and reg.event-->
+      <p class="lead"><strong>Uke 21</strong> &ndash; fra mandag 22. mai</p>
+      <p class="lead">Vi gjør godhet <strong>sammen</strong></p>
       <hr class="my-4">
 
       <div v-if="!getters.user() || !getters.user().uid">
@@ -51,7 +51,7 @@
     I samarbeid med <a href="http://godhet.no">godhet.no</a>
 
     <div style="margin-top: 1em; color: silver;">
-      <em>Oppdatert 3. mai 2022</em> - <a href="/teamreg">Team-registrering (midlertidig snarvei)</a>
+      <em>Oppdatert 11. april 2023</em> - <a href="/teamreg">Team-registrering (midlertidig snarvei)</a>
     </div>
   </div>
 </template>
