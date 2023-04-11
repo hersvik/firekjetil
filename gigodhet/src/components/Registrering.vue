@@ -95,10 +95,17 @@
             <strong>{{registration.primaryPerson.firstName || "Jeg"}}</strong> ønsker å spise:
           </label>
           <div class="day-checkbox">
-            <input type="checkbox" v-model="registration.primaryPerson.wantDinnerMonday"> Middag på imi mandag
+            <input type="checkbox" v-model="registration.primaryPerson.wantDinnerMonday"> Middag på IMI mandag
           </div>
           <div class="day-checkbox">
-            <input type="checkbox" v-model="registration.primaryPerson.wantDinnerTuesday"> Middag på imi tirsdag
+            <input type="checkbox" v-model="registration.primaryPerson.wantDinnerTuesday"> Middag på IMI tirsdag
+          </div>
+
+          <div class="day-checkbox" style="margin-top: 1em">
+            <input type="checkbox" v-model="registration.primaryPerson.glutenFree"> Trenger glutenfri mat
+          </div>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="registration.primaryPerson.lactoseFree"> Trenger laktosefri mat
           </div>
           <br>
         </div>
@@ -183,13 +190,20 @@
       <br>
       <div>
           <label>
-            <strong>{{participant.firstName || "Jeg"}}</strong> ønsker å spise:
+            <strong>{{participant.firstName || "Denne deltageren"}}</strong> ønsker å spise:
           </label>
           <div class="day-checkbox">
             <input type="checkbox" v-model="participant.wantDinnerMonday"> Middag på imi mandag
           </div>
           <div class="day-checkbox">
             <input type="checkbox" v-model="participant.wantDinnerTuesday"> Middag på imi tirsdag
+          </div>
+
+          <div class="day-checkbox" style="margin-top: 1em">
+            <input type="checkbox" v-model="participant.glutenFree"> Trenger glutenfri mat
+          </div>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="participant.lactoseFree"> Trenger laktosefri mat
           </div>
           <br>
         </div>
