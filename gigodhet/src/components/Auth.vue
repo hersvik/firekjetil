@@ -14,7 +14,7 @@
     <div class="jumbotron bg-light rounded-lg" style="border:solid 1px #eee; margin: 1em;">
       <a href="#how_why" id="how_why" @click="showWhy = !showWhy">Hvorfor skal jeg logge inn?</a>
       <div v-if="showWhy">
-        Du logger inn for at det skal være mulig å gjøre endringer senere, etter innsending, om du skulle ønske. Mest sannsynlig forblir du pålogget på telefonen/enheten din, så det er kjapt og enkelt å komme tilbake. Det primære målet er at den nærmeste teamlederen din får god oversikt begrenset til sitt team, og kan oppdatere ved å endre informasjonen du har registrert for sitt eget bruk. Og dere kan begge følge med på hva som er gjeldende til en hver tid. Registreringene her gjør det også lettere dersom teamet trenger assistanse fra sekretariatet til enten å få flere hender på oppdrag, eller å skaffe et oppdrag.   
+        Du logger inn for at det skal være mulig for deg å gjøre endringer etter innsending, om du skulle foretrekke. Mest sannsynlig forblir du pålogget på telefonen/enheten din, så det er kjapt og enkelt å komme tilbake (via enten godhetstavanger.no eller godhet.no). Det primære målet er at den nærmeste teamlederen/godhetsagenten din får oversikt over deltagere begrenset til sitt team, og kan oppdatere oversikten på dine vegne også. Registreringene her gjør det også lettere dersom teamet trenger assistanse fra sekretariatet til enten å få flere hender på oppdrag, eller å skaffe et oppdrag.   
       </div>
       <br>
       <br>
@@ -32,7 +32,7 @@
       <br>
       <a href="#how_fallback" id="how_fallback" @click="showHowFallback = !showHowFallback">Hva om jeg likevel ikke vil eller klarer å logge inn?</a>
       <div v-if="showHowFallback">
-        I så fall kan du sende forespørsler eller påmeldinger til stavanger@godhet.no, så får du svar når vi har mottatt meldingen eller påmeldingen din. Merk at vi ikke har mulighet til å svare alle som ønsker hjelp i godhetsuken (forslag til oppdrag), det gjelder om man registrer direkte i systemet også. Vi tar kontakt med dem vi har mulighet til å hjelpe blant forslagene som kommer inn. 
+        I så fall kan du sende forespørsler eller påmeldinger til stavanger@godhet.no, så får du svar når vi har mottatt meldingen eller påmeldingen din. Merk at vi ikke har mulighet til å svare alle som ønsker hjelp i godhetsuken (forslag til oppdrag), det gjelder om man registrerer direkte med innlogging også. Vi tar kontakt med dem vi har mulighet til å hjelpe blant forslagene som kommer inn. 
       </div>
     </div>
   </div>
