@@ -3,7 +3,7 @@
 
     <div v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)" class="bg-light" style="margin-top:1em; margin-bottom: 2em; border: 0px solid #eee;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; border-radius: 4px; padding: 1em">
       <h1 style="margin-top: 0; margin-bottom: 0.5em">Du er teamleder</h1>
-
+      Du vil se dine deltagere her umiddelbart etter at de bruker den påmeldings-lenken du sender ut i invitasjon. 
       <h2>Ditt team</h2>
       <router-link to="/teamreg" class="btn btn-outline-secondary btn_green_outline">
         Lag invitasjon

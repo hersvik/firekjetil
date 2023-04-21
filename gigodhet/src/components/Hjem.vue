@@ -29,7 +29,14 @@
             Meld inn oppdrag
           </button><br>
         </router-link>
-        <span class="lead mb-3">&ndash; som noen kan utføre</span>
+        <span class="lead mb-3">&ndash; som noen kan utføre</span><br>
+
+        <router-link to="/teamreg">
+          <button type="button" class="btn btn-light btn-lg mr-2 mt-3">
+            Bli teamleder
+          </button><br>
+        </router-link>
+        <span class="lead mb-3">&ndash; for "godhetsagenter" i huskirkene</span>
       </div>
 
       <hr class="my-4">
