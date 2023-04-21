@@ -72,7 +72,7 @@
 
         <div class="form-group">
             <label>
-              Aldersgruppe*
+              Aldersgruppe <span class="text-muted">(Ungdom: se fotnote *)</span>
             </label>
             <select v-model="registration.primaryPerson.ageGroup" class="custom-select">
               <option selected>-  Velg -</option>
@@ -172,7 +172,7 @@
       </div>
       <div class="form-group">
         <label>
-          Aldersgruppe*
+          Aldersgruppe <span class="text-muted">(Ungdom: se fotnote *)</span>
         </label>
         <select v-model="participant.ageGroup" class="custom-select">
           <option selected>-  Velg -</option>
