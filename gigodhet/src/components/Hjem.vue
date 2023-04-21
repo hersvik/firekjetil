@@ -17,7 +17,7 @@
         </a>
       </div>
       <div v-else>
-        <p class="lead logged_in"><strong>Du er logget inn 👍</strong> Se videre:</p>
+        <p class="lead logged_in" style="margin-bottom: 1.5em;">🔷 Du er logget inn 👍 Se videre:</p>
         <router-link to="/regs">
           <button type="button" class="btn btn-primary btn-lg mr-2 mt-3">
             Deltager-påmelding
@@ -32,7 +32,7 @@
         <span class="lead mb-3">&ndash; som noen kan utføre</span><br>
 
         <router-link to="/teamreg">
-          <button type="button" class="btn btn-light btn-lg mr-2 mt-3">
+          <button type="button" class="btn btn-light btn-lg mr-2 mt-3" style="box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
             Bli teamleder
           </button><br>
         </router-link>
@@ -96,8 +96,7 @@
 
   .logged_in {
     background-color: white;
-    padding-left: 16px;
-    padding-top: 0.5em;
+    padding: 4px 16px;
     position: relative;
     /* left: -16px; */
     border-left: solid blue 2px;
