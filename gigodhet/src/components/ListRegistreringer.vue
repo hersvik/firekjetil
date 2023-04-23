@@ -1,7 +1,7 @@
 <template>
   <div class="container container_under_nav">
 
-    <div v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)" class="bg-light" style="margin-top:1em; margin-bottom: 2em; border: 0px solid #eee;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; border-radius: 4px; padding: 1em">
+    <div v-if="isTeamLead" class="bg-light" style="margin-top:1em; margin-bottom: 2em; border: 0px solid #eee;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; border-radius: 4px; padding: 1em">
       <h1 style="margin-top: 0; margin-bottom: 0.5em">Du er teamleder</h1>
       Du vil se dine deltagere her umiddelbart etter at de bruker den påmeldings-lenken du sender ut i invitasjon. 
       <h2>Ditt team</h2>
@@ -38,7 +38,7 @@
 
     <h1>
       Påmeldinger 
-      <span v-if="getters.user().uid === constants.adminUid">
+      <span v-if="isSentralAdmin">
         <router-link to="/teams">{Teamene}</router-link>
       </span>
       <small @click="showAll" class="show_removed" v-if="atLeastOneRemoved && !showRemoved">[vis deaktiverte]</small>
@@ -49,7 +49,7 @@
       <span style="font-size: 1em; float:  left; margin-right: 0.5em;">
         💪
       </span>
-      <div class="">Takk for påmeldingen! Se nedenfor for å lese innsendt påmelding. Gjerne gjør endringer ved å sende inn på nytt! 😃 Du vil bli kontaktet når godhetsuken nærmer seg. Navnet på teamet (lederen) du hører til dukker opp sammen med påmeldingen når du har blitt tildelt team. </div>
+      <div class="">Takk for påmeldingen! Se nedenfor for å lese innsendt påmelding. Gjerne gjør endringer ved å sende inn på nytt! 😃 Du vil bli kontaktet når godhetsuken nærmer seg.  </div>
     </div>
 
     <!--div v-for="(tiem, idx) in tiems" :key=idx>      <!- <------------------- disable BEFORE commit !!! ->
@@ -60,11 +60,11 @@
         + <router-link :to="{path: 'registrering'}">
           Lag ny påmelding 
         </router-link>
-          <span v-if="teams.map(t => t.ownerUid).includes(getters.user().uid)" style="color: hwb(138deg 37% 34%); font-style: italic;">
+          <span v-if="isTeamLead" style="color: hwb(138deg 37% 34%); font-style: italic;">
             (NB: For ditt eget team se knapper over)
           </span>
       </ul>
-      <ul v-if="getters.user().uid === constants.adminUid" class="list-group-item">
+      <ul v-if="isSentralAdmin" class="list-group-item">
         <label style="color: #007bff; cursor: pointer;">
           <input type="checkbox" v-model="showHavingTeam">
           Vis dem som <em>har team</em> også
@@ -74,14 +74,25 @@
         <span class="edited_tag">#{{registration.counter}}</span>
         <span class="dot" v-if="registration.isMostRecentEdited"></span>
         {{registration.created.toDate().toLocaleDateString()}}<span v-if="registration.ownerUid === getters.user().uid">.</span>
-        <span class="hasAgent" v-if="registration.agentUid === getters.user().uid"> I ditt team</span>
-        <span class="hasAgent" v-else-if="registration.agentUid"> {{getRegistrationTeamName(registration.agentUid)}} </span>
         <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
           {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}} (+{{registration.participants && registration.participants.length || 0}})
         </router-link>
         <span class="" v-if="registration.removedBy">Fjernet av {{registration.removedBy}} </span>
         <span class="edited_tag">{{registration.displayEdited}} </span>
-        <span v-if="getters.user().uid === constants.adminUid" v-tooltip:top="'Intern sekretariat-kommentar'">{{registration.status}}</span>
+
+        <div style="text-align: right">
+          <span v-if="registration.agentUid === getters.user().uid"> 
+            Er i ditt team <router-link to="" v-if="registration.ownerUid === getters.user().uid">Løsriv</router-link>
+          </span>
+          <span class="hasAgent" v-else-if="registration.agentUid"> 
+            {{getRegistrationTeamName(registration.agentUid)}} 
+          </span>
+          <span v-else-if="isTeamLead"> <!--har tilgang på tross av agenrollen, v-else-if, se over-->
+            Ikke med i teamet ditt <router-link to="">Ta med</router-link>
+          </span>
+        </div>
+
+        <span v-if="isSentralAdmin" v-tooltip:top="'Intern sekretariat-kommentar'">{{registration.status}}</span>
       </ul>
     </li>
 
@@ -124,6 +135,12 @@
     computed: {
       getters: () => getters,
       constants: () => constants,
+      isSentralAdmin(){
+        return this.getters.user().uid === this.constants.adminUid
+      },
+      isTeamLead() {
+        return this.teams && this.teams.map(t => t.ownerUid).includes(getters.user().uid)
+      },
       registrationsReadOnly() {
         return this.registrationsWithAgentAccess.filter(r => r.ownerUid !== getters.user().uid);
       },
@@ -181,7 +198,7 @@
       },
     },
     firestore () {
-      if(getters.user().uid === constants.adminUid){
+      if(this.isSentralAdmin){
         return {
           registrations: db.collection("registrations"),
           // tiems: db.collection("tiems") // disable BEFORE commit
