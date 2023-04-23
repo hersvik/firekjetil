@@ -15,6 +15,11 @@
       <br>
       <router-link :to="'/registrering/agent/'+getters.user().uid">
         😃 Bruk lenken til å registrere deg selv også
+      </router-link><br><br>
+
+      Se på dine og ditt team sine 
+      <router-link to="/regs">
+        Påmeldinger
       </router-link>
     </div>
     <div v-else>
