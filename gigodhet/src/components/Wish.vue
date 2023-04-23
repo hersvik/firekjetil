@@ -382,7 +382,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
             .then(() => {
               this.doneSavePart1 = true;
               this.suppressWatchOnce = true;
-              alert("✅ Lagret!\n\nHvis du vet om noen som blir påvirket av endringene, si gjerne ifra til dem om du gidder 😃")
+              alert("✅ Lagret!\n\nHvis du vet om noen som blir påvirket av endringene, si gjerne ifra til dem, om du gidder 😃")
               if (this.doneSavePart2) {
                 this.whenAllSaved(isStaying);
               }

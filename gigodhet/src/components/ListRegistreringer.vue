@@ -58,10 +58,10 @@
     <li class="list-group">
       <ul class="list-group-item highlight_background_optimistic">
         + <router-link :to="{path: 'registrering'}">
-          Lag ny påmelding 
+          Ny påmelding 
         </router-link>
           <span v-if="isTeamLead" style="color: hwb(138deg 37% 34%); font-style: italic;">
-            (NB: For ditt eget team se knapper over)
+            se også grønne knapper øverst, "Ditt team"
           </span>
       </ul>
       <ul v-if="isSentralAdmin" class="list-group-item">
@@ -82,13 +82,13 @@
 
         <div style="text-align: right">
           <span v-if="registration.agentUid === getters.user().uid"> 
-            Er i ditt team <router-link to="" v-if="registration.ownerUid === getters.user().uid">Løsriv</router-link>
+            Er i ditt team <a href="#" @click="detachFromTeam(registration.id, `${registration.primaryPerson.firstName} ${registration.primaryPerson.lastName}`)" v-if="registration.ownerUid === getters.user().uid">Løsriv</a>
           </span>
           <span class="hasAgent" v-else-if="registration.agentUid"> 
             {{getRegistrationTeamName(registration.agentUid)}} 
           </span>
           <span v-else-if="isTeamLead"> <!--har tilgang på tross av agenrollen, v-else-if, se over-->
-            Ikke med i teamet ditt <router-link to="">Ta med</router-link>
+            Ikke med i teamet ditt <a href="#" @click="attachToTeam(registration.id, `${registration.primaryPerson.firstName} ${registration.primaryPerson.lastName}`)">Ta med</a>
           </span>
         </div>
 
@@ -220,6 +220,30 @@
         let teamObject = this.teams.filter(t => t.ownerUid === agentUid)[0];
         let teamName = teamObject && teamObject.teamName || "";
         return teamName;
+      },
+      attachToTeam(regId, regDisplayName){
+        db.collection('registrations')
+            .doc(regId)
+            .update({agentUid: this.getters.user().uid})
+            .then(() => {
+              console.log("Påmelding", regId, "- attached OK")
+              alert("Du la til påmeldingen fra "+regDisplayName+" i teamet ditt. Du kan endre tilbake i listen Påmeldinger her")
+            })
+            .catch(function(error){
+              alert("Kunne ikke lagre. ("+error+")")
+            });
+      },
+      detachFromTeam(regId, regDisplayName){
+        db.collection('registrations')
+            .doc(regId)
+            .update({agentUid: ""})
+            .then(() => {
+              console.log("Påmelding", regId, "- detached OK")
+              alert("Du løsrev påmeldingen fra "+regDisplayName+" fra teamet ditt. Du kan endre tilbake i listen Påmeldinger her")
+            })
+            .catch(function(error){
+              alert("Kunne ikke lagre. ("+error+")")
+            });
       },
       onTiemEdit(tiemId){
         clearTimeout(this.whiteTimerId);
