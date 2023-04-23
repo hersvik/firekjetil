@@ -82,13 +82,13 @@
 
         <div style="text-align: right">
           <span v-if="registration.agentUid === getters.user().uid"> 
-            Er i ditt team <a href="#" @click="detachFromTeam(registration.id, `${registration.primaryPerson.firstName} ${registration.primaryPerson.lastName}`)" v-if="registration.ownerUid === getters.user().uid">Løsriv</a>
+            Er i ditt team <a href="#" @click.prevent="detachFromTeam(registration.id, `${registration.primaryPerson.firstName} ${registration.primaryPerson.lastName}`)" v-if="registration.ownerUid === getters.user().uid">Løsriv</a>
           </span>
           <span class="hasAgent" v-else-if="registration.agentUid"> 
             {{getRegistrationTeamName(registration.agentUid)}} 
           </span>
           <span v-else-if="isTeamLead"> <!--har tilgang på tross av agenrollen, v-else-if, se over-->
-            Ikke med i teamet ditt <a href="#" @click="attachToTeam(registration.id, `${registration.primaryPerson.firstName} ${registration.primaryPerson.lastName}`)">Ta med</a>
+            Ikke med i teamet ditt <a href="#" @click.prevent="attachToTeam(registration.id, `${registration.primaryPerson.firstName} ${registration.primaryPerson.lastName}`)">Ta med</a>
           </span>
         </div>
 
