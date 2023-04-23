@@ -7,7 +7,7 @@
       <br>
       Snakk med "Godhetsagenten" i din huskirke for å eventuelt få en slik lenke.<br>
       <h5 style="margin-top: 1em;">Ikke med i huskirke</h5>
-      <button class="btn btn-primary" @click="confirmedGeneralRegistration=true">Start påmelding <em>uten</em> huskirke</button>
+      <button class="btn btn-primary" @click="confirmedGeneralRegistration=true">Start vanlig påmelding, uten huskirke</button>
     </div>
     <div v-else>
        Bra, trykk på den lenken du har fått fra din huskirke (igjen) nå.

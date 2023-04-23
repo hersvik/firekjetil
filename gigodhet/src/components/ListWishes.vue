@@ -41,7 +41,7 @@
       <ul v-for="(wish) in chronologicalWishes" :key="wish.id" class="list-group-item" :class="{done: wish.done}">
         <span class="dot" v-if="wish.isMostRecentEdited"></span>
         {{wish.created.toDate().toLocaleDateString()}}<span v-if="wish.ownerUid === getters.user().uid">.</span>
-        <span v-if="wish.done"><strong>Utført </strong></span>
+        <span v-if="wish.done"><strong> Utført </strong></span>
         <router-link :to="{name: 'endreWish', params:{id: wish.id} }">
           <em> {{wish.target.address || "ingen adresse"}}</em>: <strong>{{wish.title || "(mangler overskrift)"}}</strong>   {{wish.target.firstName || wish.target.lastName ? "for " + wish.target.firstName + " " + wish.target.lastName : ""}}
         </router-link>
