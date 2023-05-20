@@ -95,7 +95,7 @@
         <span v-if="isSentralAdmin" v-tooltip:top="'Intern sekretariat-kommentar'">{{registration.status}}</span>
       </ul>
     </li>
-
+    <router-link to="/countregs" v-if="isSentralAdmin">Telling</router-link><br><br>
     <!--<div style="opacity: 0.1;">{{getters.user().uid}}</div>Temporary show Uid-->
   </div>
 </template>

@@ -16,6 +16,11 @@ const router = new VueRouter({
         meta: {noScroll: true}
     },
     {
+        path: "/countregs",
+        component: () => import('./components/CountRegistreringer.vue'),
+        meta: {noScroll: true}
+    },
+    {
         path: "/regs/all",
         props: {includeHasTeam: true},
         component: () => import("./components/ListRegistreringer.vue"),
