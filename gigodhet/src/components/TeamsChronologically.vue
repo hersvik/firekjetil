@@ -2,12 +2,12 @@
   <div class="container container_under_nav">
     <a @click="$router.go(-1)">Tilbake</a><br><br>
 
-    <ul v-for="team in chronologicalTeams" :key="team.ownerUid">
-      <li>
-        {{ team.created && team.created.toDate().toLocaleDateString() }} 
+    <p style="color: silver">Liste-forklaring: dato team opprettet, <strong>Antall oppdrag</strong>, lenke til teamets info</p>
+    <div v-for="team in chronologicalTeams" :key="team.ownerUid" style="margin: 0.5em">
+        {{ team.created && team.created.toDate().toLocaleDateString() }}
+        <strong>{{ wishes.filter(w => w.agentUid === team.ownerUid).length }}</strong>&nbsp;
         <router-link :to="{name: 'dashTeamid', params: {teamid: team.ownerUid}}">{{ team.teamName }}</router-link>
-      </li>
-    </ul>
+    </div>
 
   </div>
 </template>
@@ -27,6 +27,7 @@
     data () {
       return {
         teams: [],
+        wishes: [],
       }
     },
     computed: {
@@ -40,6 +41,7 @@
     firestore () {
         return {
           teams: db.collection("teams").orderBy("teamName", "asc"),
+          wishes: db.collection("wishes"),
         };
     },
     watch: {

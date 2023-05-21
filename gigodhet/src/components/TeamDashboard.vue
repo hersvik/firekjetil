@@ -3,12 +3,13 @@
     <a @click="$router.go(-1)">Tilbake</a><br><br>
 
     <div class="filter_checkboxes" style="color: silver">
-      <input type="checkbox" v-model="filterDays[0]"><label>må ha folk mandag</label><br>
-      <input type="checkbox" v-model="filterDays[1]"><label>må ha folk tirsdag</label><br>
-      <input type="checkbox" v-model="filterDays[2]"><label>må ha folk onsdag</label><br>
-      <input type="checkbox" v-model="filterDays[3]"><label>må ha folk torsdag</label><br>
-      <input type="checkbox" v-model="filterDays[4]"><label>må ha folk fredag</label><br>
-      nb, filterne over ignorerer "meddeltagere"<br><br>
+      Filtre for "Velg team å se på"<br>
+      <input type="checkbox" v-model="filterDays[0]"><label>har folk mandag</label><br>
+      <input type="checkbox" v-model="filterDays[1]"><label>har folk tirsdag</label><br>
+      <input type="checkbox" v-model="filterDays[2]"><label>har folk onsdag</label><br>
+      <input type="checkbox" v-model="filterDays[3]"><label>har folk torsdag</label><br>
+      <input type="checkbox" v-model="filterDays[4]"><label>har folk fredag</label><br>
+      nb, filterne over ignorerer "meddeltagere" og barn<br><br>
 
       Velg team å se på:
     </div>
