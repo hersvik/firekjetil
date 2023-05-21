@@ -47,7 +47,9 @@
           <option value="">-  Uten team -</option>
           <option v-for="(team, idx) in teams" :key="idx" :value="team.ownerUid">{{team && team.teamName}}</option>
         </select>
-
+        <router-link :to="{name: 'dashTeamid', params:{teamid: wish.agentUid}}" style="background-color: white">{{teamName}} </router-link>
+        <br>
+        <br>
         <span style="color: silver">(Sett tilside <input type="checkbox" v-model="wish.isDiscarded" :disabled="!!wish.agentUid">)</span>
       </div>
 
