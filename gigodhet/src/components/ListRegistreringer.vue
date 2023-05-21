@@ -85,7 +85,7 @@
             Er i ditt team <a href="#" @click.prevent="detachFromTeam(registration.id, `${registration.primaryPerson.firstName} ${registration.primaryPerson.lastName}`)" v-if="registration.ownerUid === getters.user().uid">Løsriv</a>
           </span>
           <span class="hasAgent" v-else-if="registration.agentUid"> 
-            {{getRegistrationTeamName(registration.agentUid)}} 
+            <router-link :to="{name: 'dashTeamid', params:{teamid: registration.agentUid}}" style="color: black;">{{getRegistrationTeamName(registration.agentUid)}} </router-link>
           </span>
           <span v-else-if="isTeamLead"> <!--har tilgang på tross av agenrollen, v-else-if, se over-->
             Ikke med i teamet ditt <a href="#" @click.prevent="attachToTeam(registration.id, `${registration.primaryPerson.firstName} ${registration.primaryPerson.lastName}`)">Ta med</a>

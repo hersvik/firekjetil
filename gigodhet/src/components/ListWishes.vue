@@ -46,9 +46,12 @@
           <em> {{wish.target.address || "ingen adresse"}}</em>: <strong>{{wish.title || "(mangler overskrift)"}}</strong>   {{wish.target.firstName || wish.target.lastName ? "for " + wish.target.firstName + " " + wish.target.lastName : ""}}
         </router-link>
         <span class="edited_tag">{{wish.displayEdited}} </span>
-        <span v-if="getters.user().uid === constants.adminUid"><strong><router-link :to="{name: 'dashTeamid', params:{teamid: wish.agentUid}}" style="color: black">{{getTildeltTeamName(wish.agentUid)}} </router-link> </strong></span>
-        <span v-if="getters.user().uid === wish.agentUid"><strong> Tildelt Ditt team </strong></span>
+
         <span v-if="getters.user().uid === constants.adminUid" v-tooltip:top="'Admin-status (intern)'">{{wish.status}}</span>
+        <div style="text-align: right">
+          <span v-if="getters.user().uid === constants.adminUid"><strong><router-link :to="{name: 'dashTeamid', params:{teamid: wish.agentUid}}" style="color: black">{{getTildeltTeamName(wish.agentUid)}} </router-link> </strong></span>
+          <span v-if="getters.user().uid === wish.agentUid"><strong> Tildelt Ditt team </strong></span>
+        </div>
       </ul>
     </li>
 
