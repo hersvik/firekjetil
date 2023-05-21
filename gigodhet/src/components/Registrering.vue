@@ -35,8 +35,8 @@
           Intern kommentar (...husk å sende)
         </label>
         <input v-model="registration.status" class="form-control" type="text">
+        <div style="color: black">{{ registration.status }}</div> 
         <br>
-
         <label>
           Team
         </label>

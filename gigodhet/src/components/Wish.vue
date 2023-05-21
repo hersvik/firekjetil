@@ -22,6 +22,7 @@
             Intern status (husk Send)
           </label>
           <input v-model="wish.status" class="form-control" type="text">
+          <div style="color: black">{{ wish.status }}</div> 
         </div>
 
         <div class="form-group">
