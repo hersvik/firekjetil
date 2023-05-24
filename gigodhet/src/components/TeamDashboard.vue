@@ -28,8 +28,8 @@
         </option>
     </select>
 
-    <h1>Team status/link</h1>
-    <a :href="externalUrl" target="_blank">{{ externalUrl }}</a>
+    <h1>Team status</h1>
+    {{ externalUrl }}
 
     <template>
       <h1>Deltagere</h1>
@@ -67,8 +67,8 @@
       </ul>
     </li>
 
-    <h1>Endre status/link</h1>
-    <input type="text" v-model="externalUrl"><button :class="{ saved: isSaved}" @click="saveExternalLink">Lagre link</button>
+    <h1>Endre status</h1>
+    <input type="text" v-model="externalUrl"><button :class="{ saved: isSaved}" @click="saveExternalLink">Lagre status</button>
 
   </div>
 </template>

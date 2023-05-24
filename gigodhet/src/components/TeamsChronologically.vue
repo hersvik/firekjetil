@@ -7,6 +7,7 @@
         {{ team.created && team.created.toDate().toLocaleDateString() }}
         <strong>{{ wishes.filter(w => w.agentUid === team.ownerUid).length }}</strong>&nbsp;
         <router-link :to="{name: 'dashTeamid', params: {teamid: team.ownerUid}}">{{ team.teamName }}</router-link>
+        <div v-if="team.externalLink">{{ team.externalLink }}</div>
     </div>
 
   </div>
