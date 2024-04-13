@@ -4,7 +4,7 @@
 
     <div class="jumbotron" :class="{jumbotron__logged_in: getters.user().uid}">
       <h1 class="display-4">Godhet Stavanger &ndash; 2024</h1><!--remember year duplicated in wish.event and reg.event-->
-      <p class="lead"><strong>Uke 21</strong> &ndash; fra mandag 22. mai</p>
+      <p class="lead">27. - 31. mai</p>
       <p class="lead">Vi gjør godhet <strong>sammen</strong></p>
       <hr class="my-4">
 
