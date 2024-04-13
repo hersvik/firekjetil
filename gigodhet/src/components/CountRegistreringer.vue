@@ -5,7 +5,7 @@
     <h1>
       Antall påmeldte 
     </h1>
-
+    * Middag onsdag er med i påmeldingen, men summeres ikke på denne visningen ennå. 
     <li class="list-group">
       <ul class="list-group-item"  style="white-space: pre;">{{ JSON.stringify(counts, null, 4) }}
       </ul>

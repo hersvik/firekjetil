@@ -102,6 +102,9 @@
           <div class="day-checkbox">
             <input type="checkbox" v-model="registration.primaryPerson.wantDinnerTuesday"> Middag på IMI tirsdag
           </div>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="registration.primaryPerson.wantDinnerWednesday"> Middag på IMI onsdag
+          </div>
 
           <div class="day-checkbox" style="margin-top: 1em">
             <input type="checkbox" v-model="registration.primaryPerson.glutenFree"> Trenger glutenfri mat
@@ -200,6 +203,10 @@
           <div class="day-checkbox">
             <input type="checkbox" v-model="participant.wantDinnerTuesday"> Middag på imi tirsdag
           </div>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="participant.wantDinnerWednesday"> Middag på imi onsdag
+          </div>
+
 
           <div class="day-checkbox" style="margin-top: 1em">
             <input type="checkbox" v-model="participant.glutenFree"> Trenger glutenfri mat
