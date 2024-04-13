@@ -10,7 +10,7 @@
       </router-link>
         - eller -
       <router-link :to="'/registrering/agent/'+getters.user().uid" class="btn btn-outline-secondary btn_green_outline">
-        Meld på noen
+        Meld på noen til ditt team
       </router-link>
       
       <div v-for="(nVariableNotUsed, index) in constants.campaignDays.length" :key="index">
@@ -56,12 +56,15 @@
       <input type="text" v-model="tiem.teamName" @input="onTiemEdit(tiem.id)" ref="tieminput">
     </div-->
     <li class="list-group">
-      <ul class="list-group-item highlight_background_optimistic">
-        + <router-link :to="{path: 'registrering'}">
+      <ul class="list-group-item">
+        <router-link tag="button" class="btn btn-primary" :to="{path: 'registrering'}">
           Ny påmelding 
         </router-link>
-          <span v-if="isTeamLead" style="color: hwb(138deg 37% 34%); font-style: italic;">
-            se også grønne knapper øverst, "Ditt team"
+        <span v-if="isTeamLead">
+          (meld på andre deltagere)
+            <span style="color: hwb(138deg 37% 34%); font-style: italic;">
+              se også grønne knapper øverst, "Ditt team"
+            </span>
           </span>
       </ul>
       <ul v-if="isSentralAdmin" class="list-group-item">

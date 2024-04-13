@@ -16,7 +16,7 @@
 
     <li class="list-group">
       <ul class="list-group-item">
-        + <router-link :to="{path: 'wish'}">
+        <router-link tag="button" class="btn btn-primary" :to="{path: 'wish'}">
           Foreslå nytt oppdrag
         </router-link>
       </ul>
@@ -43,7 +43,7 @@
         {{wish.created.toDate().toLocaleDateString()}}<span v-if="wish.ownerUid === getters.user().uid">.</span>
         <span v-if="wish.done"><strong> Utført </strong></span>
         <router-link :to="{name: 'endreWish', params:{id: wish.id} }">
-          <em> {{wish.target.address || "ingen adresse"}}</em>: <strong>{{wish.title || "(mangler overskrift)"}}</strong>   {{wish.target.firstName || wish.target.lastName ? "for " + wish.target.firstName + " " + wish.target.lastName : ""}}
+          <em> {{wish.target.address || "ingen adresse"}}</em>: <strong>{{wish.title || "(mangler overskrift)"}}</strong>   {{wish.target.firstName || wish.target.lastName ? "for " + (wish.target.firstName || "") + " " + (wish.target.lastName || "") : ""}}
         </router-link>
         <span class="edited_tag">{{wish.displayEdited}} </span>
 
