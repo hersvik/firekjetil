@@ -61,9 +61,9 @@
           Ny påmelding 
         </router-link>
         <span v-if="isTeamLead">
-          (meld på andre deltagere)
+          *meld på andre utenfor teamet ditt.
             <span style="color: hwb(138deg 37% 34%); font-style: italic;">
-              se også grønne knapper øverst, "Ditt team"
+              Se også grønne knapper øverst, "Ditt team"
             </span>
           </span>
       </ul>
