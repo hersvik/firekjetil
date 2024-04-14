@@ -14,13 +14,13 @@
     <div class="jumbotron bg-light rounded-lg" style="border:solid 1px #eee; margin: 1em;">
       <a href="#how_why" id="how_why" @click="showWhy = !showWhy">Hvorfor skal jeg logge inn?</a>
       <div v-if="showWhy">
-        Du logger inn for at det skal være mulig for deg å gjøre endringer etter innsending, om du skulle foretrekke. Mest sannsynlig forblir du pålogget på telefonen/enheten din, så det er kjapt og enkelt å komme tilbake (via enten godhetstavanger.no eller godhet.no). Det primære målet er at den nærmeste teamlederen/godhetsagenten din får oversikt over deltagere begrenset til sitt team, og kan oppdatere oversikten på dine vegne også. Registreringene her gjør det også lettere dersom teamet trenger assistanse fra sekretariatet til enten å få flere hender på oppdrag, eller å skaffe et oppdrag.   
+        Du logger inn for at det skal være mulig for deg å gjøre endringer etter innsending, om du skulle foretrekke (ikke krise om du glemmer). Mest sannsynlig forblir du pålogget på telefonen/enheten din, så det er kjapt og enkelt å komme tilbake (via enten godhetstavanger.no eller godhet.no). Det primære målet er at den nærmeste teamlederen/godhetsagenten din får oversikt over deltagere begrenset til sitt team, og kan oppdatere oversikten på dine vegne også. Registreringene her gjør det også lettere dersom teamet trenger assistanse fra sekretariatet til enten å få flere hender på oppdrag, eller å skaffe et oppdrag.   
       </div>
       <br>
       <br>
-      <a href="#how_forget" id="how_forget" @click="showWhatIfForget = !showWhatIfForget">Hva om jeg glemmer passordet mitt?</a>
+      <a href="#how_forget" id="how_forget" @click="showWhatIfForget = !showWhatIfForget">Hva om jeg ikke har passord?</a>
       <div v-if="showWhatIfForget">
-        Du trenger ikke huske passordet ditt, det er bare bonus faktisk, så lenge epost-adressen er riktig vel å merke. Systemet sender deg hjelp til å logge inn igjen hvis du ber om det. Du forblir vanligvis pålogget på telefonen/enheten din, så det vil som regel ikke være et behov uansett.
+        Første gang dikter du opp et passord. Hvis du skal hente/redigere opplysningene dine og du er på en annen telefon/maskin enn den som er logget inn, må du huske hvilken epost-adresse du logger inn med her.  Du er ikke nødt til å huske passordet ditt dersom epost-adressen er ekte og riktig. Da kan systemet sende deg hjelp til å logge inn igjen hvis du ber om det. Du forblir vanligvis pålogget på telefonen/enheten din, så det vil som regel ikke være et behov for passord uansett.
       </div>
       <br>
       <br>
