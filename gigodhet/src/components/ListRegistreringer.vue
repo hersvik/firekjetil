@@ -57,7 +57,7 @@
     </div-->
     <li class="list-group">
       <ul class="list-group-item">
-        <router-link tag="button" class="btn btn-primary" :to="{path: 'registrering'}">
+        <router-link tag="button" class="btn btn-primary" :to="{path: '/registrering'}">
           Ny påmelding 
         </router-link>
         <span v-if="isTeamLead">

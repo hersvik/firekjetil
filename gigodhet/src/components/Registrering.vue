@@ -94,18 +94,20 @@
 
         <div>
           <label>
-            <strong>{{registration.primaryPerson.firstName || "Jeg"}}</strong> ønsker å spise:
+            <strong>{{registration.primaryPerson.firstName || "Jeg"}}</strong> ønsker å:
           </label>
           <div class="day-checkbox">
-            <input type="checkbox" v-model="registration.primaryPerson.wantDinnerMonday"> Middag på IMI mandag
+            <input type="checkbox" v-model="registration.primaryPerson.wantDinnerMonday"> Spise på IMI mandag
           </div>
           <div class="day-checkbox">
-            <input type="checkbox" v-model="registration.primaryPerson.wantDinnerTuesday"> Middag på IMI tirsdag
+            <input type="checkbox" v-model="registration.primaryPerson.wantDinnerTuesday"> Spise på IMI tirsdag
           </div>
           <div class="day-checkbox">
-            <input type="checkbox" v-model="registration.primaryPerson.wantDinnerWednesday"> Middag på IMI onsdag
+            <input type="checkbox" v-model="registration.primaryPerson.wantDinnerWednesday"> Spise på IMI onsdag
           </div>
-
+          <div class="mt-2" style="color: #6c757d">
+          "10 kr for pølse. 50kr for middag og ikke mer enn 200kr pr familie"
+          </div>
           <div class="day-checkbox" style="margin-top: 1em">
             <input type="checkbox" v-model="registration.primaryPerson.glutenFree"> Trenger glutenfri mat
           </div>
@@ -195,16 +197,16 @@
       <br>
       <div>
           <label>
-            <strong>{{participant.firstName || "Denne deltageren"}}</strong> ønsker å spise:
+            <strong>{{participant.firstName || "Denne deltageren"}}</strong> ønsker å:
           </label>
           <div class="day-checkbox">
-            <input type="checkbox" v-model="participant.wantDinnerMonday"> Middag på imi mandag
+            <input type="checkbox" v-model="participant.wantDinnerMonday"> Spise på imi mandag
           </div>
           <div class="day-checkbox">
-            <input type="checkbox" v-model="participant.wantDinnerTuesday"> Middag på imi tirsdag
+            <input type="checkbox" v-model="participant.wantDinnerTuesday"> Spise på imi tirsdag
           </div>
           <div class="day-checkbox">
-            <input type="checkbox" v-model="participant.wantDinnerWednesday"> Middag på imi onsdag
+            <input type="checkbox" v-model="participant.wantDinnerWednesday"> Spise på imi onsdag
           </div>
 
 
@@ -220,7 +222,7 @@
     </div>
 
     <div class="form-group mb-5">
-      <button class="btn btn-light" @click="addParticipant">+ Legg til meddeltager</button>
+      <button class="btn btn-light" @click="addParticipant">+ Legg til ny meddeltager</button>
     </div>
 
     <div class="form-group mt-4 mb-5">
