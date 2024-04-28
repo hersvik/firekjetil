@@ -107,12 +107,22 @@
             <input type="checkbox" v-model="wish.activeFriday"> Fredag
           </div>
           <br>
-          <span 
+          <label>
+            <strong>Ønsker henting</strong>:
+          </label>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="wish.bioTuesday"> Hageavfall tirsdag 28.mai
+          </div>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="wish.bioFriday"> Hageavfall fredag 31.mai
+          </div>
+          <br>
+          <div 
             :style= "[isEdited ? {'visibility': 'visible'} : {'visibility': 'hidden'}]"
             style="color: #495057;"
           >
-          🟠 Husk å <em>sende</em> ↓
-          </span>
+            🟠 Husk å <em>sende</em> skjemaet ↓
+          </div>
       </div>
 
       <div class="form-group mt-4">
