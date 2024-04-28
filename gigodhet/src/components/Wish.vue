@@ -59,6 +59,14 @@
           Kort overskrift
         </label>
         <input v-model="wish.title" class="form-control" type="text">
+        <span 
+          style="color: #495057; 
+          padding-left: 1em;
+          background-color: #f8f9fa !important;
+          display: block;"
+        >
+          {{ wish.target.address }}
+        </span>
       </div>
 
       <div v-if="!wish.agentUid" class="form-group form-check mt-4 mb-5">
@@ -117,7 +125,7 @@
         </div>
         <div class="form-group">
             <label>
-              Adresse, postnummer og -sted
+              Innmelders kontaktinfo (evt adresse/bydel)
             </label>
             <input v-model="wish.submitter.address" class="form-control" placeholder="" type="text" />
         </div>
@@ -153,7 +161,7 @@
         </div>
         <div class="form-group">
             <label>
-              Adresse, postnummer og -sted
+              Adresse📍 og bydel for oppdraget
             </label>
             <input v-model="wish.target.address" class="form-control" placeholder="" type="text" />
         </div>
