@@ -81,6 +81,40 @@
         </label>
       </div>
 
+      <div 
+        v-if="wish.selfTask || (getters.user().uid == wish.agentUid) || (getters.user().uid === constants.adminUid)"
+        style="
+          background-color: #fcfcdd; 
+          display: block;
+          padding: 1em"
+      >
+          <label>
+            <strong>Plan arbeidsdager</strong>:
+          </label>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="wish.activeMonday"> Mandag
+          </div>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="wish.activeTuesday"> Tirsdag
+          </div>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="wish.activeWednesday"> Onsdag
+          </div>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="wish.activeThursday"> Torsdag
+          </div>
+          <div class="day-checkbox">
+            <input type="checkbox" v-model="wish.activeFriday"> Fredag
+          </div>
+          <br>
+          <span 
+            :style= "[isEdited ? {'visibility': 'visible'} : {'visibility': 'hidden'}]"
+            style="color: #495057;"
+          >
+          🟠 Husk å <em>sende</em> ↓
+          </span>
+      </div>
+
       <div class="form-group mt-4">
         <label>
           Beskrivelse av arbeid
@@ -510,4 +544,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
  .fade_confirmation_label{
   opacity: 50%;
  }
+  .day-checkbox{
+    margin-top: 0.3em;
+  }
 </style>
