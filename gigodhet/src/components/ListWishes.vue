@@ -16,7 +16,7 @@
 
     <li class="list-group">
       <ul class="list-group-item">
-        <router-link tag="button" class="btn btn-primary" :to="{path: 'wish'}">
+        <router-link tag="button" class="btn btn-primary" :to="{path: '/wish'}">
           Foreslå nytt oppdrag
         </router-link>
       </ul>
