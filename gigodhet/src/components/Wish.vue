@@ -51,6 +51,14 @@
         <br>
         <br>
         <span style="color: silver">(Sett tilside <input type="checkbox" v-model="wish.isDiscarded" :disabled="!!wish.agentUid">)</span>
+        <br>
+        <br>
+        <em>
+          Siste endring - alle brukere:
+        </em>
+        <div v-for="(editedValue, nameKey) in wish.lastEditedEachUser" :key="nameKey">
+          {{ editedValue && editedValue.toDate().toLocaleDateString() }}, {{ editedValue && editedValue.toDate().toLocaleTimeString() }} - {{ nameKey}}
+        </div>
       </div>
 
 
@@ -255,8 +263,19 @@
 
     <br />
     Du kan enkelt oppdatere innholdet ved behov etter innsending.
+    <div v-if="getters.user().uid === constants.adminUid">
+      <strong>Sekretariat: </strong>
+      <input v-model="adminNick" placeholder="Send: skriv fornavnet ditt her først" size="35">
+    </div>
     <div class="form-group pb-5">
-      <button class="btn btn-primary" @click="save(false)" :disabled="!this.isEdited">Send</button>
+      <button 
+        class="btn btn-primary" 
+        @click="save(false)" 
+        :disabled="!this.isEdited"
+        v-if="adminNick || (getters.user().uid !== constants.adminUid)"
+    >
+      Send
+    </button>
     </div>
 
   </div>
@@ -313,6 +332,7 @@
         isShowingEmailPreview: false,
         watchedWish: {},
         teams: [],
+        adminNick: "",
       }
     },
     firestore () {
@@ -426,6 +446,10 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
         this.wish.edited = new Date();
         this.wish.lastUpdatedBy = getters.user().displayName;
 
+        let lastEditedEachUser = this.wish.lastEditedEachUser || {};
+        let adminNick = this.adminNick && "-"+this.adminNick.toLowerCase();
+        lastEditedEachUser[getters.user().displayName + adminNick] = new Date();
+        this.wish.lastEditedEachUser = lastEditedEachUser;
 
         if (this.id) {
           const wish= { ...this.wish} // to exclude non-enumerable "id"-property
