@@ -8,10 +8,11 @@
 
     <div  class="sentrer_hjemlink">
       Tilbake til
-      <router-link to="/">Godhetstavanger.no</router-link>
+      <router-link to="/">Godhetstavanger.no</router-link> hovedside
     </div>
 
     <div class="jumbotron bg-light rounded-lg" style="border:solid 1px #eee; margin: 1em;">
+    <h2>Godhet Stavanger</h2>
       <a href="#how_why" id="how_why" @click="showWhy = !showWhy">Hvorfor skal jeg logge inn?</a>
       <div v-if="showWhy">
         Du logger inn for at det skal være mulig for deg å gjøre endringer etter innsending, om du skulle foretrekke (ikke krise om du glemmer). Mest sannsynlig forblir du pålogget på telefonen/enheten din, så det er kjapt og enkelt å komme tilbake (via enten godhetstavanger.no eller godhet.no). Det primære målet er at den nærmeste teamlederen/godhetsagenten din får oversikt over deltagere begrenset til sitt team, og kan oppdatere oversikten på dine vegne også. Registreringene her gjør det også lettere dersom teamet trenger assistanse fra sekretariatet til enten å få flere hender på oppdrag, eller å skaffe et oppdrag.   
