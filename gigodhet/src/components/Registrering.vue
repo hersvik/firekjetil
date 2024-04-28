@@ -121,7 +121,7 @@
           <label>
             Tlf.
           </label>
-          <input v-model="registration.primaryPerson.phone" class="form-control" placeholder="" type="number" />
+          <input v-model="registration.primaryPerson.phone" class="form-control" placeholder="" type="text" />
         </div>
         <div class="form-group">
           <label>

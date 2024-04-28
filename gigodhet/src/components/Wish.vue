@@ -149,7 +149,7 @@
           <label>
             Tlf.
           </label>
-          <input v-model="wish.submitter.phone" class="form-control" placeholder="" type="number" />
+          <input v-model="wish.submitter.phone" class="form-control" placeholder="" type="text" />
         </div>
         <div class="form-group">
           <label>
@@ -185,7 +185,7 @@
           <label>
             Tlf.
           </label>
-          <input v-model="wish.target.phone" class="form-control" placeholder="" type="number" />
+          <input v-model="wish.target.phone" class="form-control" placeholder="" type="text" />
         </div>
         <div class="form-group">
           <label>
