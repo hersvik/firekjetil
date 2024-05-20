@@ -53,12 +53,14 @@
         <span style="color: silver">(Sett tilside <input type="checkbox" v-model="wish.isDiscarded" :disabled="!!wish.agentUid">)</span>
         <br>
         <br>
-        <em>
-          Siste endring - alle brukere:
-        </em>
-        <div v-for="(editedValue, nameKey) in wish.lastEditedEachUser" :key="nameKey">
-          {{ editedValue && editedValue.toDate().toLocaleDateString() }}, {{ editedValue && editedValue.toDate().toLocaleTimeString() }} - {{ nameKey}}
+        <strong>Kun siste endring</strong> (for hvert navn):
+        <div v-for="(rec) in sortedLastEditedEachUser" :key="rec.name">
+          {{ rec.time && rec.time.toDate().toLocaleDateString() }}, {{ rec.time && rec.time.toDate().toLocaleTimeString() }} - {{ rec.name}}
         </div>
+        <span class="dot" v-if="sortedLastEditedEachUser.length" style="
+                              position: relative;
+                              bottom: 1.5em;
+                              left: -1.2em;" />
       </div>
 
 
@@ -352,6 +354,12 @@
       constants() {
         return constants;
       },
+      sortedLastEditedEachUser () {
+        let obj = this.wish.lastEditedEachUser || {};
+        let arr = Object.keys(obj).map((key) => ({"name": key, "time": obj[key]}));
+ 
+        return arr.toSorted((a,b) => a.time - b.time);
+      },
       sortedRegistrations() {
         if (!this || !this.registrations) {
           return;
@@ -447,7 +455,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
         this.wish.lastUpdatedBy = getters.user().displayName;
 
         let lastEditedEachUser = this.wish.lastEditedEachUser || {};
-        let adminNick = this.adminNick && "-"+this.adminNick.toLowerCase();
+        let adminNick = this.adminNick && "-"+this.adminNick.toLowerCase().trim();
         lastEditedEachUser[getters.user().displayName + adminNick] = new Date();
         this.wish.lastEditedEachUser = lastEditedEachUser;
 
@@ -580,5 +588,13 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
  }
   .day-checkbox{
     margin-top: 0.3em;
+  }
+  .dot {
+    height: 0.8em;
+    width: 0.8em;
+    background-color: rgb(148, 207, 252);
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 0.2em;
   }
 </style>
