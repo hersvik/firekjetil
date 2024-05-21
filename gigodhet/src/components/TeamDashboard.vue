@@ -3,15 +3,15 @@
     <a @click="$router.go(-1)">Tilbake</a><br><br>
 
     <div class="filter_checkboxes" style="color: silver">
-      Filtre for "Velg team å se på"<br>
+      <p><em>Filtre for "<strong>Velg team å se på</strong>"</em></p>
       <input type="checkbox" v-model="filterDays[0]"><label>har folk mandag</label><br>
       <input type="checkbox" v-model="filterDays[1]"><label>har folk tirsdag</label><br>
       <input type="checkbox" v-model="filterDays[2]"><label>har folk onsdag</label><br>
       <input type="checkbox" v-model="filterDays[3]"><label>har folk torsdag</label><br>
       <input type="checkbox" v-model="filterDays[4]"><label>har folk fredag</label><br>
-      nb, filterne over ignorerer "meddeltagere" og barn<br><br>
+      NB: filterne over ignorerer "meddeltagere" og barn<br><br>
 
-      Velg team å se på:
+      <strong>Velg team å se på</strong>:
     </div>
     <select v-model="selectedTeamUid" class="custom-select">
       <option value="">-  Velg team -</option>
@@ -24,7 +24,13 @@
           || filterDays[3] && !teamDays[team.ownerUid][3]
           || filterDays[4] && !teamDays[team.ownerUid][4]
         ">
-          {{team.teamName}}
+          <span v-if="
+              !(filterDays[0] && !teamDays[team.ownerUid][0]
+          || filterDays[1] && !teamDays[team.ownerUid][1]
+          || filterDays[2] && !teamDays[team.ownerUid][2]
+          || filterDays[3] && !teamDays[team.ownerUid][3]
+          || filterDays[4] && !teamDays[team.ownerUid][4]
+              )">⏹️ </span>{{team.teamName}}
         </option>
     </select>
 
@@ -273,5 +279,12 @@
   }
   .filter_checkboxes input[type="checkbox"] {
     margin-right: 0.3em;
+  }
+  .filter_checkboxes {
+    color: white !important;
+    background-color: #666;
+    padding: 1em;
+    padding-bottom: 0;
+    border-radius: 4px;
   }
 </style>
