@@ -16,7 +16,11 @@
   <div v-else class="container container_under_nav" :class="{readonly: false}">
     <a @click="$router.go(-1)">Tilbake</a>
     <!-- <router-link to="/regs">Tilbake</router-link> -->
-    <h1>{{registration.event}}</h1>
+    <h1 style="margin-bottom: 0.5em;">{{registration.event}}</h1>
+    <h3>Deltageravgift</h3>
+    <p>
+    Betaling for godhetsuka for de over 18 år, gratis for de under: <span class="pris">200 kr per voksen</span> og <span class="pris">maksimum 400 kr for familier</span>. Vipps-nummer 551461&nbsp;"Godhet&nbsp;Stavanger".
+    </p>
     <h3>{{registration.id ? registration.primaryPerson.firstName+ ' + ' +registration.participants.length : "Påmelding"}}</h3>
     <div style="color: #6c757d; margin-bottom: 1em;" v-if="registration.created">Opprettet {{registration.created.toDate().toLocaleDateString()}}</div>
     <div style="color: #6c757d; margin-bottom: 1em;" v-if="registration.lastUpdatedBy">(Sist endret av {{registration.lastUpdatedBy}})</div>
@@ -469,5 +473,10 @@
      background-color: silver;
      border: silver;
      cursor: not-allowed;
+ }
+ .pris{
+    background-color: #efd;
+    padding: 4px;
+    border-radius: 6px;
  }
 </style>
