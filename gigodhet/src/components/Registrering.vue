@@ -42,8 +42,9 @@
         <div style="color: black">{{ registration.status }}</div> 
         <br>
         <label>
-          Team
+          Team (...send skjema for å lagre nytt valg)
         </label>
+        <a href="#" v-if="!teams.map(t => t.ownerUid).includes(registration.ownerUid)" style="color: black" @click="confirmCreateTeam"> [Opprett <em>{{ suggestedTeamName }}</em> ]</a>
         <select v-model="registration.agentUid" class="custom-select">
           <option value="">-  Uten team -</option>
           <option v-for="(team, idx) in teams" :key="idx" :value="team.ownerUid">{{team.teamName}}</option>
@@ -274,11 +275,7 @@
           this.team = snapshot.data()
         });
       }
-      db.collection('teams').orderBy("teamName", "asc")
-      .get()
-      .then(querySnapshot => {
-        this.teams = querySnapshot.docs.map(doc => doc.data())
-      })
+      this.loadTeams()
     },
     mounted(){
       this.registration.primaryPerson.email = this.registration.primaryPerson.email || this.getters.user().email;
@@ -348,6 +345,9 @@
         }
         return result;
       },
+      suggestedTeamName(){
+        return `Team-${this.registration.primaryPerson.firstName} ${this.registration.primaryPerson.lastName}#`;
+      },
       // isReadonly(){
       //   return this.registration.ownerUid !== this.getters.user().uid // agenter blir readonly
       //   && typeof this.registration.ownerUid !== 'undefined' // Nye påmeldinger er ikke readonly.
@@ -376,6 +376,13 @@
       },
     },
     methods: {
+      loadTeams(){
+        db.collection('teams').orderBy("teamName", "asc")
+        .get()
+        .then(querySnapshot => {
+          this.teams = querySnapshot.docs.map(doc => doc.data())
+        })
+      },
       setIsEdited() {
          this.isEdited = true;
          console.log("Påmelding", this.id, "- redigert", new Date().toLocaleTimeString());
@@ -391,6 +398,38 @@
         }
       },
 
+      confirmCreateTeam(){
+        if(confirm(`Bekreft oppretting av ${this.suggestedTeamName}. (Angrer du etterpå, kontakt Kjetil for å fjerne teamet)`)){
+          this.saveCreateTeam();
+        }
+      },
+      saveCreateTeam () {
+
+        let teamOwnerUid = this.registration.ownerUid;
+        if (teamOwnerUid) {
+
+          db.collection('teams')
+            .doc(teamOwnerUid)
+            .set(
+              {
+                teamName: this.suggestedTeamName,
+                ownerUid: teamOwnerUid, // for db write-permission.
+                created: new Date(),
+              }, {merge: true})
+            .then(() => {
+              this.loadTeams();
+              this.registration.agentUid = teamOwnerUid;
+              alert("Det nye teamet er lagret, men IKKE skjemaet du holder på med. Team-velgeren i dette skjemaet blir nå automatisk oppdatert -men HUSK å sende skjema for å lagre denne koblingen til det nye teamet. ")
+            })
+            .catch(function(error){
+              alert("Kunne ikke lagre. ("+error+")")
+            });
+        }
+        else {
+          alert("Systemfeil - mangler 'user Uid'.")
+        }
+
+      },
       save (wantReactivation) {
         if (this.saveClicked) {
           console.log("Skipped repeated send!")
