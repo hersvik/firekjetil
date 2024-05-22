@@ -110,7 +110,7 @@
             <input type="checkbox" v-model="registration.primaryPerson.wantDinnerWednesday"> Spise på IMI onsdag
           </div>
           <div class="mt-2" style="color: #6c757d">
-          "10 kr for pølse. 50kr for middag og ikke mer enn 200kr pr familie"
+          <span class="pris">Middagen serveres kl. 15:45 - 16:45</span>, "10 kr for pølse. 50kr for middag og ikke mer enn 200kr pr familie"
           </div>
           <div class="day-checkbox" style="margin-top: 1em">
             <input type="checkbox" v-model="registration.primaryPerson.glutenFree"> Trenger glutenfri mat
