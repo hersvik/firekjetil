@@ -44,7 +44,7 @@
         <label>
           Team (...send skjema for å lagre nytt valg)
         </label>
-        <a href="#" v-if="!teams.map(t => t.ownerUid).includes(registration.ownerUid)" style="color: black" @click="confirmCreateTeam"> [Opprett <em>{{ suggestedTeamName }}</em> ]</a>
+        <a href="#" v-if="!teams.map(t => t.teamName).includes(suggestedTeamName)" style="color: black" @click="confirmCreateTeam"> [Opprett <em>{{ suggestedTeamName }}</em> ]</a>
         <select v-model="registration.agentUid" class="custom-select">
           <option value="">-  Uten team -</option>
           <option v-for="(team, idx) in teams" :key="idx" :value="team.ownerUid">{{team.teamName}}</option>
@@ -406,6 +406,9 @@
       saveCreateTeam () {
 
         let teamOwnerUid = this.registration.ownerUid;
+        if(this.teams.map(t => t.ownerUid).includes(teamOwnerUid) || teamOwnerUid === this.constants.adminUid){
+          teamOwnerUid = this.suggestedTeamName;
+        }
         if (teamOwnerUid) {
 
           db.collection('teams')
