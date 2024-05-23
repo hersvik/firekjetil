@@ -26,7 +26,7 @@ router.beforeEach( (to, from, next) => {
     if(to.path === '/' || user) {
       next();
     } else {
-      if (to.path !== '/auth') {
+      if (to.path !== '/auth' && to.path !== "/info") {
         next('/auth')
       } else {
         next();

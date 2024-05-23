@@ -11,6 +11,10 @@ const router = new VueRouter({
         component: () => import('./components/Hjem.vue')
     },
     {
+        path: "/info",
+        component: () => import('./components/Info.vue')
+    },
+    {
         path: "/regs",
         component: () => import('./components/ListRegistreringer.vue'),
         meta: {noScroll: true}

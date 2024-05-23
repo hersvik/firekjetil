@@ -5,7 +5,7 @@
     <div class="jumbotron" :class="{jumbotron__logged_in: getters.user().uid}">
       <h1 class="display-4">Godhet Stavanger &ndash; 2024</h1><!--remember year duplicated in wish.event and reg.event-->
       <p class="lead">27. - 31. mai</p>
-      <p class="lead">Vi gjør godhet <strong>sammen</strong></p>
+      <p class="lead">Les <router-link to="/info">infoskriv om godhetsuken</router-link> (publisert 24.mai)</p>
       <hr class="my-4">
 
       <div v-if="!getters.user() || !getters.user().uid">
@@ -58,7 +58,7 @@
     I samarbeid med <a href="http://godhet.no">godhet.no</a>
 
     <div style="margin-top: 1em; color: silver;">
-      <em>Oppdatert 11. april 2023</em> - <a href="/teamreg">Team-registrering (midlertidig snarvei)</a>
+      <em>Oppdatert 24. mai 2024</em> - <a href="/teamreg">Team-registrering (midlertidig snarvei)</a>
     </div>
   </div>
 </template>
