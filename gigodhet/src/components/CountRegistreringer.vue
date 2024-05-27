@@ -5,7 +5,6 @@
     <h1>
       Antall påmeldte 
     </h1>
-    * Middag onsdag er med i påmeldingen, men summeres ikke på denne visningen ennå. 
     <li class="list-group">
       <ul class="list-group-item"  style="white-space: pre;">{{ JSON.stringify(counts, null, 4) }}
       </ul>
@@ -50,7 +49,8 @@
             gluten_OG_laktosefri: 0,
             kun_glutenfri:0,
             kun_laktosefri:0,
-            vanlig:0,
+            vanlig_middag_voksen:0,
+            vanlig_middag_barn:0,
           },
           tirsdag: {
             sum_dugnad:0,
@@ -58,9 +58,18 @@
             gluten_OG_laktosefri: 0,
             kun_glutenfri:0,
             kun_laktosefri:0,
-            vanlig:0,
+            vanlig_middag_voksen:0,
+            vanlig_middag_barn:0,
           },
-          onsdag_dugnad_inkl_barn: 0,
+          onsdag: {
+            sum_dugnad:0,
+            sum_middag:0,
+            gluten_OG_laktosefri: 0,
+            kun_glutenfri:0,
+            kun_laktosefri:0,
+            vanlig_middag_voksen:0,
+            vanlig_middag_barn:0,
+          },
           torsdag_dugnad_inkl_barn: 0,
           fredag_dugnad_inkl_barn: 0,
 
@@ -97,13 +106,25 @@
           result.mandag.kun_laktosefri += reg.participants.filter(p => p.wantDinnerMonday 
                                               && !p.glutenFree 
                                               && p.lactoseFree).length;
-          result.mandag.vanlig += reg.primaryPerson.wantDinnerMonday 
+                                              
+          result.mandag.vanlig_middag_voksen += reg.primaryPerson.wantDinnerMonday 
                                               && !reg.primaryPerson.glutenFree 
                                               && !reg.primaryPerson.lactoseFree 
+                                              && reg.primaryPerson.ageGroup !== "child"
                                               ? 1 : 0;
-          result.mandag.vanlig += reg.participants.filter(p => p.wantDinnerMonday 
+          result.mandag.vanlig_middag_voksen += reg.participants.filter(p => p.wantDinnerMonday 
                                               && !p.glutenFree 
-                                              && !p.lactoseFree).length;
+                                              && !p.lactoseFree
+                                              && p.ageGroup !== "child").length;
+          result.mandag.vanlig_middag_barn += reg.primaryPerson.wantDinnerMonday 
+                                              && !reg.primaryPerson.glutenFree 
+                                              && !reg.primaryPerson.lactoseFree 
+                                              && reg.primaryPerson.ageGroup === "child"
+                                              ? 1 : 0;
+          result.mandag.vanlig_middag_barn += reg.participants.filter(p => p.wantDinnerMonday 
+                                              && !p.glutenFree 
+                                              && !p.lactoseFree
+                                              && p.ageGroup === "child").length;
 
           result.tirsdag.sum_dugnad += reg.primaryPerson.willAttendDay[1] ? 1 : 0;
           result.tirsdag.sum_dugnad += reg.participants.filter(p => p.willAttendDay[1]).length;
@@ -130,16 +151,70 @@
           result.tirsdag.kun_laktosefri += reg.participants.filter(p => p.wantDinnerTuesday 
                                               && !p.glutenFree 
                                               && p.lactoseFree).length;
-          result.tirsdag.vanlig += reg.primaryPerson.wantDinnerTuesday 
+
+          result.tirsdag.vanlig_middag_voksen += reg.primaryPerson.wantDinnerTuesday 
                                               && !reg.primaryPerson.glutenFree 
                                               && !reg.primaryPerson.lactoseFree 
+                                              && reg.primaryPerson.ageGroup !== "child"
                                               ? 1 : 0;
-          result.tirsdag.vanlig += reg.participants.filter(p => p.wantDinnerTuesday 
+          result.tirsdag.vanlig_middag_voksen += reg.participants.filter(p => p.wantDinnerTuesday 
                                               && !p.glutenFree 
+                                              && !p.lactoseFree
+                                              && p.ageGroup !== "child").length;
+          result.tirsdag.vanlig_middag_barn += reg.primaryPerson.wantDinnerTuesday 
+                                              && !reg.primaryPerson.glutenFree 
+                                              && !reg.primaryPerson.lactoseFree 
+                                              && reg.primaryPerson.ageGroup === "child"
+                                              ? 1 : 0;
+          result.tirsdag.vanlig_middag_barn += reg.participants.filter(p => p.wantDinnerTuesday 
+                                              && !p.glutenFree 
+                                              && !p.lactoseFree
+                                              && p.ageGroup === "child").length;
+                      
+          result.onsdag.sum_dugnad += reg.primaryPerson.willAttendDay[2] ? 1 : 0;
+          result.onsdag.sum_dugnad += reg.participants.filter(p => p.willAttendDay[2]).length;
+          result.onsdag.sum_middag += reg.primaryPerson.wantDinnerWednesday ? 1 : 0;
+          result.onsdag.sum_middag += reg.participants.filter(p => p.wantDinnerWednesday).length;
+          result.onsdag.gluten_OG_laktosefri += reg.primaryPerson.wantDinnerWednesday 
+                                              && reg.primaryPerson.glutenFree 
+                                              && reg.primaryPerson.lactoseFree 
+                                              ? 1 : 0;
+          result.onsdag.gluten_OG_laktosefri += reg.participants.filter(p => p.wantDinnerWednesday 
+                                              && p.glutenFree 
+                                              && p.lactoseFree).length;
+          result.onsdag.kun_glutenfri += reg.primaryPerson.wantDinnerWednesday 
+                                              && reg.primaryPerson.glutenFree 
+                                              && !reg.primaryPerson.lactoseFree 
+                                              ? 1 : 0;
+          result.onsdag.kun_glutenfri += reg.participants.filter(p => p.wantDinnerWednesday 
+                                              && p.glutenFree 
                                               && !p.lactoseFree).length;
-                                              
-          result.onsdag_dugnad_inkl_barn += reg.primaryPerson.willAttendDay[2] ? 1 : 0;
-          result.onsdag_dugnad_inkl_barn += reg.participants.filter(p => p.willAttendDay[2]).length;
+          result.onsdag.kun_laktosefri += reg.primaryPerson.wantDinnerWednesday 
+                                              && !reg.primaryPerson.glutenFree 
+                                              && reg.primaryPerson.lactoseFree 
+                                              ? 1 : 0;
+          result.onsdag.kun_laktosefri += reg.participants.filter(p => p.wantDinnerWednesday 
+                                              && !p.glutenFree 
+                                              && p.lactoseFree).length;
+
+          result.onsdag.vanlig_middag_voksen += reg.primaryPerson.wantDinnerWednesday 
+                                              && !reg.primaryPerson.glutenFree 
+                                              && !reg.primaryPerson.lactoseFree 
+                                              && reg.primaryPerson.ageGroup !== "child"
+                                              ? 1 : 0;
+          result.onsdag.vanlig_middag_voksen += reg.participants.filter(p => p.wantDinnerWednesday 
+                                              && !p.glutenFree 
+                                              && !p.lactoseFree
+                                              && p.ageGroup !== "child").length;
+          result.onsdag.vanlig_middag_barn += reg.primaryPerson.wantDinnerWednesday 
+                                              && !reg.primaryPerson.glutenFree 
+                                              && !reg.primaryPerson.lactoseFree 
+                                              && reg.primaryPerson.ageGroup === "child"
+                                              ? 1 : 0;
+          result.onsdag.vanlig_middag_barn += reg.participants.filter(p => p.wantDinnerWednesday 
+                                              && !p.glutenFree 
+                                              && !p.lactoseFree
+                                              && p.ageGroup === "child").length;
 
           result.torsdag_dugnad_inkl_barn += reg.primaryPerson.willAttendDay[3] ? 1 : 0;
           result.torsdag_dugnad_inkl_barn += reg.participants.filter(p => p.willAttendDay[3]).length;

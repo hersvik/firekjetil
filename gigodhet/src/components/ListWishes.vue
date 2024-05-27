@@ -122,7 +122,7 @@
           let isIncluded = this.statusesFilter === "all" 
                         || this.statusesFilter === "assigned" && wish.agentUid 
                         || this.statusesFilter === "unassigned" && !wish.agentUid;
-          if (!wish.isDiscarded && isIncluded || this.statusesFilter === "discarded" && wish.isDiscarded) {
+          if ((!wish.isDiscarded && isIncluded /*&&(wish.activeTuesday)*/) || this.statusesFilter === "discarded" && wish.isDiscarded) {
               copy.push(wish)
           }
           else{
