@@ -41,13 +41,35 @@
         </pre>
 
         <label class="mt-4">
-          <strong><em>Team tildeling</em></strong> - <span :class="{fade_confirmation_label: wish.confirmedNonsensitive}">Bekreftet at skjemaet ikke inneholder sensitive opplysninger: </span> <input type="checkbox" v-model="wish.confirmedNonsensitive" :disabled="wish.confirmedNonsensitive">
+          <strong>Team tildeling</strong> - <span :class="{fade_confirmation_label: wish.confirmedNonsensitive}">Bekreftet at skjemaet ikke inneholder sensitive opplysninger: </span> <input type="checkbox" v-model="wish.confirmedNonsensitive" :disabled="wish.confirmedNonsensitive">
         </label>
         <select v-model="wish.agentUid" class="custom-select" :disabled="!wish.confirmedNonsensitive || wish.isDiscarded">
           <option value="">-  Uten team -</option>
           <option v-for="(team, idx) in teams" :key="idx" :value="team.ownerUid">{{team && team.teamName}}</option>
         </select>
-        <router-link :to="{name: 'dashTeamid', params:{teamid: wish.agentUid}}" style="background-color: white">{{teamName}} </router-link>
+        <router-link :to="{name: 'dashTeamid', params:{teamid: wish.agentUid}}" style="background-color: white">
+          {{teamName}} 
+        </router-link>
+        <div v-for="(_, supportIdx) in wish.arrayNumSupportTeams" :key="supportIdx+100">
+          <router-link :to="{name: 'dashTeamid', params:{teamid: wish.supportTeams[supportIdx]}}" style="background-color: white">
+            {{ 
+            teams.filter(t => t.ownerUid ==(wish.supportTeams[supportIdx]))[0] &&
+            teams.filter(t => t.ownerUid ==(wish.supportTeams[supportIdx]))[0].teamName
+            }}
+          </router-link>
+        </div>
+        <div v-for="(_, supportIdx) in wish.arrayNumSupportTeams" :key="supportIdx">
+          <select v-model="wish.supportTeams[supportIdx]" class="custom-select" :disabled="!wish.confirmedNonsensitive || wish.isDiscarded">
+            <option value="">-  Ikke valgt hvilket støtte-team -</option>
+            <option v-for="(team, idx) in teams" :key="idx" :value="team.ownerUid">{{team && team.teamName}}</option>
+          </select>
+        </div>
+        <a v-if="wish.confirmedNonsensitive && wish.agentUid && !wish.isDiscarded" @click="incrementSupportTeam">
+          + legg til et støtte-team
+        </a>
+        <a v-if="wish.confirmedNonsensitive && wish.agentUid && !wish.isDiscarded && wish.numSupportTeams > 0" style="color: black" @click="decrementSupportTeam">
+          (- fjern siste)
+        </a>
         <br>
         <br>
         <span style="color: silver">(Sett tilside <input type="checkbox" v-model="wish.isDiscarded" :disabled="!!wish.agentUid">)</span>
@@ -323,6 +345,7 @@
           ],
           agentUid: "",
           confirmedNonsensitive: false,
+          arrayNumSupportTeams: [],
         },
         registrations: [],
         suppressWatchOnce: true,
@@ -407,6 +430,18 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
       },
     },
     methods: {
+      incrementSupportTeam(){
+        this.wish.numSupportTeams = this.wish.numSupportTeams || 0;
+        this.wish.numSupportTeams += 1;
+        this.wish.arrayNumSupportTeams = Array(this.wish.numSupportTeams).fill(0);
+        this.wish.supportTeams = this.wish.supportTeams || [];
+        this.wish.supportTeams.push("");
+      },
+      decrementSupportTeam(){
+        this.wish.numSupportTeams -= 1;
+        this.wish.supportTeams = this.wish.supportTeams.slice(0, this.wish.numSupportTeams);
+        this.wish.arrayNumSupportTeams = Array(this.wish.numSupportTeams).fill(0);
+      },
       setIsEdited() {
          this.isEdited = true;
          console.log("Påmelding", this.id, "- redigert", new Date().toLocaleTimeString());
