@@ -51,7 +51,7 @@
             <option value="bioTuesday">Hageavfall hentes tirsdag</option>
             <option value="bioFriday">Hageavfall hentes fredag</option>
           </select>
-          <span @click="filterString=''">Tilbakestill</span>
+          <span v-if="filterString" @click="filterString=''">Tilbakestill</span>
         </label>
         
       </ul>
