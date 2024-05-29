@@ -267,7 +267,7 @@
     Du kan enkelt oppdatere innholdet ved behov etter innsending.
     <div v-if="getters.user().uid === constants.adminUid">
       <strong>Sekretariat: </strong>
-      <input v-model="adminNick" placeholder="Send: skriv fornavnet ditt her først" size="35">
+      <input v-model="adminNick" placeholder="Ditt_fornavn kun" size="35">
     </div>
     <div class="form-group pb-5">
       <button 

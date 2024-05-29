@@ -38,6 +38,23 @@
           Satt tilside
         </label>
       </ul>
+      <ul v-if="getters.user().uid === constants.adminUid" class="list-group-item">
+        <label style="color: #007bff; cursor: pointer;">
+          <!-- <input type="text" v-model="filterString"> -->
+          <select v-model="filterString" class="custom-select">
+            <option value="">-  alle -</option>
+            <option value="activeMonday">Jobber mandag</option>
+            <option value="activeTuesday">Jobber tirsdag</option>
+            <option value="activeWednesday">Jobber onsdag</option>
+            <option value="activeThursday">Jobber torsdag</option>
+            <option value="activeFriday">Jobber fredag</option>
+            <option value="bioTuesday">Hageavfall hentes tirsdag</option>
+            <option value="bioFriday">Hageavfall hentes fredag</option>
+          </select>
+          <span @click="filterString=''">Tilbakestill</span>
+        </label>
+        
+      </ul>
       <ul v-for="(wish) in chronologicalWishes" :key="wish.id" class="list-group-item" :class="{done: wish.done}">
         <span class="dot" v-if="wish.isMostRecentEdited"></span>
         {{wish.created.toDate().toLocaleDateString()}}<span v-if="wish.ownerUid === getters.user().uid">.</span>
@@ -49,6 +66,8 @@
 
         <span v-if="getters.user().uid === constants.adminUid" v-tooltip:top="'Admin-status (intern)'">{{wish.status}}</span>
         <div style="text-align: right">
+          <span style="background-color: #666; color: white">{{filterString}}</span>&nbsp;
+
           <span v-if="getters.user().uid === constants.adminUid"><strong><router-link :to="{name: 'dashTeamid', params:{teamid: wish.agentUid}}" style="color: black">{{getTildeltTeamName(wish.agentUid)}} </router-link> </strong></span>
           <span v-if="getters.user().uid === wish.agentUid"><strong> Tildelt Ditt team </strong></span>
         </div>
@@ -69,6 +88,11 @@
     },
     created(){
       this.statusesFilter = this.statuses;
+
+      let urlParams = new URLSearchParams(window.location.search);
+      // console.log(urlParams.has('yourParam')); // true
+      this.filterString = urlParams.get('filter') || "";   
+
       db.collection('teams') //       <----------  to be replaced in firestore method (tiems) !!! !!! !!!
       .get()
       .then(querySnapshot => {
@@ -83,6 +107,7 @@
         teams: [],
         wishesWithAgentAccess: [],
         statusesFilter: undefined,
+        filterString: undefined,
       }
     },
     computed: {
@@ -122,7 +147,10 @@
           let isIncluded = this.statusesFilter === "all" 
                         || this.statusesFilter === "assigned" && wish.agentUid 
                         || this.statusesFilter === "unassigned" && !wish.agentUid;
-          if ((!wish.isDiscarded && isIncluded /*&&(wish.activeTuesday)*/) || this.statusesFilter === "discarded" && wish.isDiscarded) {
+          let isActiveDayFilter = this.filterString || false || false;//
+          let includedInFilter = (this.filterString && wish[this.filterString] === true) || 
+                              !isActiveDayFilter
+          if ((!wish.isDiscarded && isIncluded && includedInFilter) || this.statusesFilter === "discarded" && wish.isDiscarded) {
               copy.push(wish)
           }
           else{
@@ -169,7 +197,7 @@
           return;
         
         if (activeStatuses === "all") {
-          router.replace("/wishes");
+          router.replace({path: "/wishes"});
         }
         else if (activeStatuses === "assigned") {
           router.replace("/wishes/assigned");
@@ -180,6 +208,9 @@
         else if (activeStatuses === "discarded") {
           router.replace("/wishes/discarded");
         }
+      },
+      filterString: function(value) {
+        router.replace({path: this.$route.name, query: {filter: value}})
       },
     },
   }
