@@ -25,6 +25,11 @@ const router = new VueRouter({
         meta: {noScroll: true}
     },
     {
+        path: "/participantemails",
+        component: () => import('./components/GatherParticipantEmails.vue'),
+        meta: {noScroll: true}
+    },
+    {
         path: "/regs/all",
         props: {includeHasTeam: true},
         component: () => import("./components/ListRegistreringer.vue"),
