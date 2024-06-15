@@ -23,11 +23,11 @@
       <ul v-if="getters.user().uid === constants.adminUid" class="list-group-item">
         <label style="color: #007bff; cursor: pointer;">
           <input type="radio" value="unassigned" v-model="statusesFilter">
-          Vis ledige oppdrag
+          Vis kun oppdrag <em>ikke</em> ennå plassert på et team
         </label><br>
         <label style="color: #007bff; cursor: pointer;">
           <input type="radio" value="assigned" v-model="statusesFilter">
-          Vis fordelte oppdrag
+          Vis kun oppdrag tildelt et team
         </label><br>
         <label style="color: #007bff; cursor: pointer;">
           <input type="radio" value="all" v-model="statusesFilter">
@@ -59,7 +59,7 @@
         <span class="dot" v-if="wish.isMostRecentEdited"></span>
         {{wish.created.toDate().toLocaleDateString()}}<span v-if="wish.ownerUid === getters.user().uid">.</span>
         <span v-if="wish.done"><strong> Utført </strong></span>
-        <router-link :to="{name: 'endreWish', params:{id: wish.id} }">
+        <router-link :to="{name: 'endreWish', params:{id: wish.id} }" :class="{done_self: wish.selfTask}">
           <em> {{wish.target.address || "ingen adresse"}}</em>: <strong>{{wish.title || "(mangler overskrift)"}}</strong>   {{wish.target.firstName || wish.target.lastName ? "for " + (wish.target.firstName || "") + " " + (wish.target.lastName || "") : ""}}
         </router-link>
         <span class="edited_tag">{{wish.displayEdited}} </span>
@@ -69,6 +69,7 @@
           <span style="background-color: #666; color: white">{{filterString}}</span>&nbsp;
 
           <span v-if="getters.user().uid === constants.adminUid"><strong><router-link :to="{name: 'dashTeamid', params:{teamid: wish.agentUid}}" style="color: black">{{getTildeltTeamName(wish.agentUid)}} </router-link> </strong></span>
+          <span v-if="getters.user().uid === constants.adminUid && wish.selfTask" style="color: purple">Tatt på egenhånd</span>
           <span v-if="getters.user().uid === wish.agentUid"><strong> Tildelt Ditt team </strong></span>
         </div>
       </ul>
@@ -222,6 +223,13 @@
   }
   .done {
     background-color: #fff6ff;
+  }
+  .done_self {
+    background-color: #fff6ff;
+    padding: 4px;
+    border-color: #ecd8ec;
+    border-style: dotted;
+    border-radius: 10px;
   }
 
   .dot {

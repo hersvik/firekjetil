@@ -79,11 +79,13 @@
         </span>
       </div>
 
-      <div v-if="!wish.agentUid" class="form-group form-check mt-4 mb-5">
-        <input class="form-check-input" type="checkbox" v-model="wish.selfTask">
-        <label class="form-check-label">
-          Dette oppdraget tar vi ansvar for å utføre selv
-        </label>
+      <div :class="{done_self: wish.selfTask && (getters.user().uid === constants.adminUid)}" class="mt-4 mb-5">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" v-model="wish.selfTask">
+          <label class="form-check-label">
+            Dette oppdraget tar vi ansvar for å utføre selv
+          </label>
+        </div>
       </div>
       <div v-if="wish.agentUid" class="form-group form-check mt-4 mb-5">
         <label class="form-check-label" style="color: grey">
@@ -597,4 +599,13 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`
     display: inline-block;
     margin: 0 0.2em;
   }
+  
+  .done_self {
+    background-color: #fff6ff;
+    padding: 4px;
+    border-color: #ecd8ec;
+    border-style: dotted;
+    border-radius: 10px;
+  }
+
 </style>
