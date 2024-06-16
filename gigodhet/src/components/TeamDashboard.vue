@@ -73,6 +73,27 @@
       </ul>
     </li>
 
+    <h2>Alle innsendte påmeldinger for dette teamet</h2>
+
+    <li class="list-group">
+      <ul v-for="(registration) in myTeamRegistrations" :key="registration.id" class="list-group-item" :class="{faded_removed: registration.removedBy}">
+        <span class="edited_tag">#{{registration.counter}}</span>
+        <span class="dot" v-if="registration.isMostRecentEdited"></span>
+        {{registration.created.toDate().toLocaleDateString()}}<span v-if="registration.ownerUid === getters.user().uid">.</span>
+        <router-link :to="{name: 'endreRegistrering', params:{id: registration.id} }">
+          {{registration.primaryPerson.firstName}} {{registration.primaryPerson.lastName}} (+{{registration.participants && registration.participants.length || 0}})
+        </router-link>
+        <span class="" v-if="registration.removedBy">Fjernet av {{registration.removedBy}} </span>
+        <span class="edited_tag">{{registration.displayEdited}} </span>
+
+        <div style="text-align: right">
+          <span class="hasAgent" v-if="registration.agentUid"> 
+            <router-link :to="{name: 'dashTeamid', params:{teamid: registration.agentUid}}" style="color: black;">{{getRegistrationTeamName(registration.agentUid)}} </router-link>
+          </span>
+        </div>
+      </ul>
+    </li>
+
     <h1>Endre status</h1>
     <input type="text" v-model="externalUrl"><button :class="{ saved: isSaved}" @click="saveExternalLink">Lagre status</button>
 
