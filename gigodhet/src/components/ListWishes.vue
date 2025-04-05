@@ -5,7 +5,7 @@
       <router-link to="/teams"><strong>Alle team</strong></router-link>
     </span>
     <h1>Oppdrag</h1>
-    I rekkefølge etter første gang sendt inn.
+    Vises i rekkefølge etter opprinnelig sendt inn.
     <div
       v-if="wishes.length"
       class="alert alert-secondary bg-light mt-3"

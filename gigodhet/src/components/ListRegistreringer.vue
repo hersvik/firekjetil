@@ -80,7 +80,7 @@
         >[skjul dem igjen]</small
       >
     </h1>
-    I rekkefølge etter første gang sendt inn.
+    Vises i rekkefølge etter opprinnelig sendt inn.
     <div
       v-if="registrations.length"
       class="alert alert-secondary bg-light mt-3"

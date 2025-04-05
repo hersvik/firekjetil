@@ -412,7 +412,12 @@
     Du kan enkelt oppdatere innholdet ved behov etter innsending.
     <div v-if="getters.user().uid === constants.adminUid">
       <strong>Sekretariat: </strong>
-      <input v-model="adminNick" placeholder="Ditt_fornavn kun" size="35" />
+      <input
+        v-model="adminNick"
+        :disabled="!this.isEdited"
+        placeholder="Ditt_fornavn kun"
+        size="35"
+      />
     </div>
     <div class="form-group pb-5">
       <button
@@ -422,7 +427,9 @@
         v-if="adminNick || getters.user().uid !== constants.adminUid"
       >
         Send
+        <span v-if="getters.user().uid == constants.adminUid">(Ctrl-S)</span>
       </button>
+      <span v-if="!this.isEdited">(Ingen endringer å sende)</span>
     </div>
   </div>
 </template>
@@ -444,9 +451,17 @@ export default {
       .then((querySnapshot) => {
         this.teams = querySnapshot.docs.map((doc) => doc.data());
       });
+    const savedName = localStorage.getItem("savedName");
+    if (savedName) {
+      this.adminNick = savedName;
+    }
   },
   mounted() {
     console.log("Oppdrag", this.id, "- åpnet", new Date().toLocaleTimeString());
+    window.addEventListener("keydown", this.handleKeyDown);
+  },
+  beforeDestroyed() {
+    window.removeEventListener("keydown", this.handleKeyDown);
   },
   name: "Wish",
   props: ["id"],
@@ -688,6 +703,25 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
           });
       }
     }, //(end save)
+
+    handleKeyDown(e) {
+      const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+      const isSaveShortcut =
+        (isMac && e.metaKey && e.key === "s") ||
+        (!isMac && e.ctrlKey && e.key === "s");
+
+      if (
+        isSaveShortcut &&
+        this.adminNick &&
+        getters.user().uid == constants.adminUid
+      ) {
+        e.preventDefault();
+        this.customSaveFunction();
+      }
+    },
+    customSaveFunction() {
+      this.save();
+    },
   },
   watch: {
     wish: function(entry) {
@@ -715,6 +749,9 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
       if (newStringified !== this.watchedStringifiedWish) {
         this.setIsEdited();
       }
+    },
+    adminNick: function(newAdminNick) {
+      localStorage.setItem("savedName", newAdminNick);
     },
   },
 };
