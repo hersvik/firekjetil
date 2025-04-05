@@ -77,6 +77,9 @@
             >Tilbakestill</span
           >
         </label>
+        <br />
+        <input type="checkbox" v-model="showDetails" />
+        Vis detaljer
       </ul>
       <ul
         v-for="wish in chronologicalWishes"
@@ -135,6 +138,7 @@
             ><strong> Tildelt Ditt team </strong></span
           >
         </div>
+        <div v-if="showDetails">{{ wish.description }}</div>
       </ul>
     </li>
   </div>
@@ -171,6 +175,7 @@ export default {
       wishesWithAgentAccess: [],
       statusesFilter: undefined,
       filterString: undefined,
+      showDetails: undefined,
     };
   },
   computed: {
