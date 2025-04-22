@@ -186,12 +186,11 @@
         <br />
         <label> <strong>Ønsker henting</strong>: </label>
         <div class="day-checkbox">
-          <input type="checkbox" v-model="wish.bioTuesday" /> Hageavfall tirsdag
-          28.mai
+          <input type="checkbox" v-model="wish.bioWednesday" /> Hageavfall
+          onsdag
         </div>
         <div class="day-checkbox">
           <input type="checkbox" v-model="wish.bioFriday" /> Hageavfall fredag
-          31.mai
         </div>
         <br />
         <div

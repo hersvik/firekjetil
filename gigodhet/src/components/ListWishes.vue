@@ -70,7 +70,7 @@
             <option value="activeWednesday">Jobber onsdag</option>
             <option value="activeThursday">Jobber torsdag</option>
             <option value="activeFriday">Jobber fredag</option>
-            <option value="bioTuesday">Hageavfall hentes tirsdag</option>
+            <option value="bioWednesday">Hageavfall hentes onsdag</option>
             <option value="bioFriday">Hageavfall hentes fredag</option>
           </select>
           <span v-if="filterString" @click="filterString = ''"
