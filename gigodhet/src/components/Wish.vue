@@ -193,6 +193,7 @@
           <input type="checkbox" v-model="wish.bioFriday" /> Hageavfall fredag
         </div>
         <br />
+        Bruk plastsekker dersom det gjør det enklere å hente avfallet
         <div
           :style="[
             isEdited ? { visibility: 'visible' } : { visibility: 'hidden' },
