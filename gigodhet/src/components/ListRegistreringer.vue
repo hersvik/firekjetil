@@ -6,8 +6,21 @@
       style="margin-top:1em; margin-bottom: 2em; border: 0px solid #eee;box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; border-radius: 4px; padding: 1em"
     >
       <h1 style="margin-top: 0; margin-bottom: 0.5em">Du er teamleder</h1>
-      Du vil se dine deltagere her umiddelbart etter at de bruker den
-      påmeldings-lenken du sender ut i invitasjon.
+      Til deg som teamleder under godhet
+      <ul>
+        <li>
+          <a href="/info_Godhetsagent.pdf">
+            Info til godhetsagent i huskirka
+          </a>
+        </li>
+        <li>
+          <a href="/info_HMS_godhet.pdf"> Viktig HMS-info </a>
+        </li>
+      </ul>
+      Du vil se dine deltagere her rett nedenfor umiddelbart etter at de bruker
+      den påmeldings-lenken du sender ut i invitasjon.
+      <br />
+      <br />
       <h2>Ditt team</h2>
       <router-link
         to="/teamreg"
@@ -93,7 +106,7 @@
       <div class="">
         Takk for påmeldingen! Se nedenfor for å lese innsendt påmelding. Gjerne
         gjør endringer ved å sende inn på nytt! 😃 Du vil bli kontaktet når
-        godhetsuken nærmer seg.
+        godhetsuken nærmer seg - med mindre du allerede tilhører et team.
       </div>
     </div>
 

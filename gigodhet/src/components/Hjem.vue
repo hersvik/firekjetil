@@ -10,7 +10,6 @@
       <p class="lead">
         Les
         <router-link to="/info">infoskriv om godhetsuken</router-link>
-        (publisert 24.mai 2024)
       </p>
       <hr class="my-4" />
 
@@ -42,7 +41,9 @@
             Meld inn oppdrag</button
           ><br />
         </router-link>
-        <span class="lead mb-3">&ndash; som noen kan utføre</span><br />
+        <span class="lead mb-3"
+          >&ndash; som noen (eller dere selv) kan utføre</span
+        ><br />
 
         <router-link to="/teamreg">
           <button
