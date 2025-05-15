@@ -5,16 +5,21 @@
   >
     <h1>Påmelding</h1>
     <div v-if="!confirmedHasCustomLink">
-      Er du med i en <strong>huskirke</strong>? I så fall trenger du din
-      huskirkes egen spesial-lenke for å melde deg på.
+      Er du med i en <strong>huskirke</strong>? Hør i så fall med huskirka di
+      hva som er lettest for å registrere deg.
       <!--Uansett om du allerede har trykket på lenken fra huskirken (før du fikk logget på godhetstavanger.no), må du trykke på lenken nå for å melde deg på.--><br />
       <button class="btn btn-primary" @click="confirmedHasCustomLink = true">
         Jeg har spesial-lenken fra huskirken
       </button>
       <br />
       Snakk med "Godhetsagenten" i din huskirke for å eventuelt få en slik
-      lenke.<br />
-      <h5 style="margin-top: 1em;">Ikke med i huskirke</h5>
+      lenke.<br /><br />
+      Dersom du er godhetsagenten i din huskirke skal du velge
+      <a href="/teamreg"> "Bli teamleder" her</a> (eller fra hovedsiden)
+      <h5 style="margin-top: 1em;">
+        Ikke med i huskirke - eller huskirker som vi hjelper manuelt uten
+        spesial-lenke
+      </h5>
       <button
         class="btn btn-primary"
         @click="confirmedGeneralRegistration = true"
@@ -24,6 +29,10 @@
     </div>
     <div v-else>
       Bra, trykk på den lenken du har fått fra din huskirke (igjen) nå.
+      <br /><br />Eller, hvis den ikke virker nå etter at du er logget inn, kan
+      du melde deg på "uten" huskirke, og bare oppgi i kommentar hvilken
+      huskirke eller godhetsagent du tilhører. Da blir du koblet til riktig team
+      så fort vi får gjort det manuelt.
     </div>
   </div>
   <div

@@ -39,7 +39,7 @@
       </router-link>
     </div>
     <div v-else>
-      Registrer deg som team-leder ved å trykke på denne knappen:<br />
+      Bli teamleder ved å trykke på denne knappen:<br />
       <br />
       <button @click="save" class="btn btn-primary">
         Bekreft og opprett "{{ suggestedTeamName }}"
