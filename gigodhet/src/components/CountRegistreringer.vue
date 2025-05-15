@@ -42,8 +42,8 @@ export default {
         voksne: 0,
         barn: 0,
         mandag: {
-          sum_dugnad: 0,
-          sum_middag: 0,
+          sum_dugnad_inkl_barn: 0,
+          sum_middag_inkl_barn: 0,
           gluten_OG_laktosefri: 0,
           kun_glutenfri: 0,
           kun_laktosefri: 0,
@@ -51,8 +51,8 @@ export default {
           vanlig_middag_barn: 0,
         },
         tirsdag: {
-          sum_dugnad: 0,
-          sum_middag: 0,
+          sum_dugnad_inkl_barn: 0,
+          sum_middag_inkl_barn: 0,
           gluten_OG_laktosefri: 0,
           kun_glutenfri: 0,
           kun_laktosefri: 0,
@@ -60,8 +60,8 @@ export default {
           vanlig_middag_barn: 0,
         },
         onsdag: {
-          sum_dugnad: 0,
-          sum_middag: 0,
+          sum_dugnad_inkl_barn: 0,
+          sum_middag_inkl_barn: 0,
           gluten_OG_laktosefri: 0,
           kun_glutenfri: 0,
           kun_laktosefri: 0,
@@ -82,12 +82,16 @@ export default {
           (p) => p.ageGroup === "child"
         ).length;
 
-        result.mandag.sum_dugnad += reg.primaryPerson.willAttendDay[0] ? 1 : 0;
-        result.mandag.sum_dugnad += reg.participants.filter(
+        result.mandag.sum_dugnad_inkl_barn += reg.primaryPerson.willAttendDay[0]
+          ? 1
+          : 0;
+        result.mandag.sum_dugnad_inkl_barn += reg.participants.filter(
           (p) => p.willAttendDay[0]
         ).length;
-        result.mandag.sum_middag += reg.primaryPerson.wantDinnerMonday ? 1 : 0;
-        result.mandag.sum_middag += reg.participants.filter(
+        result.mandag.sum_middag_inkl_barn += reg.primaryPerson.wantDinnerMonday
+          ? 1
+          : 0;
+        result.mandag.sum_middag_inkl_barn += reg.participants.filter(
           (p) => p.wantDinnerMonday
         ).length;
         result.mandag.gluten_OG_laktosefri +=
@@ -147,14 +151,18 @@ export default {
             p.ageGroup === "child"
         ).length;
 
-        result.tirsdag.sum_dugnad += reg.primaryPerson.willAttendDay[1] ? 1 : 0;
-        result.tirsdag.sum_dugnad += reg.participants.filter(
-          (p) => p.willAttendDay[1]
-        ).length;
-        result.tirsdag.sum_middag += reg.primaryPerson.wantDinnerTuesday
+        result.tirsdag.sum_dugnad_inkl_barn += reg.primaryPerson
+          .willAttendDay[1]
           ? 1
           : 0;
-        result.tirsdag.sum_middag += reg.participants.filter(
+        result.tirsdag.sum_dugnad_inkl_barn += reg.participants.filter(
+          (p) => p.willAttendDay[1]
+        ).length;
+        result.tirsdag.sum_middag_inkl_barn += reg.primaryPerson
+          .wantDinnerTuesday
+          ? 1
+          : 0;
+        result.tirsdag.sum_middag_inkl_barn += reg.participants.filter(
           (p) => p.wantDinnerTuesday
         ).length;
         result.tirsdag.gluten_OG_laktosefri +=
@@ -214,14 +222,17 @@ export default {
             p.ageGroup === "child"
         ).length;
 
-        result.onsdag.sum_dugnad += reg.primaryPerson.willAttendDay[2] ? 1 : 0;
-        result.onsdag.sum_dugnad += reg.participants.filter(
-          (p) => p.willAttendDay[2]
-        ).length;
-        result.onsdag.sum_middag += reg.primaryPerson.wantDinnerWednesday
+        result.onsdag.sum_dugnad_inkl_barn += reg.primaryPerson.willAttendDay[2]
           ? 1
           : 0;
-        result.onsdag.sum_middag += reg.participants.filter(
+        result.onsdag.sum_dugnad_inkl_barn += reg.participants.filter(
+          (p) => p.willAttendDay[2]
+        ).length;
+        result.onsdag.sum_middag_inkl_barn += reg.primaryPerson
+          .wantDinnerWednesday
+          ? 1
+          : 0;
+        result.onsdag.sum_middag_inkl_barn += reg.participants.filter(
           (p) => p.wantDinnerWednesday
         ).length;
         result.onsdag.gluten_OG_laktosefri +=
