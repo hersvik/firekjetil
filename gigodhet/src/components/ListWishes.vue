@@ -138,7 +138,9 @@
             ><strong> Tildelt Ditt team </strong></span
           >
         </div>
-        <div v-if="showDetails">{{ wish.description }}</div>
+        <div v-if="showDetails">
+          <em>{{ wish.description }}</em>
+        </div>
       </ul>
     </li>
   </div>

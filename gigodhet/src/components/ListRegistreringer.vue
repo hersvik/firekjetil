@@ -132,7 +132,12 @@
       <ul v-if="isSentralAdmin" class="list-group-item">
         <label style="color: #007bff; cursor: pointer;">
           <input type="checkbox" v-model="showHavingTeam" />
-          Vis dem som <em>har team</em> også
+          Vis dem som <em>har</em> team også
+        </label>
+        <br />
+        <label style="">
+          <input type="checkbox" v-model="showDetails" />
+          Vis detaljer
         </label>
       </ul>
       <ul
@@ -208,8 +213,21 @@
         <span
           v-if="isSentralAdmin"
           v-tooltip:top="'Intern sekretariat-kommentar'"
-          >{{ registration.status }}</span
-        >
+          >{{ registration.status }}
+        </span>
+
+        <div v-if="isSentralAdmin && showDetails">
+          <div style="color: silver">
+            <span
+              v-for="(isAttending, index) in registration.primaryPerson
+                .willAttendDay"
+              :key="index"
+              >{{ isAttending ? "✓" : "▢" }}</span
+            >
+            <span v-if="registration.participants.length">+meddeltagere</span>
+          </div>
+          <em>{{ registration.misc }}</em>
+        </div>
       </ul>
     </li>
     <router-link to="/countregs" v-if="isSentralAdmin"
@@ -252,6 +270,7 @@ export default {
       hasQueuedSave: false, // tiems
       whiteTimerId: null, // tiems
       showHavingTeam: undefined,
+      showDetails: undefined,
     };
   },
   computed: {
