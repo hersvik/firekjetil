@@ -115,6 +115,18 @@
           >{{ wish.status }}</span
         >
         <div style="text-align: right">
+          <span
+            v-if="
+              !wish.activeMonday &&
+                !wish.activeTuesday &&
+                !wish.activeWednesday &&
+                !wish.activeThursday &&
+                !wish.activeFriday
+            "
+            style="background-color: #993; color: white"
+          >
+            noneActiveDays
+          </span>
           <span style="background-color: #666; color: white">{{
             filterString
           }}</span
