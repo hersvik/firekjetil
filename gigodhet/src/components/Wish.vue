@@ -1,6 +1,10 @@
 <template>
   <div class="container container_under_nav">
-    <a @click="$router.go(-1)">Tilbake</a>
+    <a href="#" @click="$router.go(-1)">Tilbake </a>
+    <span v-if="getters.user().uid === constants.adminUid">
+      <span style="color: grey">|</span>
+      <router-link to="/teams"><strong> Alle team</strong></router-link> </span
+    ><br /><br />
     <h1>{{ id ? wish.title : "Meld inn oppdrag" }}</h1>
     <h3>{{ wish.event }}</h3>
     <div style="color: #6c757d; margin-bottom: 1em;" v-if="wish.created">

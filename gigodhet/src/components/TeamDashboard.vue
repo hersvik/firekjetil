@@ -1,6 +1,10 @@
 <template>
   <div class="container container_under_nav">
-    <a @click="$router.go(-1)">Tilbake</a><br /><br />
+    <a href="#" @click="$router.go(-1)">Tilbake </a>
+    <span v-if="getters.user().uid === constants.adminUid">
+      <span style="color: grey">|</span>
+      <router-link to="/teams"><strong> Alle team</strong></router-link> </span
+    ><br /><br />
 
     <div class="filter_checkboxes" style="color: silver">
       <p>

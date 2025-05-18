@@ -40,8 +40,12 @@
     class="container container_under_nav"
     :class="{ readonly: false }"
   >
-    <a @click="$router.go(-1)">Tilbake</a>
-    <!-- <router-link to="/regs">Tilbake</router-link> -->
+    <a href="#" @click="$router.go(-1)">Tilbake </a>
+    <span v-if="getters.user().uid === constants.adminUid">
+      <span style="color: grey">|</span>
+      <router-link to="/teams"><strong> Alle team</strong></router-link> </span
+    ><br /><br />
+
     <h1 style="margin-bottom: 0.5em;">{{ registration.event }}</h1>
     <h3>Deltageravgift</h3>
     <p>
