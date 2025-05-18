@@ -133,6 +133,31 @@
           style="background-color: white;"
           >{{ teamName }}
         </router-link>
+        <br /><br />
+        Deltar hvilke ukedager, navn, voksen/barn/ukjent <br />
+        <span
+          v-for="(isAttending, ix) in registration.primaryPerson.willAttendDay"
+          :key="ix"
+          >{{ isAttending ? "✓" : "▢" }}</span
+        >
+        👤 {{ registration.primaryPerson.firstName }}
+        <div
+          v-for="(participant, index) in registration.participants"
+          :key="index"
+        >
+          <span
+            v-for="(isAttending, ix) in participant.willAttendDay"
+            :key="ix"
+            >{{ isAttending ? "✓" : "▢" }}</span
+          >{{
+            participant.ageGroup == "child"
+              ? " 🧒"
+              : participant.ageGroup == "adult"
+              ? " 👤"
+              : " -"
+          }}
+          {{ participant.firstName }}
+        </div>
       </div>
 
       <div

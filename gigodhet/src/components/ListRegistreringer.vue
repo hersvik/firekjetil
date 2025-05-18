@@ -217,7 +217,7 @@
         </span>
 
         <div v-if="isSentralAdmin && showDetails">
-          <div style="color: silver">
+          <div style="opacity: 40%">
             <span
               v-for="(isAttending, index) in registration.primaryPerson
                 .willAttendDay"
@@ -225,6 +225,18 @@
               >{{ isAttending ? "✓" : "▢" }}</span
             >
             <span v-if="registration.participants.length">+meddeltagere</span>
+            <span
+              v-for="(participant, index) in registration.participants"
+              :key="index"
+              >{{
+                participant.ageGroup == "child"
+                  ? " 🧒"
+                  : participant.ageGroup == "adult"
+                  ? " 👤"
+                  : " -"
+              }}
+              {{ participant.firstName }} {{ participant.lastName }},
+            </span>
           </div>
           <em>{{ registration.misc }}</em>
         </div>
