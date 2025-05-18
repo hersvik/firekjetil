@@ -167,6 +167,11 @@ export default {
       .then((querySnapshot) => {
         this.teams = querySnapshot.docs.map((doc) => doc.data());
       });
+
+    const shouldShowDetails = localStorage.getItem("showDetails") == "true";
+    if (shouldShowDetails) {
+      this.showDetails = shouldShowDetails;
+    }
   },
   name: "ListWishes",
   props: ["statuses"],
@@ -177,7 +182,7 @@ export default {
       wishesWithAgentAccess: [],
       statusesFilter: undefined,
       filterString: undefined,
-      showDetails: undefined,
+      showDetails: false,
     };
   },
   computed: {
@@ -278,6 +283,9 @@ export default {
     },
   },
   watch: {
+    showDetails: function(shouldShowDetails) {
+      localStorage.setItem("showDetails", shouldShowDetails);
+    },
     statusesFilter: function(activeStatuses) {
       if (activeStatuses === this.statuses) return;
 

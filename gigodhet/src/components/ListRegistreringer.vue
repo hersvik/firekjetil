@@ -269,6 +269,11 @@ export default {
       .then((querySnapshot) => {
         this.teams = querySnapshot.docs.map((doc) => doc.data());
       });
+
+    const shouldShowDetails = localStorage.getItem("showDetails") == "true";
+    if (shouldShowDetails) {
+      this.showDetails = shouldShowDetails;
+    }
   },
   name: "ListRegistreringer",
   props: ["includeHasTeam"],
@@ -282,7 +287,7 @@ export default {
       hasQueuedSave: false, // tiems
       whiteTimerId: null, // tiems
       showHavingTeam: undefined,
-      showDetails: undefined,
+      showDetails: false,
     };
   },
   computed: {
@@ -466,6 +471,9 @@ export default {
     },
   },
   watch: {
+    showDetails: function(shouldShowDetails) {
+      localStorage.setItem("showDetails", shouldShowDetails);
+    },
     showHavingTeam: function(shouldShow) {
       if (this.includeHasTeam === this.showHavingTeam) return; // no change, loading etc.
 
