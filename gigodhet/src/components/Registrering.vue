@@ -141,6 +141,7 @@
           >{{ isAttending ? "✓" : "▢" }}</span
         >
         👤 {{ registration.primaryPerson.firstName }}
+        {{ registration.primaryPerson.lastName }}
         <div
           v-for="(participant, index) in registration.participants"
           :key="index"
@@ -156,7 +157,7 @@
               ? " 👤"
               : " -"
           }}
-          {{ participant.firstName }}
+          {{ participant.firstName }} {{ participant.lastName }}
         </div>
       </div>
 
