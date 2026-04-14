@@ -522,7 +522,7 @@ export default {
       "Påmelding",
       this.id,
       "- åpnet",
-      new Date().toLocaleTimeString()
+      new Date().toLocaleTimeString(),
     );
   },
   beforeUpdate() {
@@ -541,7 +541,7 @@ export default {
         },
         participants: [],
         dailyAttendance: [{}], // add {} for tuesday, etc
-        event: "Godhet Stavanger 2025",
+        event: "Godhet Stavanger 2026",
         agentUid: "",
       },
       alreadyLoaded: false,
@@ -571,7 +571,7 @@ export default {
     },
     teamName() {
       let teamsFiltered = this.teams.filter(
-        (t) => t.ownerUid === this.registration.agentUid
+        (t) => t.ownerUid === this.registration.agentUid,
       );
       if (teamsFiltered.length !== 1 || !teamsFiltered[0].teamName) return null;
       return teamsFiltered[0].teamName;
@@ -584,7 +584,7 @@ export default {
     },
     adultNumberSelection: function() {
       let result = this.registration.participants.filter(
-        (el) => el.ageGroup == "adult"
+        (el) => el.ageGroup == "adult",
       );
       result.push({});
       if (this.registration.primaryPerson.ageGroup == "adult") {
@@ -613,7 +613,7 @@ export default {
         JSON.stringify(entry) !== JSON.stringify(this.watchedRegistration)
       ) {
         alert(
-          "Opplysningene i skjemaet ble endret utenfra. Les gjennom på nytt!"
+          "Opplysningene i skjemaet ble endret utenfra. Les gjennom på nytt!",
         );
       }
       this.alreadyLoaded = true;
@@ -643,7 +643,7 @@ export default {
         "Påmelding",
         this.id,
         "- redigert",
-        new Date().toLocaleTimeString()
+        new Date().toLocaleTimeString(),
       );
     },
     addParticipant() {
@@ -656,7 +656,7 @@ export default {
         confirm(
           "Vil du fjerne meddeltager nummer " +
             (idx + 1) +
-            "? \n\nHusk å også bruke send-knappen nederst i skjema for å bekrefte endringer. "
+            "? \n\nHusk å også bruke send-knappen nederst i skjema for å bekrefte endringer. ",
         )
       ) {
         this.registration.participants.splice(idx, 1);
@@ -668,7 +668,7 @@ export default {
         confirm(
           `Bekreft oppretting av ${
             this.suggestedTeamName
-          }. (Angrer du etterpå, kontakt Kjetil for å fjerne teamet)`
+          }. (Angrer du etterpå, kontakt Kjetil for å fjerne teamet)`,
         )
       ) {
         this.saveCreateTeam();
@@ -691,13 +691,13 @@ export default {
               ownerUid: teamOwnerUid, // for db write-permission.
               created: new Date(),
             },
-            { merge: true }
+            { merge: true },
           )
           .then(() => {
             this.loadTeams();
             this.registration.agentUid = teamOwnerUid;
             alert(
-              "Det nye teamet er lagret, men IKKE skjemaet du holder på med. Team-velgeren i dette skjemaet blir nå automatisk oppdatert -men HUSK å sende skjema for å lagre denne koblingen til det nye teamet. "
+              "Det nye teamet er lagret, men IKKE skjemaet du holder på med. Team-velgeren i dette skjemaet blir nå automatisk oppdatert -men HUSK å sende skjema for å lagre denne koblingen til det nye teamet. ",
             );
           })
           .catch(function(error) {
@@ -737,7 +737,7 @@ export default {
           .then(() => {
             console.log("Påmelding", this.id, "- Lagret OK");
             alert(
-              "✅ Lagret!\n\nHvis du vet om noen som blir påvirket av endringene, si gjerne ifra til dem, om du gidder 😃"
+              "✅ Lagret!\n\nHvis du vet om noen som blir påvirket av endringene, si gjerne ifra til dem, om du gidder 😃",
             );
             this.$router.back(); //.push("/regs")
           })
@@ -756,7 +756,7 @@ export default {
     removeRegistration() {
       if (
         confirm(
-          "Vil du deaktivere påmeldingen? For å gjennopprette etterpå, klikk 'vis deaktiverte' i oversikten. (Administrator kan finne deaktiverte påmeldinger, men du kan tømme innholdet før du sender for å slette innholdet helt)."
+          "Vil du deaktivere påmeldingen? For å gjennopprette etterpå, klikk 'vis deaktiverte' i oversikten. (Administrator kan finne deaktiverte påmeldinger, men du kan tømme innholdet før du sender for å slette innholdet helt).",
         )
       ) {
         this.alreadyLoaded = false;

@@ -505,7 +505,7 @@ export default {
           lastName: getters.authDisplayNameSplitted().lastName,
         },
         target: {},
-        event: "Godhet Stavanger 2025",
+        event: "Godhet Stavanger 2026",
         assigneesPerDay: [{ registrationRefs: [] }],
         agentUid: "",
         confirmedNonsensitive: false,

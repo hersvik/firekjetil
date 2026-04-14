@@ -2,7 +2,7 @@
   <div class="container container_under_nav">
     <div class="jumbotron jumbotron_custom">
       <h1 class="display-4">
-        Godhet Stavanger &ndash; 2025
+        Godhet Stavanger &ndash; 2026
       </h1>
       <p class="lead">
         <!-- 27. - 31. mai -->
@@ -13,13 +13,13 @@
         </strong>
       </p>
       <p>
-        For 20.året på rad arrangeres GodhetStavanger! Fra 19.-23.mai er
+        For 21.året på rad arrangeres GodhetStavanger! Fra 1.-5.juni er
         hundrevis av mennesker ute for å vise praktisk godhet til mennesker i
         byen vår.
       </p>
       <p>
         <strong>Når?</strong><br />
-        Godhetsuka arrangeres mandag 19.mai til fredag 23.mai i fra klokka
+        Godhetsuka arrangeres mandag 1.juni til fredag 5.juni i fra klokka
         17-21. For de med små barn kan det være nyttig å tenke fra klokka 17-19.
         Mulighet for middager på IMI mandag-onsdag, mer info i påmelding.
       </p>

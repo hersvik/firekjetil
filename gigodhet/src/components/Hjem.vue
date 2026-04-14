@@ -4,9 +4,9 @@
       class="jumbotron"
       :class="{ jumbotron__logged_in: getters.user().uid }"
     >
-      <h1 class="display-4">Godhet Stavanger &ndash; 2025</h1>
+      <h1 class="display-4">Godhet Stavanger &ndash; 2026</h1>
       <!--remember year duplicated in wish.event and reg.event-->
-      <p class="lead">19. - 23. mai</p>
+      <p class="lead">1. - 5. juni</p>
       <p class="lead">
         Les
         <router-link to="/info">infoskriv om godhetsuken</router-link>
@@ -98,8 +98,7 @@
     I samarbeid med <a href="http://godhet.no">godhet.no</a>
 
     <div style="margin-top: 1em; color: silver;">
-      <em>Oppdatert 5. april 2025</em> -
-      <a href="/teamreg">Team-registrering (midlertidig snarvei)</a>
+      <em>Oppdatert 14. april 2026</em>
     </div>
   </div>
 </template>
