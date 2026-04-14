@@ -70,6 +70,9 @@
             <option value="activeWednesday">Jobber onsdag</option>
             <option value="activeThursday">Jobber torsdag</option>
             <option value="activeFriday">Jobber fredag</option>
+            <option value="bioNotNeeded"
+              >Trenger ikke hageavfall henting</option
+            >
             <option value="bioWednesday">Hageavfall hentes onsdag</option>
             <option value="bioFriday">Hageavfall hentes fredag</option>
           </select>
@@ -87,7 +90,11 @@
         class="list-group-item"
         :class="{ done: wish.done }"
       >
-        <span class="dot" v-if="wish.isMostRecentEdited"></span>
+        <span
+          class="dot"
+          v-if="wish.isMostRecentEdited"
+          v-tooltip:top="'Nyeste endring'"
+        ></span>
         {{
           wish.created.toDate().toLocaleDateString()
         }}<span v-if="wish.ownerUid === getters.user().uid">.</span>
@@ -204,7 +211,7 @@ export default {
     getters: () => getters,
     wishesOnlyAgentAcess() {
       return this.wishesWithAgentAccess.filter(
-        (r) => r.ownerUid !== getters.user().uid
+        (r) => r.ownerUid !== getters.user().uid,
       );
     },
     chronologicalWishes() {

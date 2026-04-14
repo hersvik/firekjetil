@@ -136,6 +136,27 @@
         </span>
       </div>
 
+      <div class="mt-4 mb-5">
+        <div class="form-check">
+          <label class="form-check-label">
+            Har den som skal motta hjelp fått hjelp tidligere år?
+          </label>
+          <br />
+          <label>
+            <input
+              type="radio"
+              style="margin-top: 0.8em"
+              value="receivedHelpBefore"
+              v-model="wish.preHistory"
+            />
+            Ja </label
+          ><br />
+          <label>
+            <input type="radio" value="notKnown" v-model="wish.preHistory" />
+            Nei, ikke som jeg vet </label
+          ><br />
+        </div>
+      </div>
       <div
         :class="{
           done_self: wish.selfTask && getters.user().uid === constants.adminUid,
@@ -188,7 +209,11 @@
           <input type="checkbox" v-model="wish.activeFriday" /> Fredag
         </div>
         <br />
-        <label> <strong>Ønsker henting</strong>: </label>
+        <label> <strong>Hageavfall bes hentet</strong>: </label>
+        <div class="day-checkbox">
+          <input type="checkbox" v-model="wish.bioNotNeeded" /> Trengs ikke (vet
+          allerede nå)
+        </div>
         <div class="day-checkbox">
           <input type="checkbox" v-model="wish.bioWednesday" /> Hageavfall
           onsdag
@@ -550,7 +575,7 @@ export default {
     },
     teamName() {
       let teamsFiltered = this.teams.filter(
-        (t) => t.ownerUid === this.wish.agentUid
+        (t) => t.ownerUid === this.wish.agentUid,
       );
       if (teamsFiltered.length !== 1 || !teamsFiltered[0].teamName) return null;
       return teamsFiltered[0].teamName;
@@ -578,7 +603,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
         "Påmelding",
         this.id,
         "- redigert",
-        new Date().toLocaleTimeString()
+        new Date().toLocaleTimeString(),
       );
     },
     addExtraAssigneeForDay(day) {
@@ -587,11 +612,11 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
     removeAssigneeForDay(day, ref) {
       if (
         confirm(
-          "Fjerne deltager fra oppdraget \n\nHusk å klikke lagre i skjemaet for at endringen skal få effekt. "
+          "Fjerne deltager fra oppdraget \n\nHusk å klikke lagre i skjemaet for at endringen skal få effekt. ",
         )
       ) {
         let filtered = this.wish.assigneesPerDay[day].registrationRefs.filter(
-          (el) => el !== ref
+          (el) => el !== ref,
         );
         this.wish.assigneesPerDay[day].registrationRefs = filtered;
       }
@@ -602,7 +627,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
       } else {
         this.isShowingEmailPreview = true;
         alert(
-          "Epost-forslaget vil nå forhåpentligvis åpnes i din e-post app.\n\nHusk å fjerne sensitiv informasjon før du sender eposten!"
+          "Epost-forslaget vil nå forhåpentligvis åpnes i din e-post app.\n\nHusk å fjerne sensitiv informasjon før du sender eposten!",
         );
         window.location.href =
           "mailto:" +
@@ -622,6 +647,12 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
     },
 
     save(isStaying) {
+      if (!this.wish.preHistory) {
+        alert(
+          "Du må angi om hjelp har blitt mottatt tidligere godhetsuker, se valg øverst i skjema",
+        );
+        return;
+      }
       if (this.saveClicked) {
         console.log("Skipped repeated send!");
         return;
@@ -654,7 +685,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
             this.doneSavePart1 = true;
             this.suppressWatchOnce = true;
             alert(
-              "✅ Lagret!\n\nHvis du vet om noen som blir påvirket av endringene, si gjerne ifra til dem, om du gidder 😃"
+              "✅ Lagret!\n\nHvis du vet om noen som blir påvirket av endringene, si gjerne ifra til dem, om du gidder 😃",
             );
             if (this.doneSavePart2) {
               this.whenAllSaved(isStaying);
@@ -690,7 +721,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
                 wishServerData,
                 transaction,
                 wishDocRef,
-                assigneesPerDay
+                assigneesPerDay,
               );
             });
           })
@@ -736,7 +767,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
         JSON.stringify(entry) !== JSON.stringify(this.watchedWish)
       ) {
         alert(
-          "Opplysningene i skjemaet ble endret utenfra. Les gjennom på nytt!"
+          "Opplysningene i skjemaet ble endret utenfra. Les gjennom på nytt!",
         );
       }
       this.suppressWatchOnce = false; // enable next watch
@@ -765,7 +796,7 @@ let updateRegistrations = function(
   wishServerData,
   transaction,
   wishDocRef,
-  newAssigneesPerDay
+  newAssigneesPerDay,
 ) {
   let registrationReferences = newAssigneesPerDay[0].registrationRefs;
   let uniqueReferences = [...new Set(registrationReferences)];
