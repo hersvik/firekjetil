@@ -478,10 +478,36 @@
       </div>
     </form>
 
+    <div class="mt-4 mb-2">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          v-model="wish.informedConsent"
+        />
+        <label class="form-check-label">
+          Jeg bekrefter at mottager ønsker hjelp og er informert om at jeg
+          sender inn dette forslaget til godhetsoppdrag
+        </label>
+      </div>
+    </div>
+    <div class="mt-2 mb-5">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          v-model="wish.contactConsent"
+        />
+        <label class="form-check-label">
+          Jeg har fått lov til å dele videre kontaktinformasjonen med
+          GodhetStavanger
+        </label>
+      </div>
+    </div>
     <div v-if="this.id" class="form-group form-check mt-4 mb-5">
       <input class="form-check-input" type="checkbox" v-model="wish.done" />
       <label class="form-check-label">
-        Dette oppdraget er nå fullført
+        Dette oppdraget er nå fullført – hjelpen er ferdig utført
       </label>
     </div>
 
@@ -557,6 +583,7 @@ export default {
         assigneesPerDay: [{ registrationRefs: [] }],
         agentUid: "",
         confirmedNonsensitive: false,
+        planChangedDetails: "",
       },
       registrations: [],
       suppressWatchOnce: true,
@@ -699,6 +726,18 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
       if (!this.wish.preHistory) {
         alert(
           "Du må angi om hjelp har blitt mottatt tidligere godhetsuker, se valg øverst i skjema",
+        );
+        return;
+      }
+      if (!this.wish.informedConsent) {
+        alert(
+          "Må krysses av: Jeg bekrefter at mottager ønsker hjelp og er informert om at jeg sender inn dette forslaget til godhetsoppdrag",
+        );
+        return;
+      }
+      if (!this.wish.contactConsent) {
+        alert(
+          "Må krysses av: Jeg har fått lov til å dele videre kontaktinformasjonen med GodhetStavanger",
         );
         return;
       }
