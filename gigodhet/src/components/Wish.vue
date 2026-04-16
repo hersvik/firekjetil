@@ -193,26 +193,70 @@
           padding: 1em"
       >
         <label> <strong>Plan arbeidsdager</strong>: </label>
+        <br />
+        <em v-if="wish.planOfficial">Ferdig plan</em>
+        <em v-else>Foreløpig plan</em>
+
         <div class="day-checkbox">
-          <input type="checkbox" v-model="wish.activeMonday" /> Mandag
+          <input
+            type="checkbox"
+            v-model="wish.activeMonday"
+            @change="planChanged = true"
+          />
+          Mandag
         </div>
         <div class="day-checkbox">
-          <input type="checkbox" v-model="wish.activeTuesday" /> Tirsdag
+          <input
+            type="checkbox"
+            v-model="wish.activeTuesday"
+            @change="planChanged = true"
+          />
+          Tirsdag
         </div>
         <div class="day-checkbox">
-          <input type="checkbox" v-model="wish.activeWednesday" /> Onsdag
+          <input
+            type="checkbox"
+            v-model="wish.activeWednesday"
+            @change="planChanged = true"
+          />
+          Onsdag
         </div>
         <div class="day-checkbox">
-          <input type="checkbox" v-model="wish.activeThursday" /> Torsdag
+          <input
+            type="checkbox"
+            v-model="wish.activeThursday"
+            @change="planChanged = true"
+          />
+          Torsdag
         </div>
         <div class="day-checkbox">
-          <input type="checkbox" v-model="wish.activeFriday" /> Fredag
+          <input
+            type="checkbox"
+            v-model="wish.activeFriday"
+            @change="planChanged = true"
+          />
+          Fredag
+        </div>
+        <div class="day-checkbox" style="margin-top: 10px">
+          <input
+            type="checkbox"
+            v-model="wish.planOfficial"
+            @change="planChanged = true"
+          />
+          Planen er ferdig – kan brukes av et evt. vaffel-team
+        </div>
+        <div v-if="!planChanged && wish.planChangedDetails" style="color: grey">
+          Plan sist endret
+          {{ wish.planChangedDetails }}
+        </div>
+        <div style="color: #495057;" v-if="planChanged">
+          🟠 Endring ikke lagret ennå
         </div>
         <br />
-        <label> <strong>Hageavfall bes hentet</strong>: </label>
+        <label> <strong>Ønsker henting</strong>: </label>
         <div class="day-checkbox">
-          <input type="checkbox" v-model="wish.bioNotNeeded" /> Trengs ikke (vet
-          allerede nå)
+          <input type="checkbox" v-model="wish.bioNotNeeded" /> Trengs ikke for
+          hageavfall
         </div>
         <div class="day-checkbox">
           <input type="checkbox" v-model="wish.bioWednesday" /> Hageavfall
@@ -220,6 +264,10 @@
         </div>
         <div class="day-checkbox">
           <input type="checkbox" v-model="wish.bioFriday" /> Hageavfall fredag
+        </div>
+        <div class="day-checkbox">
+          <input type="checkbox" v-model="wish.bioOther" /> Har annet eller
+          kanskje behov, ønsker å bli kontaktet
         </div>
         <br />
         Bruk plastsekker dersom det gjør det enklere å hente avfallet
@@ -229,7 +277,7 @@
           ]"
           style="color: #495057;"
         >
-          🟠 Husk å <em>sende</em> skjemaet ↓
+          🟠 Husk å <em>sende</em> skjemaet for å lagre endringer ↓
         </div>
       </div>
 
@@ -521,6 +569,7 @@ export default {
       watchedWish: {},
       teams: [],
       adminNick: "",
+      planChanged: false,
     };
   },
   firestore() {
@@ -667,6 +716,14 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
       this.wish.created = this.wish.created || new Date();
       this.wish.edited = new Date();
       this.wish.lastUpdatedBy = getters.user().displayName;
+      this.wish.planChangedDetails = this.planChanged
+        ? `${new Intl.DateTimeFormat("no-NO", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          }).format(new Date())} (${getters.user().displayName}${this
+            .adminNick && " " + this.adminNick})`
+        : this.wish.planChangedDetails;
 
       let lastEditedEachUser = this.wish.lastEditedEachUser || {};
       let adminNick =
