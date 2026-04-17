@@ -75,9 +75,7 @@
             >
             <option value="bioWednesday">Hageavfall hentes onsdag</option>
             <option value="bioFriday">Hageavfall hentes fredag</option>
-            <option value="bioOther"
-              >Har annet eller kanskje behov, ønsker å bli kontaktet</option
-            >
+            <option value="bioOther">Annet, kanskje henting</option>
           </select>
           <span v-if="filterString" @click="filterString = ''"
             >Tilbakestill</span
