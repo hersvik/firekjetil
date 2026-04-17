@@ -563,7 +563,7 @@ export default {
     console.log("Oppdrag", this.id, "- åpnet", new Date().toLocaleTimeString());
     window.addEventListener("keydown", this.handleKeyDown);
   },
-  beforeDestroyed() {
+  beforeDestroy() {
     window.removeEventListener("keydown", this.handleKeyDown);
   },
   name: "Wish",

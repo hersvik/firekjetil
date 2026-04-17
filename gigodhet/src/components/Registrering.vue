@@ -176,6 +176,18 @@
         <small class="form-text text-muted"
           >Deltager (enkeltperson eller gruppeleder)</small
         >
+        <div class="form-group form-check mt-1 mb-1">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="registration.isMe"
+          />
+          <label class="form-check-label">
+            Dette er min egen påmelding – dvs. samme som pålogget ({{
+              getters.user().displayName
+            }})
+          </label>
+        </div>
         <div class="form-group">
           <label>
             Fornavn
@@ -524,6 +536,10 @@ export default {
       "- åpnet",
       new Date().toLocaleTimeString(),
     );
+    window.addEventListener("keydown", this.handleKeyDown);
+  },
+  beforeDestroy() {
+    window.removeEventListener("keydown", this.handleKeyDown);
   },
   beforeUpdate() {
     this.registration.agentUid = this.registration.agentUid || this.agent;
@@ -767,6 +783,21 @@ export default {
             edited: new Date(),
           });
         this.$router.push("/regs");
+      }
+    },
+    handleKeyDown(e) {
+      const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+      const isSaveShortcut =
+        (isMac && e.metaKey && e.key === "s") ||
+        (!isMac && e.ctrlKey && e.key === "s");
+
+      if (
+        isSaveShortcut &&
+        // this.adminNick && //kun på wish
+        getters.user().uid == constants.adminUid // kun admin fortsatt
+      ) {
+        e.preventDefault();
+        this.save();
       }
     },
   },
