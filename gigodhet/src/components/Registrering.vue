@@ -176,18 +176,6 @@
         <small class="form-text text-muted"
           >Deltager (enkeltperson eller gruppeleder)</small
         >
-        <div class="form-group form-check mt-1 mb-1">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            v-model="registration.isMe"
-          />
-          <label class="form-check-label">
-            Dette er min egen påmelding – dvs. samme som pålogget ({{
-              getters.user().displayName
-            }})
-          </label>
-        </div>
         <div class="form-group">
           <label>
             Fornavn
@@ -209,6 +197,18 @@
             placeholder=""
             type="text"
           />
+        </div>
+        <div class="form-group form-check mt-1 mb-4">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="registration.isMe"
+          />
+          <label class="form-check-label">
+            Dette er min egen påmelding, altså
+            <em>{{ registration.ownerDisplayName }}</em> fra pålogging
+            <span class="text-muted">(ikke påkrevd å svare)</span>
+          </label>
         </div>
 
         <div class="form-group">
@@ -559,6 +559,7 @@ export default {
         dailyAttendance: [{}], // add {} for tuesday, etc
         event: "Godhet Stavanger 2026",
         agentUid: "",
+        ownerDisplayName: getters.user().displayName || "",
       },
       alreadyLoaded: false,
       isEdited: false,
@@ -736,6 +737,8 @@ export default {
       this.alreadyLoaded = false; // Avoids watch alert
       this.registration.ownerUid =
         this.registration.ownerUid || getters.user().uid;
+      this.registration.ownerDisplayName =
+        this.registration.ownerDisplayName || getters.user().displayName;
       this.registration.agentUid = this.registration.agentUid || null;
       this.registration.created = this.registration.created || new Date();
       this.registration.edited = new Date();
