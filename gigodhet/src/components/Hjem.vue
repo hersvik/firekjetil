@@ -23,6 +23,10 @@
             Denne veien inn
           </button>
         </a>
+        <span style="color: grey">
+          – Du klarer ikke å ødelegge noe her 🙂, klikk og se evt. hjelp på
+          neste side.</span
+        >
       </div>
       <div v-else>
         <p class="lead logged_in" style="margin-bottom: 1.5em;">
@@ -77,8 +81,8 @@
           💚 Hvis du ikke får til å starte registrering, kan hvem som helst
           andre gjøre det på dine vegne, ved å logge på som seg selv. Da er det
           denne personen som har tilgang til å endre opplysningene dine.
-          Alternativt kan du skrive epost til stavanger@godhet.no, så får du
-          hjelp med registrering.
+          Alternativt kan du skrive epost til stavanger@godhet.no, så
+          registrerer vi for deg.
         </p>
       </div>
     </div>
