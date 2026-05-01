@@ -249,32 +249,35 @@
         <div>
           <label>
             <strong>{{ registration.primaryPerson.firstName || "Jeg" }}</strong>
-            ønsker å:
+            ønsker å spise på IMI før godhet starter:
           </label>
           <div class="day-checkbox">
             <input
               type="checkbox"
               v-model="registration.primaryPerson.wantDinnerMonday"
             />
-            Spise på IMI mandag
+            Mandagen -
+            <span class="pris">Spaghetti bolognese</span> (2026)
           </div>
           <div class="day-checkbox">
             <input
               type="checkbox"
               v-model="registration.primaryPerson.wantDinnerTuesday"
             />
-            Spise på IMI tirsdag
+            Tirsdagen -
+            <span class="pris">Tikka masala</span> (2026)
           </div>
           <div class="day-checkbox">
             <input
               type="checkbox"
               v-model="registration.primaryPerson.wantDinnerWednesday"
             />
-            Spise på IMI onsdag
+            Onsdagen -
+            <span class="pris">Lasagne med brød</span> (2026)
           </div>
           <div class="mt-2" style="color: #6c757d">
-            <span class="pris">Middagen serveres kl. 15:45 - 16:45</span>, "10
-            kr for pølse. 50kr for middag og ikke mer enn 200kr pr familie"
+            <span class="pris">Middagen serveres kl. 15:45 - 16:45</span>, "15
+            kr for pølse, 50kr for middag"
           </div>
           <div class="day-checkbox" style="margin-top: 1em">
             <input
