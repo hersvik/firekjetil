@@ -243,7 +243,7 @@
             v-model="wish.planOfficial"
             @change="planChanged = true"
           />
-          Planen er ferdig – kan brukes av et evt. vaffel-team
+          Planen er ferdig, alle arbeidsdagene skal være krysset av nå
         </div>
         <div v-if="!planChanged && wish.planChangedDetails" style="color: grey">
           Plan sist endret
