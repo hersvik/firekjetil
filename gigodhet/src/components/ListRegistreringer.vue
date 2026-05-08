@@ -132,7 +132,7 @@
       <ul v-if="isSentralAdmin" class="list-group-item">
         <label style="color: #007bff; cursor: pointer;">
           <input type="checkbox" v-model="showHavingTeam" />
-          Vis dem som <em>har</em> team også
+          Vis alle – inkl. dem som <em>har</em> team også
         </label>
         <br />
         <label style="">
@@ -175,7 +175,7 @@
                   registration.id,
                   `${registration.primaryPerson.firstName} ${
                     registration.primaryPerson.lastName
-                  }`
+                  }`,
                 )
               "
               v-if="registration.ownerUid === getters.user().uid"
@@ -202,7 +202,7 @@
                   registration.id,
                   `${registration.primaryPerson.firstName} ${
                     registration.primaryPerson.lastName
-                  }`
+                  }`,
                 )
               "
               >Ta med</a
@@ -304,7 +304,7 @@ export default {
     },
     registrationsReadOnly() {
       return this.registrationsWithAgentAccess.filter(
-        (r) => r.ownerUid !== getters.user().uid
+        (r) => r.ownerUid !== getters.user().uid,
       );
     },
     atLeastOneRemoved() {
@@ -372,7 +372,7 @@ export default {
     },
     myTeamRegistrations() {
       return this.chronologicalRegistrations.filter(
-        (r) => r.agentUid === this.getters.user().uid
+        (r) => r.agentUid === this.getters.user().uid,
       );
     },
   },
@@ -412,7 +412,7 @@ export default {
           alert(
             "Du la til påmeldingen fra " +
               regDisplayName +
-              " i teamet ditt. Du kan endre tilbake i listen Påmeldinger her"
+              " i teamet ditt. Du kan endre tilbake i listen Påmeldinger her",
           );
         })
         .catch(function(error) {
@@ -428,7 +428,7 @@ export default {
           alert(
             "Du løsrev påmeldingen fra " +
               regDisplayName +
-              " fra teamet ditt. Du kan endre tilbake i listen Påmeldinger her"
+              " fra teamet ditt. Du kan endre tilbake i listen Påmeldinger her",
           );
         })
         .catch(function(error) {
@@ -456,7 +456,7 @@ export default {
             teamName: this.tiems.filter((t) => t.id == tiemId)[0].teamName,
             ownerUid: this.getters.user().uid, // for db write-permission.
           },
-          { merge: true }
+          { merge: true },
         )
         .then(() => {
           that.$refs.tieminput[0].style.backgroundColor = "#cfc";
