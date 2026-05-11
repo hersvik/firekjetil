@@ -40,7 +40,7 @@
           kopi av deltager-skjema med info </a
         >.
       </p>
-      <a href="#how_why" id="how_why" @click="showWhy = !showWhy"
+      <a href="#how_why" id="how_why" @click.prevent="showWhy = !showWhy"
         >Hvorfor skal jeg logge inn?</a
       >
 
@@ -61,7 +61,7 @@
       <a
         href="#how_forget"
         id="how_forget"
-        @click="showWhatIfForget = !showWhatIfForget"
+        @click.prevent="showWhatIfForget = !showWhatIfForget"
         >Hva om jeg ikke har passord?</a
       >
       <div v-if="showWhatIfForget">
@@ -77,7 +77,7 @@
       <a
         href="#how_anonymous"
         id="how_anonymous"
-        @click="showHowAnonymous = !showHowAnonymous"
+        @click.prevent="showHowAnonymous = !showHowAnonymous"
         >Hva om jeg ikke vil oppgi en epost adresse, evt. være anonym?</a
       >
       <div v-if="showHowAnonymous">
@@ -95,7 +95,7 @@
       <a
         href="#how_fallback"
         id="how_fallback"
-        @click="showHowFallback = !showHowFallback"
+        @click.prevent="showHowFallback = !showHowFallback"
         >Hva om jeg likevel ikke vil eller klarer å logge inn?</a
       >
       <div v-if="showHowFallback">
