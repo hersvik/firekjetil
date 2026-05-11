@@ -309,7 +309,7 @@
         </div>
         <div class="form-group">
           <label>
-            E-post
+            Riktig E-post (ellers bruk tomt felt)
           </label>
           <input
             v-model="registration.primaryPerson.email"

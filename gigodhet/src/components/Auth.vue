@@ -17,11 +17,28 @@
     >
       <h2>Godhet Stavanger</h2>
       <p class="lead">
-        Ingen fare om du lager ny innlogging med evt. feil epostadresse, vi
-        mottar info uansett. <br />
-        Vi kan registere for deg også, om du synes det er lettere, bare send
-        detaljene f.eks. til mrkjetil@gmail.com, så etterspør jeg mer ved behov
-        eller om du evt. vil se et skjema.
+        Logg på med en e-postadresse for å komme videre ⬆️
+        <br />Første gang får du velge passord selv ("choose password"). Neste
+        gang, hvis du har glemt passordet ditt kan du trykke
+        <em>trouble signin in</em> ved passordfeltet, og endre passord via
+        mail/spam-folderen.
+        <span style="opacity: 0.5;"
+          >Alternativt kan du bruke en falsk epostadresse, da kommer du lett
+          inn, men vanskeligere å finne tilbake til infoen din på andre maskiner
+          enn den du er på nå. Helt greit å gjøre, og faktisk en perfekt løsning
+          dersom du skulle ønske du slapp å logge inn i utgangspunktet :)</span
+        >
+      </p>
+      <p class="lead">
+        Vi kan registrere for deg også, om du synes det er lettere, bare send
+        hvilke dager du vil delta (eller beskrivelse av oppdrag du vil foreslå)
+        til
+        <em>stavanger@godhet.no</em>, så bekrefter vi når vi sjekker mail, evt
+        etterspør vi detaljer ved behov. <br />Dersom vi registrerer for deg kan
+        det være lurt å sjekke
+        <a href="/deltager_skjema_mobil_10mai2026.pdf">
+          kopi av deltager-skjema med info </a
+        >.
       </p>
       <a href="#how_why" id="how_why" @click="showWhy = !showWhy"
         >Hvorfor skal jeg logge inn?</a
@@ -48,13 +65,12 @@
         >Hva om jeg ikke har passord?</a
       >
       <div v-if="showWhatIfForget">
-        Første gang dikter du opp et passord. Hvis du skal hente/redigere
-        opplysningene dine og du er på en annen telefon/maskin enn den som er
-        logget inn, må du huske hvilken epost-adresse du logger inn med her. Du
-        er ikke nødt til å huske passordet ditt dersom epost-adressen er ekte og
-        riktig. Da kan systemet sende deg hjelp til å logge inn igjen hvis du
-        ber om det. Du forblir vanligvis pålogget på telefonen/enheten din, så
-        det vil som regel ikke være et behov for passord uansett.
+        Første gang dikter du opp et passord ("choose password"). Du er ikke
+        nødt til å huske passordet ditt dersom epost-adressen er ekte og riktig.
+        Da kan systemet sende deg hjelp til å logge inn igjen hvis du ber om det
+        (se <em>Trouble signin in</em> ved passordfeltet). Du forblir pålogget
+        på telefonen/enheten din i månedsvis, så da vil det ikke være et behov
+        for passord om du kommer tilbake noen måneder senere.
       </div>
       <br />
       <br />
