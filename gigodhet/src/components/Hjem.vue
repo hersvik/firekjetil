@@ -15,8 +15,10 @@
 
       <div v-if="!getters.user() || !getters.user().uid">
         <p class="lead">
-          For å <strong>melde deg på</strong>, <br />eller for å
-          <strong>komme med forslag</strong> til oppdrag:
+          For å <strong><em>melde deg på</em></strong
+          >, <br />eller for å komme med forslag til
+          <strong><em>oppdrag</em></strong
+          >:
         </p>
         <a href="/auth">
           <button type="button" class="btn btn-primary btn-lg">
@@ -24,7 +26,7 @@
           </button>
         </a>
         <span style="color: grey">
-          – Du klarer ikke å ødelegge noe her 🙂, klikk og se evt. hjelp på
+          – Du klarer ikke å ødelegge noe her 😉, klikk og se evt. hjelp på
           neste side.</span
         >
       </div>
@@ -68,8 +70,7 @@
           >endre påmeldinger
         </span>
         &nbsp;eller oppdrag som du har meldt inn. Kom i så fall tilbake hit til
-        <strong>godhetstavanger.no</strong>. Vi oppdaterer informasjonen for deg
-        også ved behov.
+        <strong>godhetstavanger.no</strong>.
       </p>
       <p>
         Teamlederen for akkurat ditt team (som skal være godhetsagenten i

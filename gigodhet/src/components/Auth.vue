@@ -15,7 +15,7 @@
       class="jumbotron bg-light rounded-lg"
       style="border:solid 1px #eee; margin: 1em;"
     >
-      <h2>Godhet Stavanger</h2>
+      <!-- <h4>Godhet Stavanger</h4> -->
       <p class="lead">
         Logg på med en e-postadresse for å komme videre ⬆️
         <br />Første gang får du velge passord selv ("choose password"). Neste
