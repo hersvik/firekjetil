@@ -189,7 +189,12 @@ export default {
   beforeCreate() {
     // setters.setActiveNav("pameldinger");
   },
-  mounted() {},
+  mounted() {
+    window.addEventListener("keydown", this.handleKeyDown);
+  },
+  beforeDestroy() {
+    window.removeEventListener("keydown", this.handleKeyDown);
+  },
   name: "TeamDashboard",
   props: ["teamid"],
   data() {
@@ -214,7 +219,7 @@ export default {
         for (let i = 0; i < 5; i++) {
           hasMember[team.ownerUid][i] = this.registrations.some(
             (r) =>
-              r.primaryPerson.willAttendDay[i] && r.agentUid == team.ownerUid
+              r.primaryPerson.willAttendDay[i] && r.agentUid == team.ownerUid,
           );
         }
       }
@@ -312,7 +317,7 @@ export default {
 
     myTeamRegistrations() {
       return this.chronologicalRegistrations.filter(
-        (r) => r.agentUid === this.selectedTeamUid
+        (r) => r.agentUid === this.selectedTeamUid,
       );
     },
     sortedTeams() {
@@ -362,9 +367,24 @@ export default {
 
     updateExternalUrl() {
       let teamObject = this.teams.filter(
-        (t) => t.ownerUid === this.selectedTeamUid
+        (t) => t.ownerUid === this.selectedTeamUid,
       )[0];
       this.externalUrl = (teamObject && teamObject.externalLink) || "";
+    },
+    handleKeyDown(e) {
+      const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+      const isSaveShortcut =
+        (isMac && e.metaKey && e.key === "s") ||
+        (!isMac && e.ctrlKey && e.key === "s");
+
+      if (
+        isSaveShortcut &&
+        // this.adminNick && //kun på wish
+        getters.user().uid == constants.adminUid // kun admin fortsatt
+      ) {
+        e.preventDefault();
+        this.saveExternalLink();
+      }
     },
   },
 };
