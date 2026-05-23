@@ -65,6 +65,12 @@
           <!-- <input type="text" v-model="filterString"> -->
           <select v-model="filterString" class="custom-select">
             <option value="">- alle -</option>
+            <option value="preHistory==notKnown"
+              >Ikke fått hjelp før (eller ukjent)</option
+            >
+            <option value="preHistory==receivedHelpBefore"
+              >Har fått hjelp før</option
+            >
             <option value="activeMonday">Jobber mandag</option>
             <option value="activeTuesday">Jobber tirsdag</option>
             <option value="activeWednesday">Jobber onsdag</option>
@@ -248,9 +254,15 @@ export default {
           this.statusesFilter === "all" ||
           (this.statusesFilter === "assigned" && wish.agentUid) ||
           (this.statusesFilter === "unassigned" && !wish.agentUid);
-        let isActiveDayFilter = this.filterString || false || false; //
+        let isActiveDayFilter = this.filterString || false;
+        let filterProp = this.filterString && this.filterString.split("==")[0];
+        let filterValue =
+          this.filterString && this.filterString.includes("==")
+            ? this.filterString.split("==")[1]
+            : true;
+
         let includedInFilter =
-          (this.filterString && wish[this.filterString] === true) ||
+          (filterProp && wish[filterProp] === filterValue) ||
           !isActiveDayFilter;
         if (
           (!wish.isDiscarded && isIncluded && includedInFilter) ||
