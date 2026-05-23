@@ -61,7 +61,10 @@
         v-if="getters.user().uid === constants.adminUid"
         class="list-group-item"
       >
-        <label style="color: #007bff; cursor: pointer;">
+        <label
+          style="color: #007bff; cursor: pointer;"
+          v-if="statusesFilter != 'discarded'"
+        >
           <!-- <input type="text" v-model="filterString"> -->
           <select v-model="filterString" class="custom-select">
             <option value="">- alle -</option>
@@ -71,11 +74,15 @@
             <option value="preHistory==receivedHelpBefore"
               >Har fått hjelp før</option
             >
-            <option value="activeMonday">Jobber mandag</option>
-            <option value="activeTuesday">Jobber tirsdag</option>
-            <option value="activeWednesday">Jobber onsdag</option>
-            <option value="activeThursday">Jobber torsdag</option>
-            <option value="activeFriday">Jobber fredag</option>
+            <option value="planOfficial==undefined"
+              >Arbeidsdager ikke spikret</option
+            >
+            <option value="planOfficial">Arbeidsdager spikret</option>
+            <option value="activeMonday">Arbeidsdag mandag</option>
+            <option value="activeTuesday">Arbeidsdag tirsdag</option>
+            <option value="activeWednesday">Arbeidsdag onsdag</option>
+            <option value="activeThursday">Arbeidsdag torsdag</option>
+            <option value="activeFriday">Arbeidsdag fredag</option>
             <option value="bioNotNeeded"
               >Trenger ikke hageavfall henting</option
             >
@@ -258,7 +265,9 @@ export default {
         let filterProp = this.filterString && this.filterString.split("==")[0];
         let filterValue =
           this.filterString && this.filterString.includes("==")
-            ? this.filterString.split("==")[1]
+            ? this.filterString.split("==")[1] == "undefined"
+              ? undefined
+              : this.filterString.split("==")[1]
             : true;
 
         let includedInFilter =
