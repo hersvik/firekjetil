@@ -127,7 +127,8 @@
         }} -->
         <router-link :to="{ name: 'endreWish', params: { id: wish.id } }">
           <em>{{ wish.target.address }}</em>
-          <strong>{{ wish.title }}</strong> {{ wish.target.firstName }}
+          <strong>{{ wish.title || "(mangler tittel på oppdraget)" }}</strong>
+          {{ wish.target.firstName }}
           {{ wish.target.lastName }}
         </router-link>
         <!-- <span class="edited_tag">{{ wish.displayEdited }} </span> -->
@@ -148,7 +149,7 @@
         <router-link
           :to="{ name: 'endreWish', params: { id: kobling.wishId } }"
         >
-          {{ kobling.wishTitle }}
+          {{ kobling.wishTitle || "(mangler tittel på oppdraget)" }}
         </router-link>
         <!-- <span
           v-if="getters.user().uid === constants.adminUid"
