@@ -23,10 +23,13 @@
         <em>trouble signin in</em> ved passordfeltet, og endre passord via
         mail/spam-folderen.
         <span style="opacity: 0.5;"
-          >Alternativt kan du bruke en falsk epostadresse, da kommer du lett
-          inn, men vanskeligere å finne tilbake til infoen din på andre maskiner
-          enn den du er på nå. Helt greit å gjøre, og faktisk en perfekt løsning
-          dersom du skulle ønske du slapp å logge inn i utgangspunktet :)</span
+          >Alternativt kan du bruke en falsk epostadresse. Da kommer du lett
+          inn, men det blir vanskeligere å finne tilbake til det du har sendt
+          inn fra andre maskiner enn den du brukte. Helt greit å gjøre, vi
+          merker faktisk ikke forskjell. Det er en perfekt løsning dersom du
+          skulle ønske du slapp å logge inn i utgangspunktet, og din
+          kontakt-info som f.eks. epost adresse fylles ut i skjemaet senere
+          likevel.</span
         >
       </p>
       <p class="lead">
