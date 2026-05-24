@@ -8,7 +8,7 @@
 
     <div class="filter_checkboxes" style="color: silver">
       <p>
-        <em>Filtre for "<strong>Velg team å se på</strong>"</em>
+        <em>Valgfrie filter for <strong> listen</strong> av team </em>
       </p>
       <input type="checkbox" v-model="filterDays[0]" /><label
         >har folk mandag</label
@@ -25,44 +25,54 @@
       <input type="checkbox" v-model="filterDays[4]" /><label
         >har folk fredag</label
       ><br />
-      NB: filterne over ignorerer "meddeltagere" og barn<br /><br />
-
-      <strong>Velg team å se på</strong>:
-    </div>
-    <select v-model="selectedTeamUid" class="custom-select">
-      <option value="">- Velg team -</option>
-      <option
-        v-for="(team, idx) in sortedTeams"
-        :key="idx"
-        :value="team.ownerUid"
-        :disabled="
-          (filterDays[0] && !teamDays[team.ownerUid][0]) ||
-            (filterDays[1] && !teamDays[team.ownerUid][1]) ||
-            (filterDays[2] && !teamDays[team.ownerUid][2]) ||
-            (filterDays[3] && !teamDays[team.ownerUid][3]) ||
-            (filterDays[4] && !teamDays[team.ownerUid][4])
-        "
+      NB: filterne over ignorerer "meddeltagere" og barn<br />
+      <!-- <hr style="border: solid 1px white" /> -->
+      <h2
+        style="
+    color: white;
+    text-shadow: 0px 0px 18px black;"
       >
-        <span
-          v-if="
-            !(
-              (filterDays[0] && !teamDays[team.ownerUid][0]) ||
+        Vis team (filtrerbar liste):
+      </h2>
+      <select v-model="selectedTeamUid" class="custom-select">
+        <option value="">- Velg team -</option>
+        <option
+          v-for="(team, idx) in sortedTeams"
+          :key="idx"
+          :value="team.ownerUid"
+          :disabled="
+            (filterDays[0] && !teamDays[team.ownerUid][0]) ||
               (filterDays[1] && !teamDays[team.ownerUid][1]) ||
               (filterDays[2] && !teamDays[team.ownerUid][2]) ||
               (filterDays[3] && !teamDays[team.ownerUid][3]) ||
               (filterDays[4] && !teamDays[team.ownerUid][4])
-            )
           "
-          >⏹️ </span
-        >{{ team.teamName }}
-      </option>
-    </select>
-
-    <h1>Team status</h1>
+        >
+          <span
+            v-if="
+              !(
+                (filterDays[0] && !teamDays[team.ownerUid][0]) ||
+                (filterDays[1] && !teamDays[team.ownerUid][1]) ||
+                (filterDays[2] && !teamDays[team.ownerUid][2]) ||
+                (filterDays[3] && !teamDays[team.ownerUid][3]) ||
+                (filterDays[4] && !teamDays[team.ownerUid][4])
+              )
+            "
+            >⏹️ </span
+          >{{ team.teamName }}
+        </option>
+      </select>
+    </div>
+    <br />
+    <br />
+    <h1>{{ getRegistrationTeamName(teamid) }}</h1>
+    <br />
+    <h2>Team status</h2>
     {{ externalUrl }}
+    <hr class="sectionSeparator" />
 
     <template>
-      <h1>Deltagere</h1>
+      <h2>Deltagere</h2>
       <div
         v-for="(nVariableNotUsed, index) in constants.campaignDays.length"
         :key="index"
@@ -99,8 +109,9 @@
         </div>
       </div>
     </template>
+    <hr class="sectionSeparator" />
 
-    <h1>Oppdrag</h1>
+    <h2>Oppdrag</h2>
 
     <li class="list-group">
       <ul
@@ -108,26 +119,45 @@
         :key="wish.id"
         class="list-group-item"
       >
-        {{
+        <!-- {{
           wish.isMostRecentEdited
         }}
         {{
           wish.created.toDate().toLocaleDateString()
-        }}
+        }} -->
         <router-link :to="{ name: 'endreWish', params: { id: wish.id } }">
-          <em>{{ wish.target.address }}</em
-          >: <strong>{{ wish.title }}</strong> for {{ wish.target.firstName }}
+          <em>{{ wish.target.address }}</em>
+          <strong>{{ wish.title }}</strong> {{ wish.target.firstName }}
           {{ wish.target.lastName }}
         </router-link>
-        <span class="edited_tag">{{ wish.displayEdited }} </span>
-        <span
+        <!-- <span class="edited_tag">{{ wish.displayEdited }} </span> -->
+        <!-- <span
           v-if="getters.user().uid === constants.adminUid"
           v-tooltip:top="'Admin-status (intern)'"
           >{{ wish.status }}</span
-        >
+        > -->
       </ul>
     </li>
-
+    <!-- <pre>    {{ JSON.stringify(this.wishes, null, 2) }}</pre> -->
+    <li class="list-group">
+      <ul
+        v-for="(kobling, idx) in koblinger"
+        :key="idx"
+        class="list-group-item"
+      >
+        <router-link
+          :to="{ name: 'endreWish', params: { id: kobling.wishId } }"
+        >
+          {{ kobling.wishTitle }}
+        </router-link>
+        <!-- <span
+          v-if="getters.user().uid === constants.adminUid"
+          v-tooltip:top="'Admin-status (intern)'"
+          >{{ wishes.filter((w) => w.id === kobling.wishId).status }}</span
+        > -->
+      </ul>
+    </li>
+    <hr class="sectionSeparator" />
     <h2>Alle innsendte påmeldinger for dette teamet</h2>
 
     <li class="list-group">
@@ -171,11 +201,10 @@
       </ul>
     </li>
 
-    <h1>Endre status</h1>
-    <input type="text" v-model="externalUrl" /><button
-      :class="{ saved: isSaved }"
-      @click="saveExternalLink"
-    >
+    <hr class="sectionSeparator" />
+    <h2>Endre status</h2>
+    <textarea rows="5" cols="26" type="text" v-model="externalUrl" /><br />
+    <button :class="{ saved: isSaved }" @click="saveExternalLink">
       Lagre status
     </button>
   </div>
@@ -202,6 +231,7 @@ export default {
       registrations: [],
       wishes: [],
       teams: [],
+      koblinger: [],
       selectedTeamUid: this.teamid || "",
       externalUrl: "",
       isSaved: false,
@@ -327,16 +357,37 @@ export default {
     },
   },
   firestore() {
+    let koblinger;
+    if (this.selectedTeamUid && getters.user().uid === constants.adminUid) {
+      koblinger = db
+        .collection("koblinger")
+        .where("teamId", "==", this.selectedTeamUid);
+    }
     return {
       registrations: db.collection("registrations"),
       wishes: db.collection("wishes"),
       teams: db.collection("teams"),
+      koblinger: koblinger,
     };
   },
   watch: {
-    selectedTeamUid: function(teamUid) {
-      this.$router.replace({ path: "/dash/" + teamUid });
-      this.updateExternalUrl();
+    selectedTeamUid: {
+      immediate: true,
+      async handler(teamUid) {
+        // Existing logic
+        // this.doSomething();
+
+        // VueFire rebinding logic
+        if (!teamUid || getters.user().uid !== constants.adminUid) {
+          this.koblinger = [];
+          return;
+        }
+        const ref = db.collection("koblinger").where("teamId", "==", teamUid);
+        await this.$bind("koblinger", ref);
+
+        this.$router.replace({ path: "/dash/" + teamUid });
+        this.updateExternalUrl();
+      },
     },
     teams: function() {
       this.updateExternalUrl();
@@ -391,7 +442,7 @@ export default {
 </script>
 
 <style scoped>
-h1 {
+h2 {
   margin-top: 0.5em;
 }
 .dayTitle {
@@ -412,5 +463,10 @@ button.saved {
   padding: 1em;
   padding-bottom: 0;
   border-radius: 4px;
+}
+hr.sectionSeparator {
+  width: 20%;
+  border: dashed 1px silver;
+  margin-left: 0;
 }
 </style>

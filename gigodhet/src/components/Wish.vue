@@ -90,11 +90,54 @@
         </select>
         <router-link
           :to="{ name: 'dashTeamid', params: { teamid: wish.agentUid } }"
-          style="background-color: white"
-          >{{ teamName }}
+          style="
+    background-color: white;
+    float: right;
+    padding: 2px;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 3px;"
+          >{{ teamName && "➡️ " }}{{ teamName }}
         </router-link>
         <br />
-        <br />
+        <template v-if="wish.id">
+          <!-- or this.id -->
+          <div v-for="(kobling, kx) in koblinger" :key="kx">
+            <!-- <div v-if="kobling.koblingType == 'team'"> -->
+            &
+            <router-link
+              :to="{
+                name: 'dashTeamid',
+                params: { teamid: kobling.teamId },
+              }"
+              style="font-weight: normal; font-style: normal; color: rgb(168, 227, 272)"
+            >
+              {{ kobling.teamName }}
+            </router-link>
+            <span
+              @click="removeLink(kobling.id, kobling.teamName)"
+              style="cursor: pointer;"
+              >🅧 ta vekk</span
+            >
+            <!-- </div> -->
+          </div>
+          +
+          <select
+            v-model="selectedForKobling"
+            @change="addLink"
+            :disabled="wish.isDiscarded"
+            style="width: 11em;"
+          >
+            <option value="">ekstra team-kobling</option>
+            <option v-for="(team, idx) in teams" :key="idx" :value="team">{{
+              team && team.teamName
+            }}</option>
+          </select>
+          ← autolagres
+          <br />
+          <!-- <pre>{{ JSON.stringify(this.koblinger, null, 2) }}</pre> -->
+          <br />
+        </template>
         <span style="color: silver"
           >(Sett tilside
           <input
@@ -589,6 +632,8 @@ export default {
         planChangedDetails: "",
       },
       registrations: [],
+      koblinger: [],
+      selectedForKobling: "",
       suppressWatchOnce: true,
       isEdited: false,
       watchedStringifiedWish: "",
@@ -609,6 +654,12 @@ export default {
     }
     if (getters.user().uid === constants.adminUid) {
       result.registrations = db.collection("registrations"); //unused for now?
+    }
+    if (this.id && getters.user().uid === constants.adminUid) {
+      result.koblinger = db
+        .collection("koblinger")
+        .where("wishId", "==", this.id)
+        .orderBy("teamName", "asc");
     }
     return result;
   },
@@ -855,6 +906,43 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
     },
     customSaveFunction() {
       this.save();
+    },
+    addLink() {
+      const optionValue = this.selectedForKobling;
+      if (optionValue.ownerUid === this.wish.agentUid) {
+        alert("Allerede brukt som hovedkobling. Avbrytes");
+        this.selectedForKobling = "";
+        return;
+      }
+      const existingExtraTeamIds = this.koblinger.map((k) => k.teamId);
+      if (existingExtraTeamIds.includes(optionValue.ownerUid)) {
+        alert("Allerede brukt som ekstrakobling. Avbrytes");
+        this.selectedForKobling = "";
+        return;
+      }
+
+      db.collection("koblinger")
+        .add({
+          wishId: this.wish.id, // or this.id?
+          wishTitle: this.wish.title,
+          koblingType: "team",
+          teamId: optionValue.ownerUid,
+          teamName: optionValue.teamName,
+        })
+        .then(() => {
+          // alert("save'a");
+          this.selectedForKobling = "";
+        })
+        .catch(function(error) {
+          alert("Kunne ikke lagre ny kobling. (" + error + ")");
+        });
+    },
+    removeLink(koblingId, name) {
+      if (confirm("Slette kobling til " + name + "?")) {
+        db.collection("koblinger")
+          .doc(koblingId)
+          .delete();
+      }
     },
   },
   watch: {
