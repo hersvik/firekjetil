@@ -550,10 +550,26 @@
         </label>
       </div>
     </div>
-    <div v-if="this.id" class="form-group form-check mt-4 mb-5">
-      <input class="form-check-input" type="checkbox" v-model="wish.done" />
+    <div
+      v-if="this.id"
+      class="form-group form-check mt-4 mb-5"
+      style="
+    background-color: grey;
+    color: white;
+    padding: 1em 3em;
+    border-radius: 1em;
+    border: solid 1px silver;"
+    >
+      <input
+        class="form-check-input"
+        style="
+    width: 1.1em;
+    height: 1.1em;"
+        type="checkbox"
+        v-model="wish.done"
+      />
       <label class="form-check-label">
-        Dette oppdraget er nå fullført – hjelpen er ferdig utført
+        &nbsp; ferdig utført oppdrag
       </label>
     </div>
 
