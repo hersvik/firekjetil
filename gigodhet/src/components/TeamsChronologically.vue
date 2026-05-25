@@ -12,9 +12,7 @@
       style="margin: 0.5em"
     >
       {{ team.created && team.created.toDate().toLocaleDateString() }}
-      <strong>{{
-        wishes.filter((w) => w.agentUid === team.ownerUid).length
-      }}</strong
+      <strong>{{ relatedWishesCount(team.ownerUid) }}</strong
       >&nbsp;
       <router-link
         :to="{ name: 'dashTeamid', params: { teamid: team.ownerUid } }"
@@ -45,6 +43,7 @@ export default {
     return {
       teams: [],
       wishes: [],
+      koblinger: [],
       lastOpenedTeam: "",
     };
   },
@@ -64,10 +63,22 @@ export default {
     return {
       teams: db.collection("teams").orderBy("teamName", "asc"),
       wishes: db.collection("wishes"),
+      koblinger: db.collection("koblinger"),
     };
   },
   watch: {},
   methods: {
+    relatedWishesCount(teamId) {
+      let mainAssigns =
+        (this.wishes &&
+          this.wishes.filter((w) => w.agentUid === teamId).length) ||
+        0;
+      let extraAssigns =
+        (this.koblinger &&
+          this.koblinger.filter((k) => k.teamId == teamId).length) ||
+        0;
+      return mainAssigns + extraAssigns;
+    },
     handleClickTeam(teamId) {
       localStorage.setItem("lastOpenedTeam", teamId);
     },
