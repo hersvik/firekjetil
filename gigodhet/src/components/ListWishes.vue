@@ -103,7 +103,7 @@
         v-for="wish in chronologicalWishes"
         :key="wish.id"
         class="list-group-item"
-        :class="{ done: wish.done }"
+        :class="{ done: wish.done, last_opened: wish.id === lastOpenedWish }"
       >
         <span
           class="dot"
@@ -117,6 +117,7 @@
         <router-link
           :to="{ name: 'endreWish', params: { id: wish.id } }"
           :class="{ done_self: wish.selfTask }"
+          @click.native="handleClickWish(wish.id)"
         >
           <em> {{ wish.target.address || "ingen adresse" }}</em
           >: <strong>{{ wish.title || "(mangler overskrift)" }}</strong>
@@ -206,6 +207,10 @@ export default {
     if (shouldShowDetails) {
       this.showDetails = shouldShowDetails;
     }
+    const storageWish = localStorage.getItem("lastOpenedWish");
+    if (storageWish) {
+      this.lastOpenedWish = storageWish;
+    }
   },
   name: "ListWishes",
   props: ["statuses"],
@@ -217,6 +222,7 @@ export default {
       statusesFilter: undefined,
       filterString: undefined,
       showDetails: false,
+      lastOpenedWish: "",
     };
   },
   computed: {
@@ -317,6 +323,9 @@ export default {
     }
   },
   methods: {
+    handleClickWish(wishId) {
+      localStorage.setItem("lastOpenedWish", wishId);
+    },
     getTildeltTeamName(agentUid) {
       let teamObject = this.teams.filter((t) => t.ownerUid === agentUid)[0];
       let teamName = (teamObject && teamObject.teamName) || "";
@@ -370,5 +379,9 @@ export default {
   border-radius: 50%;
   display: inline-block;
   margin: 0 0.2em;
+}
+
+.last_opened {
+  border: solid 1px blue;
 }
 </style>

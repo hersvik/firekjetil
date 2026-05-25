@@ -144,7 +144,10 @@
         v-for="registration in chronologicalRegistrations"
         :key="registration.id"
         class="list-group-item"
-        :class="{ faded_removed: registration.removedBy }"
+        :class="{
+          faded_removed: registration.removedBy,
+          last_opened: registration.id === lastOpenedRegistration,
+        }"
       >
         <span class="edited_tag">#{{ registration.counter }}</span>
         <span class="dot" v-if="registration.isMostRecentEdited"></span>
@@ -153,6 +156,7 @@
         }}<span v-if="registration.ownerUid === getters.user().uid">.</span>
         <router-link
           :to="{ name: 'endreRegistrering', params: { id: registration.id } }"
+          @click.native="handleClickRegistration(registration.id)"
         >
           {{ registration.primaryPerson.firstName }}
           {{ registration.primaryPerson.lastName }} (+{{
@@ -274,6 +278,11 @@ export default {
     if (shouldShowDetails) {
       this.showDetails = shouldShowDetails;
     }
+
+    const storageRegistration = localStorage.getItem("lastOpenedRegistration");
+    if (storageRegistration) {
+      this.lastOpenedRegistration = storageRegistration;
+    }
   },
   name: "ListRegistreringer",
   props: ["includeHasTeam"],
@@ -288,6 +297,7 @@ export default {
       whiteTimerId: null, // tiems
       showHavingTeam: undefined,
       showDetails: false,
+      lastOpenedRegistration: "",
     };
   },
   computed: {
@@ -395,6 +405,9 @@ export default {
     }
   },
   methods: {
+    handleClickRegistration(regId) {
+      localStorage.setItem("lastOpenedRegistration", regId);
+    },
     showAll() {
       this.showRemoved = !this.showRemoved;
     },
@@ -528,5 +541,8 @@ h1 {
 }
 .btn_green_outline:hover {
   background-color: silver;
+}
+.last_opened {
+  border: solid 1px blue;
 }
 </style>
