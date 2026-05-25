@@ -816,7 +816,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
             year: "numeric",
           }).format(new Date())} (${getters.user().displayName}${this
             .adminNick && " " + this.adminNick})`
-        : this.wish.planChangedDetails;
+        : this.wish.planChangedDetails || "";
 
       let lastEditedEachUser = this.wish.lastEditedEachUser || {};
       let adminNick =
