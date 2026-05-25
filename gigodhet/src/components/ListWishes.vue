@@ -99,6 +99,9 @@
         <input type="checkbox" v-model="showDetails" />
         Vis detaljer
       </ul>
+      <div style="margin-bottom: 10px">
+        {{ chronologicalWishes.length }} treff på oppdrag
+      </div>
       <ul
         v-for="wish in chronologicalWishes"
         :key="wish.id"
