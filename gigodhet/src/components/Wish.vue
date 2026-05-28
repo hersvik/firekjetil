@@ -112,7 +112,7 @@
               }"
               style="font-weight: normal; font-style: normal; color: rgb(168, 227, 272)"
             >
-              {{ kobling.teamName }}
+              {{ kobling.confirmed ? "" : "💥" }}{{ kobling.teamName }}
             </router-link>
             <span
               @click="removeLink(kobling.id, kobling.teamName)"

@@ -126,7 +126,7 @@
           wish.created.toDate().toLocaleDateString()
         }} -->
         <router-link :to="{ name: 'endreWish', params: { id: wish.id } }">
-          <em>{{ wish.target.address }}</em>
+          <em>{{ wish.target.address }} </em>
           <strong>{{ wish.title || "(mangler tittel på oppdraget)" }}</strong>
           {{ wish.target.firstName }}
           {{ wish.target.lastName }}
@@ -149,8 +149,16 @@
         <router-link
           :to="{ name: 'endreWish', params: { id: kobling.wishId } }"
         >
+          {{ kobling.confirmed ? "" : "💥" }}
           {{ kobling.wishTitle || "(mangler tittel på oppdraget)" }}
         </router-link>
+        <button
+          type="button"
+          @click="toggleKoblingConfirmed(kobling.id, !kobling.confirmed)"
+        >
+          {{ kobling.confirmed ? "🤝" : "merk som bekreftet" }}
+        </button>
+
         <!-- <span
           v-if="getters.user().uid === constants.adminUid"
           v-tooltip:top="'Admin-status (intern)'"
@@ -436,6 +444,19 @@ export default {
       ) {
         e.preventDefault();
         this.saveExternalLink();
+      }
+    },
+    toggleKoblingConfirmed(id, value) {
+      if (id) {
+        db.collection("koblinger")
+          .doc(id)
+          .set({ confirmed: value }, { merge: true })
+          .then(() => {
+            // alert("Lagret kobling ✅ ");
+          })
+          .catch(function(error) {
+            alert("Kunne ikke lagre kobling. (" + error + ")");
+          });
       }
     },
   },
