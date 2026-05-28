@@ -156,7 +156,13 @@
           type="button"
           @click="toggleKoblingConfirmed(kobling.id, !kobling.confirmed)"
         >
-          {{ kobling.confirmed ? "🤝" : "merk som bekreftet" }}
+          {{ kobling.confirmed ? "🤝" : "merk som bekreftet" }}</button
+        >&nbsp;
+        <button
+          type="button"
+          @click="deleteKobling(kobling.id, kobling.wishTitle)"
+        >
+          ✘ fjern kobling
         </button>
 
         <!-- <span
@@ -457,6 +463,13 @@ export default {
           .catch(function(error) {
             alert("Kunne ikke lagre kobling. (" + error + ")");
           });
+      }
+    },
+    deleteKobling(id, wishTitle) {
+      if (confirm("Slette kobling til " + wishTitle + "?")) {
+        db.collection("koblinger")
+          .doc(id)
+          .delete();
       }
     },
   },
