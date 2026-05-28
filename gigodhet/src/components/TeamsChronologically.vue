@@ -12,8 +12,16 @@
       style="margin: 0.5em"
     >
       {{ team.created && team.created.toDate().toLocaleDateString() }}
-      <strong>{{ relatedWishesCount(team.ownerUid) }}</strong
-      >&nbsp;
+      <strong>{{ relatedWishesCount(team.ownerUid) }}</strong>
+      <span
+        v-for="kobling in unconfirmedKoblinger.filter(
+          (k) => k.teamId === team.ownerUid,
+        )"
+        :key="kobling.id"
+      >
+        💥
+      </span>
+      &nbsp;
       <router-link
         :to="{ name: 'dashTeamid', params: { teamid: team.ownerUid } }"
         @click.native="handleClickTeam(team.ownerUid)"
@@ -57,6 +65,9 @@ export default {
           ((a.created && a.created.seconds) || 0) -
           ((b.created && b.created.seconds) || 0),
       );
+    },
+    unconfirmedKoblinger() {
+      return this.koblinger.filter((k) => !k.confirmed);
     },
   },
   firestore() {
