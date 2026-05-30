@@ -150,7 +150,10 @@
           :to="{ name: 'endreWish', params: { id: kobling.wishId } }"
         >
           {{ kobling.confirmed ? "" : "💥" }}
-          {{ kobling.wishTitle || "(mangler tittel på oppdraget)" }}
+          {{ getAddress(kobling) }},
+          <strong>{{
+            kobling.wishTitle || "(mangler tittel på oppdraget)"
+          }}</strong>
         </router-link>
         <button
           type="button"
@@ -471,6 +474,12 @@ export default {
           .doc(id)
           .delete();
       }
+    },
+    getAddress(kobling) {
+      const wish = this.wishes.find((w) => w.id === kobling.wishId);
+      return wish
+        ? wish.target.address || "(gateadresse manglet)"
+        : "(fant ikke oppdraget)";
     },
   },
 };
