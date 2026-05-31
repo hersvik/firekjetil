@@ -146,10 +146,16 @@
         :key="idx"
         class="list-group-item"
       >
+        <span
+          @click="toggleKoblingConfirmed(kobling.id, true)"
+          style="cursor: pointer;"
+          class="koblingClickable"
+        >
+          {{ kobling.confirmed ? "" : "💥" }}</span
+        >
         <router-link
           :to="{ name: 'endreWish', params: { id: kobling.wishId } }"
         >
-          {{ kobling.confirmed ? "" : "💥" }}
           {{ getAddress(kobling) }},
           <strong>{{
             kobling.wishTitle || "(mangler tittel på oppdraget)"
@@ -159,14 +165,16 @@
           type="button"
           @click="toggleKoblingConfirmed(kobling.id, !kobling.confirmed)"
         >
-          {{ kobling.confirmed ? "🤝" : "merk som bekreftet" }}</button
+          {{
+            kobling.confirmed ? "endre til ubekreftet" : "merk som bekreftet"
+          }}</button
         >&nbsp;
-        <button
-          type="button"
+        <span
           @click="deleteKobling(kobling.id, kobling.wishTitle)"
+          style="cursor: pointer;"
         >
           ✘ fjern kobling
-        </button>
+        </span>
 
         <!-- <span
           v-if="getters.user().uid === constants.adminUid"
@@ -512,5 +520,12 @@ hr.sectionSeparator {
   width: 20%;
   border: dashed 1px silver;
   margin-left: 0;
+}
+.koblingClickable:hover {
+  border: solid 2px orange;
+}
+.koblingClickable {
+  border-radius: 3px;
+  border: solid 2px transparent;
 }
 </style>

@@ -105,6 +105,13 @@
           <div v-for="(kobling, kx) in koblinger" :key="kx">
             <!-- <div v-if="kobling.koblingType == 'team'"> -->
             &
+            <span
+              @click="confirmLink(kobling.id, kobling.teamName)"
+              style="cursor: pointer;"
+              class="koblingClickable"
+            >
+              {{ kobling.confirmed ? "" : "💥" }}
+            </span>
             <router-link
               :to="{
                 name: 'dashTeamid',
@@ -112,7 +119,7 @@
               }"
               style="font-weight: normal; font-style: normal; color: rgb(168, 227, 272)"
             >
-              {{ kobling.confirmed ? "" : "💥" }}{{ kobling.teamName }}
+              {{ kobling.teamName }}
             </router-link>
             <span
               @click="removeLink(kobling.id, kobling.teamName)"
@@ -960,6 +967,21 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
           .delete();
       }
     },
+    confirmLink(koblingId, name) {
+      if (confirm("Bekreft kobling til " + name + "? (dvs. skjul 💥-merket)")) {
+        if (koblingId) {
+          db.collection("koblinger")
+            .doc(koblingId)
+            .set({ confirmed: true }, { merge: true })
+            .then(() => {
+              // alert("Lagret kobling ✅ ");
+            })
+            .catch(function(error) {
+              alert("Kunne ikke lagre kobling. (" + error + ")");
+            });
+        }
+      }
+    },
   },
   watch: {
     wish: function(entry) {
@@ -1063,5 +1085,13 @@ button.btn.btn-primary:disabled {
   border-color: #ecd8ec;
   border-style: dotted;
   border-radius: 10px;
+}
+
+.koblingClickable:hover {
+  border: solid 2px orange;
+}
+.koblingClickable {
+  border-radius: 3px;
+  border: solid 2px transparent;
 }
 </style>

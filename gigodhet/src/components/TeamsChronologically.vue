@@ -18,6 +18,9 @@
           (k) => k.teamId === team.ownerUid,
         )"
         :key="kobling.id"
+        @click="confirmLink(kobling.id, kobling.teamName, kobling.wishTitle)"
+        style="cursor: pointer;"
+        class="koblingClickable"
       >
         💥
       </span>
@@ -101,6 +104,29 @@ export default {
     //   let teamName = teamObject && teamObject.teamName || "";
     //   return teamName;
     // },
+    confirmLink(koblingId, teamName, wishTitle) {
+      if (
+        confirm(
+          "Bekrefte kobling? mellom " +
+            teamName +
+            " og oppdrag '" +
+            wishTitle +
+            "' (dvs. skjul 💥-merket)",
+        )
+      ) {
+        if (koblingId) {
+          db.collection("koblinger")
+            .doc(koblingId)
+            .set({ confirmed: true }, { merge: true })
+            .then(() => {
+              // alert("Lagret kobling ✅ ");
+            })
+            .catch(function(error) {
+              alert("Kunne ikke lagre kobling. (" + error + ")");
+            });
+        }
+      }
+    },
   },
 };
 </script>
@@ -111,5 +137,13 @@ h1 {
 }
 .last_opened {
   text-decoration: underline;
+}
+
+.koblingClickable:hover {
+  border: solid 2px orange;
+}
+.koblingClickable {
+  border-radius: 3px;
+  border: solid 2px transparent;
 }
 </style>
