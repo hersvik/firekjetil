@@ -35,9 +35,12 @@
 
 <script>
 import { db } from "../main";
-import { getters, constants } from "../store";
+import { getters, setters, constants } from "../store";
 
 export default {
+  beforeCreate() {
+    setters.setActiveNav("teams");
+  },
   created() {
     const storageTeam = localStorage.getItem("lastOpenedTeam");
     if (storageTeam) {

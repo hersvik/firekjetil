@@ -230,11 +230,11 @@
 
 <script>
 import { db } from "../main";
-import { getters, constants } from "../store";
+import { getters, setters, constants } from "../store";
 
 export default {
   beforeCreate() {
-    // setters.setActiveNav("pameldinger");
+    setters.setActiveNav("teams");
   },
   mounted() {
     window.addEventListener("keydown", this.handleKeyDown);
