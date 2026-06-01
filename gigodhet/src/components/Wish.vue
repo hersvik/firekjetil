@@ -85,7 +85,7 @@
             v-for="(team, idx) in teams"
             :key="idx"
             :value="team.ownerUid"
-            >{{ team && team.teamName }}</option
+            >{{ teamNameWithPreCharacter(team) }}</option
           >
         </select>
         <router-link
@@ -137,7 +137,7 @@
           >
             <option value="">ekstra team-kobling</option>
             <option v-for="(team, idx) in teams" :key="idx" :value="team">{{
-              team && team.teamName
+              teamNameWithPreCharacter(team)
             }}</option>
           </select>
           ← autolagres
@@ -981,6 +981,13 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
             });
         }
       }
+    },
+    teamNameWithPreCharacter(team) {
+      if (!(team && team.teamName)) {
+        return "";
+      }
+      const firstLetter = team.teamName.replace("Team-", "")[0];
+      return firstLetter + "| " + team.teamName;
     },
   },
   watch: {

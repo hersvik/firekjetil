@@ -122,7 +122,7 @@
             v-for="(team, idx) in teams"
             :key="idx"
             :value="team.ownerUid"
-            >{{ team.teamName }}</option
+            >{{ teamNameWithPreCharacter(team) }}</option
           >
         </select>
         <router-link
@@ -805,6 +805,13 @@ export default {
         e.preventDefault();
         this.save();
       }
+    },
+    teamNameWithPreCharacter(team) {
+      if (!(team && team.teamName)) {
+        return "";
+      }
+      const firstLetter = team.teamName.replace("Team-", "")[0];
+      return firstLetter + "| " + team.teamName;
     },
   },
 };
