@@ -87,6 +87,7 @@
               >Trenger ikke hageavfall henting</option
             >
             <option value="bioTuesday">Hageavfall hentes tirsdag</option>
+            <option value="bioWednesday">Hageavfall hentes onsdag</option>
             <option value="bioThursday">Hageavfall hentes torsdag</option>
             <option value="bioFriday">Hageavfall hentes fredag</option>
             <option value="bioOther">Annet, kanskje henting</option>

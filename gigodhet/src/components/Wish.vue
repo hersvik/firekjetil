@@ -312,8 +312,12 @@
           <input type="checkbox" v-model="wish.bioTuesday" /> Hageavfall tirsdag
         </div>
         <div class="day-checkbox">
+          <input type="checkbox" v-model="wish.bioWednesday" /> Hageavfall
+          onsdag
+        </div>
+        <div class="day-checkbox">
           <input type="checkbox" v-model="wish.bioThursday" /> Hageavfall
-          torsdag
+          torsdag (<strong>avlyst</strong> henting, bytt til annnen dag)
         </div>
         <div class="day-checkbox">
           <input type="checkbox" v-model="wish.bioFriday" /> Hageavfall fredag
