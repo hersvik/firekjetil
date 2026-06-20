@@ -479,60 +479,6 @@
           />
         </div>
       </div>
-
-      <div
-        v-if="false && getters.user().uid === constants.adminUid && wish.id"
-        class="form-group mt-5 mb-5"
-      >
-        <h3>
-          Administrer deltagere på dette oppdraget
-        </h3>
-        <div style="opacity: 0.5;">
-          Tegnforklaring når du legger til deltagelse: <br />
-          (tall) = antall deltagere på gruppen inkludert leder og alle aldre<br />
-          F = deltar på familiegodhet <br />
-          * = allerede engasjert på <strong>ett</strong> oppdrag
-          <em>utenom</em> dette oppdraget <br />
-          ** = allerede engasjert på <strong>to</strong> oppdrag
-          <em>utenom</em> dette oppdraget <br />
-          (Listen er sortert med største grupper først, deretter alfabetisk
-          etter navn på hoveddeltageren. )
-        </div>
-        <div
-          v-for="(ref, idx) in wish.assigneesPerDay[0].registrationRefs"
-          :key="idx"
-        >
-          <span @click="removeAssigneeForDay(0, ref)" class="clickable_tag"
-            >(-)</span
-          >
-          <AssigneeSelector
-            v-model="wish.assigneesPerDay[0].registrationRefs[idx]"
-            :registrations="sortedRegistrations"
-            :day="0"
-            :wishRef="wish.id"
-          />
-          <a v-if="ref" :href="'/registrering/' + ref" target="_blank"
-            >Åpne påmeldingen</a
-          >
-        </div>
-        <button
-          type="button"
-          class="btn btn-secondary"
-          @click="addExtraAssigneeForDay(0)"
-        >
-          Legg til deltagelse
-        </button>
-      </div>
-      <div
-        v-else-if="
-          false && getters.user().uid === constants.adminUid && !wish.id
-        "
-      >
-        <h5>
-          Administrer deltagere på dette oppdraget
-        </h5>
-        Du må lagre dette oppdraget først før du kan legge til deltagere.
-      </div>
     </form>
 
     <div class="mt-4 mb-2">
@@ -612,7 +558,6 @@
 
 <script>
 import { db } from "../main";
-import firebase from "firebase/app";
 
 import { getters, setters, constants } from "../store";
 
@@ -641,9 +586,7 @@ export default {
   },
   name: "Wish",
   props: ["id"],
-  components: {
-    AssigneeSelector: () => import("./AssigneeSelector.vue"),
-  },
+  components: {},
   data() {
     return {
       wish: {
@@ -653,7 +596,6 @@ export default {
         },
         target: {},
         event: "Godhet Stavanger 2026",
-        assigneesPerDay: [{ registrationRefs: [] }],
         agentUid: "",
         confirmedNonsensitive: false,
         planChangedDetails: "",
@@ -666,7 +608,6 @@ export default {
       watchedStringifiedWish: "",
       saveClicked: false,
       doneSavePart1: false,
-      doneSavePart2: false,
       isShowingEmailPreview: false,
       watchedWish: {},
       teams: [],
@@ -763,21 +704,6 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
         new Date().toLocaleTimeString(),
       );
     },
-    addExtraAssigneeForDay(day) {
-      this.wish.assigneesPerDay[day].registrationRefs.push("");
-    },
-    removeAssigneeForDay(day, ref) {
-      if (
-        confirm(
-          "Fjerne deltager fra oppdraget \n\nHusk å klikke lagre i skjemaet for at endringen skal få effekt. ",
-        )
-      ) {
-        let filtered = this.wish.assigneesPerDay[day].registrationRefs.filter(
-          (el) => el !== ref,
-        );
-        this.wish.assigneesPerDay[day].registrationRefs = filtered;
-      }
-    },
     makeEmail() {
       if (this.isEdited) {
         alert("Du må lagre først for ordens skyld");
@@ -830,7 +756,6 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
 
       this.suppressWatchOnce = true;
 
-      const assigneesPerDay = this.wish.assigneesPerDay;
       // Save wish document
       this.wish.ownerUid = this.wish.ownerUid || getters.user().uid;
       this.wish.created = this.wish.created || new Date();
@@ -853,7 +778,6 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
 
       if (this.id) {
         const wish = { ...this.wish }; // to exclude non-enumerable "id"-property
-        delete wish.assigneesPerDay; // saves later in transaction with registration documents
 
         db.collection("wishes")
           .doc(this.id)
@@ -864,9 +788,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
             alert(
               "✅ Lagret!\n\nHvis du vet om noen som blir påvirket av endringene, si gjerne ifra til dem, om du gidder 😃",
             );
-            if (this.doneSavePart2) {
-              this.whenAllSaved(isStaying);
-            }
+            this.whenAllSaved(isStaying);
           })
           .catch(function(error) {
             alert("Kunne ikke lagre. (" + error + ")");
@@ -876,42 +798,6 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
           .add(this.wish)
           .then(() => {
             this.$router.push("/wishes");
-          });
-      }
-
-      // Save ref. in registrations (need wish-id so not possible on first wish create)
-      if (this.id) {
-        let wishDocRef = db.collection("wishes").doc(this.id);
-        let wishId = this.id;
-
-        return db
-          .runTransaction(function(transaction) {
-            // This code may get re-run multiple times if there are conflicts.
-            return transaction.get(wishDocRef).then(function(wishDoc) {
-              if (!wishDoc.exists) {
-                throw "Document does not exist!";
-              }
-
-              let wishServerData = wishDoc.data();
-              updateRegistrations(
-                wishId,
-                wishServerData,
-                transaction,
-                wishDocRef,
-                assigneesPerDay,
-              );
-            });
-          })
-          .then(() => {
-            console.log("Transaction successfully committed!");
-            this.doneSavePart2 = true;
-            this.suppressWatchOnce = true;
-            if (this.doneSavePart1) {
-              this.whenAllSaved(isStaying);
-            }
-          })
-          .catch(function(error) {
-            console.log("Transaction failed: ", error);
           });
       }
     }, //(end save)
@@ -991,7 +877,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
         return "";
       }
       const firstLetter = team.teamName.replace("Team-", "")[0];
-      return firstLetter + "| " + team.teamName;
+      return firstLetter + "| - " + team.teamName;
     },
   },
   watch: {
@@ -1026,47 +912,9 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
     },
   },
 };
-
-let updateRegistrations = function(
-  wishId,
-  wishServerData,
-  transaction,
-  wishDocRef,
-  newAssigneesPerDay,
-) {
-  let registrationReferences = newAssigneesPerDay[0].registrationRefs;
-  let uniqueReferences = [...new Set(registrationReferences)];
-  uniqueReferences = uniqueReferences.filter((r) => !!r);
-  newAssigneesPerDay[0].registrationRefs = uniqueReferences;
-  transaction.update(wishDocRef, {
-    assigneesPerDay: newAssigneesPerDay,
-  });
-
-  // update registrations (wish refs on missionDay[0] ..)
-  // (update removed refs)
-  let day = 0;
-  let missionDayKey = "missionDay" + day;
-  for (let assignee of wishServerData.assigneesPerDay[0].registrationRefs) {
-    let registrationDocRef = db.collection("registrations").doc(assignee);
-    transaction.update(registrationDocRef, {
-      [missionDayKey]: firebase.firestore.FieldValue.arrayRemove(wishId), //optimization: only remove needed?
-    });
-  }
-  // (add refs)
-  for (let assignee of newAssigneesPerDay[0].registrationRefs) {
-    let registrationDocRef = db.collection("registrations").doc(assignee);
-    transaction.update(registrationDocRef, {
-      [missionDayKey]: firebase.firestore.FieldValue.arrayUnion(wishId),
-    });
-  }
-};
 </script>
 
 <style scoped>
-/* input, button, textarea { /* for blocking wish form for users * /
-    pointer-events: none;
-    background-color: silver;
-  } */
 .clickable_tag {
   cursor: pointer !important;
 }

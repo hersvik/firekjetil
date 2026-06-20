@@ -811,7 +811,7 @@ export default {
         return "";
       }
       const firstLetter = team.teamName.replace("Team-", "")[0];
-      return firstLetter + "| " + team.teamName;
+      return firstLetter + "| - " + team.teamName;
     },
   },
 };
