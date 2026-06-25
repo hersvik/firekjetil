@@ -877,7 +877,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
         return "";
       }
       const firstLetter = team.teamName.replace("Team-", "")[0];
-      return firstLetter + "| - " + team.teamName;
+      return firstLetter + "..  " + team.teamName;
     },
   },
   watch: {
