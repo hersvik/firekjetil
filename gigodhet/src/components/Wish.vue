@@ -120,6 +120,10 @@
               style="font-weight: normal; font-style: normal; color: rgb(168, 227, 272)"
             >
               {{ kobling.teamName }}
+              <em>{{
+                kobling.timeCreated &&
+                  kobling.timeCreated.toDate().toLocaleDateString()
+              }}</em>
             </router-link>
             <span
               @click="removeLink(kobling.id, kobling.teamName)"
@@ -131,7 +135,6 @@
           +
           <select
             v-model="selectedForKobling"
-            @change="addLink"
             :disabled="wish.isDiscarded"
             style="width: 11em;"
           >
@@ -140,7 +143,20 @@
               teamNameWithPreCharacter(team)
             }}</option>
           </select>
-          ← autolagres
+          <button
+            type="button"
+            :disabled="!selectedForKobling"
+            @click="addLink('offer')"
+          >
+            Lagre tilbud
+          </button>
+          <button
+            type="button"
+            :disabled="!selectedForKobling"
+            @click="addLink('confirmed')"
+          >
+            Lagre bekreftet
+          </button>
           <br />
           <!-- <pre>{{ JSON.stringify(this.koblinger, null, 2) }}</pre> -->
           <br />
@@ -557,6 +573,7 @@
 </template>
 
 <script>
+// import { Button } from "bootstrap";
 import { db } from "../main";
 
 import { getters, setters, constants } from "../store";
@@ -627,7 +644,7 @@ export default {
       result.koblinger = db
         .collection("koblinger")
         .where("wishId", "==", this.id)
-        .orderBy("teamName", "asc");
+        .orderBy("timeCreated", "asc");
     }
     return result;
   },
@@ -820,7 +837,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
     customSaveFunction() {
       this.save();
     },
-    addLink() {
+    addLink(status) {
       const optionValue = this.selectedForKobling;
       if (optionValue.ownerUid === this.wish.agentUid) {
         alert("Allerede brukt som hovedkobling. Avbrytes");
@@ -841,6 +858,8 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
           koblingType: "team",
           teamId: optionValue.ownerUid,
           teamName: optionValue.teamName,
+          confirmed: status == "confirmed",
+          timeCreated: new Date(),
         })
         .then(() => {
           // alert("save'a");
