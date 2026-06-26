@@ -31,7 +31,7 @@
           <!-- or this.id -->
           <div v-for="(kobling, kx) in koblinger" :key="kx">
             <!-- <div v-if="kobling.koblingType == 'team'"> -->
-            &
+
             <span
               @click="confirmLink(kobling.id, kobling.teamName)"
               style="cursor: pointer;"
@@ -52,20 +52,22 @@
                   kobling.timeCreated.toDate().toLocaleDateString()
               }}</em>
             </router-link>
+            Avslå
             <span
               @click="removeLink(kobling.id, kobling.teamName)"
-              style="cursor: pointer;"
+              style="cursor: pointer; opacity: 0.2;"
               >🅧 ta vekk</span
             >
             <!-- </div> -->
           </div>
+          ..vis avslag<br />
           +
           <select
             v-model="selectedForKobling"
             :disabled="wish.isDiscarded"
-            style="width: 11em;"
+            style="width: 14em;"
           >
-            <option value="">ekstra team-kobling</option>
+            <option value="">ny team-kobling</option>
             <option v-for="(team, idx) in teams" :key="idx" :value="team">{{
               teamNameWithPreCharacter(team.teamName)
             }}</option>
@@ -75,16 +77,15 @@
             :disabled="!selectedForKobling"
             @click="addLink('offer')"
           >
-            Lagre tilbud
+            Som tilbud 💥
           </button>
           <button
             type="button"
             :disabled="!selectedForKobling"
             @click="addLink('confirmed')"
           >
-            Lagre bekreftet
+            Tar oppdraget!
           </button>
-          <br />
           <!-- <pre>{{ JSON.stringify(this.koblinger, null, 2) }}</pre> -->
           <br />
         </template>
@@ -94,7 +95,8 @@
         class="alert alert-dark bg-secondary text-white mt-4"
       >
         <label class="mt-4">
-          Gi<em> lese- og skrivetilgang</em> (hvit og gul del under) -
+          Gi<em> lese- og skrivetilgang</em> (hvit og gul del av oppdragskjema
+          under) -
           <span :class="{ fade_confirmation_label: wish.confirmedNonsensitive }"
             >Bekreftet at skjemaet ikke inneholder sensitive opplysninger:
           </span>
@@ -109,7 +111,7 @@
           class="custom-select"
           :disabled="!wish.confirmedNonsensitive || wish.isDiscarded"
         >
-          <option value="">- Uten team -</option>
+          <option value="">- Ingen får tilgang -</option>
           <option
             v-for="(kobling, idx) in koblinger"
             :key="idx"
