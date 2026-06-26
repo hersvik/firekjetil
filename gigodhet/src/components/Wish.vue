@@ -24,82 +24,9 @@
     <form>
       <div
         v-if="getters.user().uid === constants.adminUid"
-        class="alert alert-dark bg-secondary text-white mt-4"
+        class="alert alert-dark text-white mt-4"
+        style="background-color: #2c2c75;"
       >
-        <div class="form-group mt-3">
-          <label>
-            Intern status (husk Send)
-          </label>
-          <input v-model="wish.status" class="form-control" type="text" />
-          <div style="color: black">{{ wish.status }}</div>
-        </div>
-
-        <div class="form-group">
-          <label>
-            Lag e-post til
-          </label>
-          <div class="input-group">
-            <input
-              v-model="wish.emailSendTo"
-              class="form-control"
-              type="text"
-              :disabled="wish.isDiscarded"
-            />
-            <div class="input-group-append">
-              <button
-                @click="makeEmail"
-                class="btn btn-primary"
-                type="button"
-                :disabled="wish.isDiscarded"
-              >
-                Lag e-post
-              </button>
-            </div>
-          </div>
-        </div>
-        <pre
-          v-if="isShowingEmailPreview"
-          style="white-space: pre-wrap;"
-        >E-post, emne: {{wish.title}} <br>cc: stavanger@godhet.no
-          {{emailTextHtml}}
-        </pre>
-
-        <label class="mt-4">
-          <strong><em>Team tildeling</em></strong> -
-          <span :class="{ fade_confirmation_label: wish.confirmedNonsensitive }"
-            >Bekreftet at skjemaet ikke inneholder sensitive opplysninger:
-          </span>
-          <input
-            type="checkbox"
-            v-model="wish.confirmedNonsensitive"
-            :disabled="wish.confirmedNonsensitive"
-          />
-        </label>
-        <select
-          v-model="wish.agentUid"
-          class="custom-select"
-          :disabled="!wish.confirmedNonsensitive || wish.isDiscarded"
-        >
-          <option value="">- Uten team -</option>
-          <option
-            v-for="(team, idx) in teams"
-            :key="idx"
-            :value="team.ownerUid"
-            >{{ teamNameWithPreCharacter(team) }}</option
-          >
-        </select>
-        <router-link
-          :to="{ name: 'dashTeamid', params: { teamid: wish.agentUid } }"
-          style="
-    background-color: white;
-    float: right;
-    padding: 2px;
-    padding-top: 0;
-    padding-bottom: 0;
-    border-radius: 3px;"
-          >{{ teamName && "➡️ " }}{{ teamName }}
-        </router-link>
-        <br />
         <template v-if="wish.id">
           <!-- or this.id -->
           <div v-for="(kobling, kx) in koblinger" :key="kx">
@@ -140,7 +67,7 @@
           >
             <option value="">ekstra team-kobling</option>
             <option v-for="(team, idx) in teams" :key="idx" :value="team">{{
-              teamNameWithPreCharacter(team)
+              teamNameWithPreCharacter(team.teamName)
             }}</option>
           </select>
           <button
@@ -161,6 +88,86 @@
           <!-- <pre>{{ JSON.stringify(this.koblinger, null, 2) }}</pre> -->
           <br />
         </template>
+      </div>
+      <div
+        v-if="getters.user().uid === constants.adminUid"
+        class="alert alert-dark bg-secondary text-white mt-4"
+      >
+        <label class="mt-4">
+          Gi<em> lese- og skrivetilgang</em> (hvit og gul del under) -
+          <span :class="{ fade_confirmation_label: wish.confirmedNonsensitive }"
+            >Bekreftet at skjemaet ikke inneholder sensitive opplysninger:
+          </span>
+          <input
+            type="checkbox"
+            v-model="wish.confirmedNonsensitive"
+            :disabled="wish.confirmedNonsensitive"
+          />
+        </label>
+        <select
+          v-model="wish.agentUid"
+          class="custom-select"
+          :disabled="!wish.confirmedNonsensitive || wish.isDiscarded"
+        >
+          <option value="">- Uten team -</option>
+          <option
+            v-for="(kobling, idx) in koblinger"
+            :key="idx"
+            :value="kobling.teamId"
+            >{{ kobling.teamName }}</option
+          >
+        </select>
+        <router-link
+          :to="{ name: 'dashTeamid', params: { teamid: wish.agentUid } }"
+          style="
+    background-color: white;
+    float: right;
+    padding: 2px;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 3px;"
+          >{{ teamName && "➡️ " }}{{ teamName }}
+        </router-link>
+        <br />
+
+        <div class="form-group mt-3">
+          <label>
+            Intern status (husk Send)
+          </label>
+          <input v-model="wish.status" class="form-control" type="text" />
+          <div style="color: black">{{ wish.status }}</div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            Lag e-post til
+          </label>
+          <div class="input-group">
+            <input
+              v-model="wish.emailSendTo"
+              class="form-control"
+              type="text"
+              :disabled="wish.isDiscarded"
+            />
+            <div class="input-group-append">
+              <button
+                @click="makeEmail"
+                class="btn btn-primary"
+                type="button"
+                :disabled="wish.isDiscarded"
+              >
+                Lag e-post
+              </button>
+            </div>
+          </div>
+        </div>
+        <pre
+          v-if="isShowingEmailPreview"
+          style="white-space: pre-wrap;"
+        >E-post, emne: {{wish.title}} <br>cc: stavanger@godhet.no
+          {{emailTextHtml}}
+        </pre>
+
         <span style="color: silver"
           >(Sett tilside
           <input
@@ -891,12 +898,9 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
         }
       }
     },
-    teamNameWithPreCharacter(team) {
-      if (!(team && team.teamName)) {
-        return "";
-      }
-      const firstLetter = team.teamName.replace("Team-", "")[0];
-      return firstLetter + "..  " + team.teamName;
+    teamNameWithPreCharacter(teamName) {
+      const firstLetter = teamName.replace("Team-", "")[0];
+      return firstLetter + "..  " + teamName;
     },
   },
   watch: {
