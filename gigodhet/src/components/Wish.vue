@@ -37,7 +37,11 @@
               style="cursor: pointer;"
               class="koblingClickable"
             >
-              {{ kobling.confirmed ? "" : "💥" }}
+              {{
+                kobling.status === "confirmed" || kobling.status === "rejected"
+                  ? ""
+                  : "💥"
+              }}
             </span>
             <span>
               {{ kobling.status === "rejected" ? "🛑" : "" }}
@@ -888,7 +892,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
           koblingType: "team",
           teamId: optionValue.ownerUid,
           teamName: optionValue.teamName,
-          confirmed: status == "confirmed",
+          status: status,
           timeCreated: new Date(),
         })
         .then(() => {
@@ -911,7 +915,7 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
         if (koblingId) {
           db.collection("koblinger")
             .doc(koblingId)
-            .set({ confirmed: true }, { merge: true })
+            .set({ status: "confirmed" }, { merge: true })
             .then(() => {
               // alert("Lagret kobling ✅ ");
             })

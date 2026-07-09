@@ -73,7 +73,7 @@ export default {
       );
     },
     unconfirmedKoblinger() {
-      return this.koblinger.filter((k) => !k.confirmed);
+      return this.koblinger.filter((k) => k.status !== "confirmed");
     },
   },
   firestore() {
@@ -117,7 +117,7 @@ export default {
         if (koblingId) {
           db.collection("koblinger")
             .doc(koblingId)
-            .set({ confirmed: true }, { merge: true })
+            .set({ status: "confirmed" }, { merge: true })
             .then(() => {
               // alert("Lagret kobling ✅ ");
             })

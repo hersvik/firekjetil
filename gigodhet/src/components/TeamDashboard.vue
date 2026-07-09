@@ -147,11 +147,11 @@
         class="list-group-item"
       >
         <span
-          @click="toggleKoblingConfirmed(kobling.id, true)"
+          @click="toggleKoblingConfirmed(kobling.id, 'confirmed')"
           style="cursor: pointer;"
           class="koblingClickable"
         >
-          {{ kobling.confirmed ? "" : "💥" }}</span
+          {{ kobling.status === "confirmed" ? "" : "💥" }}</span
         >
         <router-link
           :to="{ name: 'endreWish', params: { id: kobling.wishId } }"
@@ -163,10 +163,17 @@
         </router-link>
         <button
           type="button"
-          @click="toggleKoblingConfirmed(kobling.id, !kobling.confirmed)"
+          @click="
+            toggleKoblingConfirmed(
+              kobling.id,
+              kobling.status === 'confirmed' ? '' : 'confirmed',
+            )
+          "
         >
           {{
-            kobling.confirmed ? "endre til ubekreftet" : "merk som bekreftet"
+            kobling.status === "confirmed"
+              ? "endre til ubekreftet"
+              : "merk som bekreftet"
           }}</button
         >&nbsp;
         <span
@@ -464,11 +471,11 @@ export default {
         this.saveExternalLink();
       }
     },
-    toggleKoblingConfirmed(id, value) {
+    toggleKoblingConfirmed(id, newStatus) {
       if (id) {
         db.collection("koblinger")
           .doc(id)
-          .set({ confirmed: value }, { merge: true })
+          .set({ status: newStatus }, { merge: true })
           .then(() => {
             // alert("Lagret kobling ✅ ");
           })
