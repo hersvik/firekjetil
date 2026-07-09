@@ -113,7 +113,7 @@
 
     <h2>Oppdrag</h2>
 
-    <li class="list-group">
+    <li class="list-group" style="opacity: 0.4;">
       <ul
         v-for="wish in chronologicalWishes"
         :key="wish.id"
@@ -387,7 +387,8 @@ export default {
     if (this.selectedTeamUid && getters.user().uid === constants.adminUid) {
       koblinger = db
         .collection("koblinger")
-        .where("teamId", "==", this.selectedTeamUid);
+        .where("teamId", "==", this.selectedTeamUid)
+        .orderBy("timeCreated", "asc");
     }
     return {
       registrations: db.collection("registrations"),

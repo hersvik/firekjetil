@@ -29,7 +29,7 @@
       >
         <template v-if="wish.id">
           <!-- or this.id -->
-          <div v-for="(kobling, kx) in koblinger" :key="kx">
+          <div v-for="(kobling, kx) in filteredKoblinger" :key="kx">
             <!-- <div v-if="kobling.koblingType == 'team'"> -->
 
             <span
@@ -38,6 +38,9 @@
               class="koblingClickable"
             >
               {{ kobling.confirmed ? "" : "💥" }}
+            </span>
+            <span>
+              {{ kobling.status === "rejected" ? "🛑" : "" }}
             </span>
             <router-link
               :to="{
@@ -52,7 +55,7 @@
                   kobling.timeCreated.toDate().toLocaleDateString()
               }}</em>
             </router-link>
-            Avslå
+            <span @click="rejectLink(kobling.id, kobling.teamName)">Avslå</span>
             <span
               @click="removeLink(kobling.id, kobling.teamName)"
               style="cursor: pointer; opacity: 0.2;"
@@ -60,7 +63,15 @@
             >
             <!-- </div> -->
           </div>
-          ..vis avslag<br />
+          <span
+            @click="isShowingRejectedKoblinger = !isShowingRejectedKoblinger"
+          >
+            <span v-if="isShowingRejectedKoblinger">
+              ..skjul avslag
+            </span>
+            <span v-else>... vis avslag</span>
+          </span>
+          <br />
           +
           <select
             v-model="selectedForKobling"
@@ -113,7 +124,9 @@
         >
           <option value="">- Ingen får tilgang -</option>
           <option
-            v-for="(kobling, idx) in koblinger"
+            v-for="(kobling, idx) in koblinger.filter(
+              (k) => k.status !== 'rejected',
+            )"
             :key="idx"
             :value="kobling.teamId"
             >{{ kobling.teamName }}</option
@@ -639,6 +652,7 @@ export default {
       teams: [],
       adminNick: "",
       planChanged: false,
+      isShowingRejectedKoblinger: false,
     };
   },
   firestore() {
@@ -669,6 +683,13 @@ export default {
       let arr = Object.keys(obj).map((key) => ({ name: key, time: obj[key] }));
 
       return arr.toSorted((a, b) => a.time - b.time);
+    },
+    filteredKoblinger() {
+      if (this.isShowingRejectedKoblinger) {
+        return this.koblinger;
+      } else {
+        return this.koblinger.filter((k) => k.status !== "rejected");
+      }
     },
     sortedRegistrations() {
       if (!this || !this.registrations) {
@@ -891,6 +912,21 @@ Utstyr på stedet: ${this.wish.equipment}%0D%0A`;
           db.collection("koblinger")
             .doc(koblingId)
             .set({ confirmed: true }, { merge: true })
+            .then(() => {
+              // alert("Lagret kobling ✅ ");
+            })
+            .catch(function(error) {
+              alert("Kunne ikke lagre kobling. (" + error + ")");
+            });
+        }
+      }
+    },
+    rejectLink(koblingId, name) {
+      if (confirm("Har " + name + " avslått?")) {
+        if (koblingId) {
+          db.collection("koblinger")
+            .doc(koblingId)
+            .set({ status: "rejected" }, { merge: true })
             .then(() => {
               // alert("Lagret kobling ✅ ");
             })
